@@ -71,7 +71,7 @@ bool Player::Update(float dt)
 
 	// Jumping
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !IsJumping) {
-		b2Vec2 jumpImpulse(0.0f, -4.3f); // Upward
+		b2Vec2 jumpImpulse(0.0f, -4.1f); // Upward
 		pbody->body->ApplyLinearImpulse(jumpImpulse, pbody->body->GetWorldCenter(), true);
 		IsJumping = true;
 	}
