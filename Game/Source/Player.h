@@ -15,7 +15,7 @@ public:
 	
 	virtual ~Player();
 	
-	bool Isjumping = false;
+	bool IsJumping = false;
 
 	bool Grounded = true;
 

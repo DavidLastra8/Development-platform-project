@@ -44,8 +44,9 @@ bool Player::Start() {
 bool Player::Update(float dt)
 {
 	
-	vely = -GRAVITY_Y;
-	velx = 0;
+	/*vely = -GRAVITY_Y;
+	velx = 0;*/
+	b2Vec2 currentVel = pbody->body->GetLinearVelocity();
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		//
@@ -54,22 +55,31 @@ bool Player::Update(float dt)
 		//
 	}
 
+	// Horizontal movement
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		velx = -speed * dt;
+		currentVel.x = -5.0f; // Leftward
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		currentVel.x = 5.0f; // Rightward
+	}
+	else {
+		currentVel.x = 0.0f; // Stop horizontal movement when no keys are pressed
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		velx = speed * dt;
+	// Apply the updated horizontal velocity
+	pbody->body->SetLinearVelocity(b2Vec2(currentVel.x, pbody->body->GetLinearVelocity().y));
+
+	// Jumping
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !IsJumping) {
+		b2Vec2 jumpImpulse(0.0f, -4.0f); // Upward
+		pbody->body->ApplyLinearImpulse(jumpImpulse, pbody->body->GetWorldCenter(), true);
+		IsJumping = true;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
-		float jmptime=SDL_GetTicks();
-		
-		vely = GRAVITY_Y;
-	}
-	b2Vec2 vel = b2Vec2(velx, vely);
-	//Set the velocity of the pbody of the player
-	pbody->body->SetLinearVelocity(vel);
+	//we don't want this for now, Instead of directly setting the linear velocity for movement, you can apply forces or impulses in the horizontal direction as well. This will allow both jumping and lateral movement to coexist.
+
+	
+
 
 	//Update player position in pixels
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
@@ -96,8 +106,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
-		if (Isjumping) {
-			Isjumping = false;
+		if (IsJumping) {
+			IsJumping = false;
 		}
 		break;
 
