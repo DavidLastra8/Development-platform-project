@@ -57,10 +57,10 @@ bool Player::Update(float dt)
 
 	// Horizontal movement
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		currentVel.x = -5.0f; // Leftward
+		currentVel.x = -8.0f; // Leftward
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		currentVel.x = 5.0f; // Rightward
+		currentVel.x = 8.0f; // Rightward
 	}
 	else {
 		currentVel.x = 0.0f; // Stop horizontal movement when no keys are pressed
@@ -71,7 +71,7 @@ bool Player::Update(float dt)
 
 	// Jumping
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !IsJumping) {
-		b2Vec2 jumpImpulse(0.0f, -4.0f); // Upward
+		b2Vec2 jumpImpulse(0.0f, -4.3f); // Upward
 		pbody->body->ApplyLinearImpulse(jumpImpulse, pbody->body->GetWorldCenter(), true);
 		IsJumping = true;
 	}
