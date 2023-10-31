@@ -5,6 +5,9 @@
  <tileset firstgid="4161" source="MapMetadata.tsx"/>
  <tileset firstgid="4163" source="MapMetadata200-export.tsx"/>
  <layer id="1" name="Mapa1" width="150" height="25">
+  <properties>
+   <property name="Draw" type="bool" value="true"/>
+  </properties>
   <data>
    <tile/>
    <tile/>
@@ -3759,6 +3762,9 @@
   </data>
  </layer>
  <layer id="3" name="Mapa2" width="150" height="25">
+  <properties>
+   <property name="Draw" type="bool" value="true"/>
+  </properties>
   <data>
    <tile/>
    <tile/>
@@ -7513,6 +7519,9 @@
   </data>
  </layer>
  <layer id="2" name="Colliders" width="150" height="25">
+  <properties>
+   <property name="Collision" type="bool" value="true"/>
+  </properties>
   <data>
    <tile/>
    <tile/>
