@@ -200,7 +200,7 @@ bool Map::Load()
                 {
                     int gid = mapLayerItem->data->Get(x, y);
                     TileSet* tileset = GetTilesetFromTileId(gid);
-                    if (gid == 4161)
+                    if (gid == 33025)
                     {
                         SDL_Rect r = tileset->GetTileRect(gid);
                         iPoint pos = MapToWorld(x, y);
