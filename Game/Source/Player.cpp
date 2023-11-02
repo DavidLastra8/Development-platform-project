@@ -82,8 +82,8 @@ bool Player::Update(float dt)
 
 
 	//Update player position in pixels
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 50;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 58;
 
 	app->render->DrawTexture(texture, position.x, position.y);
 
