@@ -19,6 +19,8 @@ public:
 
 	bool Grounded = true;
 
+	bool GodMode = false;
+
 	bool Awake();
 
 	bool Start();
