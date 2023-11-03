@@ -81,19 +81,43 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	float camSpeed = 1; 
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+		CameraLock = true;
+	}
+	if (CameraLock == true) {
+		if (player->position.x < app->win->screenSurface->w / 2) {
+			player->position.x = app->win->screenSurface->w / 2;
+		}
+		app->render->camera.x = -player->position.x + app->win->screenSurface->w / 2;
+		if (player->position.y <= 0) {
+			//player->position.y += app->win->screenSurface->h + 13*2;
+		}
+		else if (player->position.y >= app->win->screenSurface->h) {
+			player->position.y -= app->win->screenSurface->h + 13 * 2;
+		}
+		else {
+			player->position.y = 0;
+		}
+		app->render->camera.y = -player->position.y;
+	}
 
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += (int)ceil(camSpeed * dt);
+		
+	else
+	{
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+			app->render->camera.y -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= (int)ceil(camSpeed * dt);
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+			app->render->camera.y += (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += (int)ceil(camSpeed * dt);
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+			app->render->camera.x -= (int)ceil(camSpeed * dt);
 
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+			app->render->camera.x += (int)ceil(camSpeed * dt);
+	}
+	
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
 
