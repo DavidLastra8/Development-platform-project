@@ -19,7 +19,7 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
 
-	bool CameraLock = false;
+	bool CameraLock = true;
 	// Called before the first frame
 	bool Start();
 
