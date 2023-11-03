@@ -47,7 +47,7 @@ bool Player::Update(float dt)
 	/*vely = -GRAVITY_Y;
 	velx = 0;*/
 	b2Vec2 currentVel = pbody->body->GetLinearVelocity();
-
+	b2Vec2 jumpImpulse(0.0f, -4.1f); // Upward
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		//
 	}
@@ -65,21 +65,32 @@ bool Player::Update(float dt)
 	else {
 		currentVel.x = 0.0f; // Stop horizontal movement when no keys are pressed
 	}
-
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		
+	}
 	// Apply the updated horizontal velocity
 	pbody->body->SetLinearVelocity(b2Vec2(currentVel.x, pbody->body->GetLinearVelocity().y));
 
 	// Jumping
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !IsJumping) {
-		b2Vec2 jumpImpulse(0.0f, -4.1f); // Upward
+		
 		pbody->body->ApplyLinearImpulse(jumpImpulse, pbody->body->GetWorldCenter(), true);
 		IsJumping = true;
 	}
 
 	//we don't want this for now, Instead of directly setting the linear velocity for movement, you can apply forces or impulses in the horizontal direction as well. This will allow both jumping and lateral movement to coexist.
 
-	
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		if (GodMode == false) {
+			GodMode = true;
+		}
+		else if (GodMode == true) {
+			GodMode = false;
+		}
+	}
+	if (GodMode == true) {
 
+	}
 
 	//Update player position in pixels
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 50;
