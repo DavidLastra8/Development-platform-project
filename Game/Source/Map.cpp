@@ -213,7 +213,7 @@ bool Map::Load()
                         SDL_Rect r = tileset->GetTileRect(gid);
                         iPoint pos = MapToWorld(x, y);
                         PhysBody* c2 = app->physics->CreateRectangle(pos.x + mapData.tileWidth / 2, pos.y + mapData.tileHeight / 2, mapData.tileWidth, mapData.tileHeight, STATIC);
-                        c2->ctype = ColliderType::PLATFORM;
+                        c2->ctype = ColliderType::DEATH;
                     }
 
                     

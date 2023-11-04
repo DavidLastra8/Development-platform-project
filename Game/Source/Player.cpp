@@ -66,7 +66,7 @@ bool Player::Update(float dt)
 		currentVel.x = 0.0f; // Stop horizontal movement when no keys are pressed
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-		
+		pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(0.0f), PIXEL_TO_METERS(1.0f)),0);
 	}
 	// Apply the updated horizontal velocity
 	pbody->body->SetLinearVelocity(b2Vec2(currentVel.x, pbody->body->GetLinearVelocity().y));
@@ -89,7 +89,7 @@ bool Player::Update(float dt)
 		}
 	}
 	if (GodMode == true) {
-
+		
 	}
 
 	//Update player position in pixels
