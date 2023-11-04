@@ -81,16 +81,45 @@ bool Player::Update(float dt)
 	//we don't want this for now, Instead of directly setting the linear velocity for movement, you can apply forces or impulses in the horizontal direction as well. This will allow both jumping and lateral movement to coexist.
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		
+
+
 		if (GodMode == false) {
 			GodMode = true;
 		}
 		else if (GodMode == true) {
 			GodMode = false;
 		}
-	}
-	if (GodMode == true) {
+
 		
+
 	}
+
+	if (GodMode == true) {
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			pbody->body->ApplyForceToCenter(b2Vec2(0.0f, -10.0f), true);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			pbody->body->ApplyForceToCenter(b2Vec2(0.0f, 10.0f), true);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			pbody->body->ApplyForceToCenter(b2Vec2(-30.0f, 0.0f), true);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			pbody->body->ApplyForceToCenter(b2Vec2(30.0f, 0.0f), true);
+		}
+		//make gravity stop working
+		pbody->body->SetGravityScale(0.0f);
+		//don't let the player jump, when press space bar do nothing
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+			//
+		}
+	}
+	else if (GodMode == false) {
+		//make gravity work again
+		pbody->body->SetGravityScale(1.0f);
+	}
+	
 
 	//Update player position in pixels
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 50;

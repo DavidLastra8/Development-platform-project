@@ -221,7 +221,7 @@
  </tileset>
  <layer id="18" name="BackgroundBlue" width="128" height="64">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="Draw" type="bool" value="true"/>
   </properties>
   <data>
    <tile gid="509"/>
@@ -8420,7 +8420,7 @@
  </layer>
  <layer id="19" name="Background cloud" width="128" height="64">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="Draw" type="bool" value="true"/>
   </properties>
   <data>
    <tile gid="5252"/>
