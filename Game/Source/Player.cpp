@@ -12,6 +12,10 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
+	idleAnim.PushBack({ 27, 14, 46, 48 });
+	idleAnim.PushBack({ 116, 14, 46, 48 });
+	idleAnim.loop = true;
+	idleAnim.speed = 0.1f;
 }
 
 Player::~Player() {
@@ -31,6 +35,7 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	currentAnimation = &idleAnim;
 
 	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
 	pbody->listener = this;

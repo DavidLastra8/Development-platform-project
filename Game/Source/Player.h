@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -37,12 +38,29 @@ public:
 	
 	float speed = 0.2f;
 	const char* texturePath;
+	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 	int pickCoinFxId;
 	float velx;
 	float gravity;
 	float vely;
+
+
+
+	// The pointer to the current player animation
+	// It will be switched depending on the player's movement direction
+	Animation* currentAnimation = nullptr;
+	// A set of animations
+	Animation idleAnim;
+	Animation leftAnim;
+	Animation rightAnim;
+	Animation death;
+
+	
+
+	
+
 };
 
 #endif // __PLAYER_H__
