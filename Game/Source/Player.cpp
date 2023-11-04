@@ -41,6 +41,14 @@ bool Player::Start() {
 	return true;
 }
 
+//make a SetPosition function
+void Player::SetPosition(int x, int y) {
+	position.x = x;
+	position.y = y;
+	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+}
+
 bool Player::Update(float dt)
 {
 	
@@ -66,7 +74,7 @@ bool Player::Update(float dt)
 		currentVel.x = 0.0f; // Stop horizontal movement when no keys are pressed
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-		pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(0.0f), PIXEL_TO_METERS(1.0f)),0);
+		pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y)),0);
 	}
 	// Apply the updated horizontal velocity
 	pbody->body->SetLinearVelocity(b2Vec2(currentVel.x, pbody->body->GetLinearVelocity().y));
@@ -119,6 +127,14 @@ bool Player::Update(float dt)
 		//make gravity work again
 		pbody->body->SetGravityScale(1.0f);
 	}
+
+	//If pressed F3, Set the player postion back to start
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		//set position to start
+		SetPosition(400, 1102);
+	}
+	
+
 	
 
 	//Update player position in pixels
