@@ -25,3 +25,6 @@ Group member github accounts:
  F9 Visualize the colliders / logic
  F10 God Mode (can fly around using wasd, using BOX2D, cannot be killed)
  F11 Enable/Disable FPS cap to 30
+
+License
+This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check LICENSE for further details.
