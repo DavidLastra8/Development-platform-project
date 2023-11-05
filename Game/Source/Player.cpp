@@ -8,6 +8,9 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Animation.h"
+
+
 
 Player::Player() : Entity(EntityType::PLAYER)
 {

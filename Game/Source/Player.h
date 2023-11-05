@@ -8,6 +8,9 @@
 
 struct SDL_Texture;
 
+
+
+
 class Player : public Entity
 {
 public:
@@ -57,6 +60,7 @@ public:
 	Animation idleAnim;
 	Animation leftAnim;
 	Animation rightAnim;
+	Animation jumpAnim;
 	Animation death;
 
 	
