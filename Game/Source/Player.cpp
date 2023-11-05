@@ -39,7 +39,7 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/player-Sheet-animations.png");
-	currentAnimation = &idleAnim;
+	
 
 	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -60,7 +60,7 @@ void Player::SetPosition(int x, int y) {
 
 bool Player::Update(float dt)
 {
-	
+	currentAnimation = &idleAnim;
 	/*vely = -GRAVITY_Y;
 	velx = 0;*/
 	b2Vec2 currentVel = pbody->body->GetLinearVelocity();
@@ -177,7 +177,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType:: DEATH:
 		LOG("Collision DEATH");
-		SetPosition(400, 1102);
+		//SetPosition(400, 1102);
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
