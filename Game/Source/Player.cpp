@@ -12,8 +12,12 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
-	idleAnim.PushBack({ 27, 14, 46, 48 });
-	idleAnim.PushBack({ 116, 14, 46, 48 });
+	idleAnim.PushBack({ 27, 21, 42, 53 });
+	idleAnim.PushBack({ 123, 21, 42, 53 });
+	idleAnim.PushBack({ 219, 21, 42, 53 });
+	idleAnim.PushBack({ 315, 21, 42, 53 });
+	idleAnim.PushBack({ 411, 21, 42, 53 });
+	idleAnim.PushBack({ 507, 21, 42, 53 });
 	idleAnim.loop = true;
 	idleAnim.speed = 0.1f;
 }
@@ -34,7 +38,7 @@ bool Player::Awake() {
 bool Player::Start() {
 
 	//initilize textures
-	texture = app->tex->Load(texturePath);
+	texture = app->tex->Load("Assets/Textures/player-Sheet-animations.png");
 	currentAnimation = &idleAnim;
 
 	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
@@ -146,7 +150,7 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 50;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 58;
 
-	app->render->DrawTexture(texture, position.x, position.y);
+	app->render->DrawTexture(texture, position.x, position.y,  &currentAnimation->GetCurrentFrame());
 
 	return true;
 }
