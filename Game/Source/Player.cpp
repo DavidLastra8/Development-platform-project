@@ -98,7 +98,10 @@ bool Player::Update(float dt)
 			IsJumping = true;
 		}
 	}
-	
+	if (isAlive == false) {
+		SetPosition(400, 1102);
+		isAlive = true;
+	 }
 
 	//we don't want this for now, Instead of directly setting the linear velocity for movement, you can apply forces or impulses in the horizontal direction as well. This will allow both jumping and lateral movement to coexist.
 
