@@ -60,40 +60,44 @@ void Player::SetPosition(int x, int y) {
 
 bool Player::Update(float dt)
 {
-	currentAnimation = &idleAnim;
-	/*vely = -GRAVITY_Y;
-	velx = 0;*/
-	b2Vec2 currentVel = pbody->body->GetLinearVelocity();
-	b2Vec2 jumpImpulse(0.0f, -4.1f); // Upward
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		//
-	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		//
-	}
+	if (isAlive)
+	{
+		currentAnimation = &idleAnim;
+		/*vely = -GRAVITY_Y;
+		velx = 0;*/
+		b2Vec2 currentVel = pbody->body->GetLinearVelocity();
+		b2Vec2 jumpImpulse(0.0f, -4.1f); // Upward
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			//
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			//
+		}
 
-	// Horizontal movement
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		currentVel.x = -8.0f; // Leftward
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		currentVel.x = 8.0f; // Rightward
-	}
-	else {
-		currentVel.x = 0.0f; // Stop horizontal movement when no keys are pressed
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-		SetPosition(400, 1102);
-	}
-	// Apply the updated horizontal velocity
-	pbody->body->SetLinearVelocity(b2Vec2(currentVel.x, pbody->body->GetLinearVelocity().y));
+		// Horizontal movement
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			currentVel.x = -8.0f; // Leftward
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			currentVel.x = 8.0f; // Rightward
+		}
+		else {
+			currentVel.x = 0.0f; // Stop horizontal movement when no keys are pressed
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+			SetPosition(400, 1102);
+		}
+		// Apply the updated horizontal velocity
+		pbody->body->SetLinearVelocity(b2Vec2(currentVel.x, pbody->body->GetLinearVelocity().y));
 
-	// Jumping
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !IsJumping) {
-		
-		pbody->body->ApplyLinearImpulse(jumpImpulse, pbody->body->GetWorldCenter(), true);
-		IsJumping = true;
+		// Jumping
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !IsJumping) {
+
+			pbody->body->ApplyLinearImpulse(jumpImpulse, pbody->body->GetWorldCenter(), true);
+			IsJumping = true;
+		}
 	}
+	
 
 	//we don't want this for now, Instead of directly setting the linear velocity for movement, you can apply forces or impulses in the horizontal direction as well. This will allow both jumping and lateral movement to coexist.
 
@@ -177,10 +181,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType:: DEATH:
 		LOG("Collision DEATH");
-		//SetPosition(400, 1102);
+		isAlive = false;
+		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
+		//player not movable
+		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 		break;
 	}
 }

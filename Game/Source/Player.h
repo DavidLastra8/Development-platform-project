@@ -34,6 +34,8 @@ public:
 
 	void SetPosition(int x, int y);
 
+	bool isAlive = true;
+
 public:
 	
 	float speed = 0.2f;
