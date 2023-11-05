@@ -87,9 +87,7 @@ bool Player::Update(float dt)
 		else {
 			currentVel.x = 0.0f; // Stop horizontal movement when no keys are pressed
 		}
-		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-			SetPosition(400, 1102);
-		}
+		
 		// Apply the updated horizontal velocity
 		pbody->body->SetLinearVelocity(b2Vec2(currentVel.x, pbody->body->GetLinearVelocity().y));
 
@@ -138,6 +136,9 @@ bool Player::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 			//
 		}
+		//player ignore isAlive variable
+		isAlive = true;
+		
 	}
 	else if (GodMode == false) {
 		//make gravity work again
@@ -148,6 +149,11 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		//set position to start
 		SetPosition(400, 1102);
+		isAlive = true;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		SetPosition(400, 1102);
+		isAlive = true;
 	}
 	
 
@@ -164,6 +170,8 @@ bool Player::Update(float dt)
 
 bool Player::CleanUp()
 {
+	app->tex->UnLoad(texture);
+
 
 	return true;
 }
@@ -186,6 +194,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision DEATH");
 		isAlive = false;
 		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+		
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");

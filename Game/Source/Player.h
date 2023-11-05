@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 #include "Animation.h"
+#include <SDL_image/include/SDL_image.h>
 
 struct SDL_Texture;
 
