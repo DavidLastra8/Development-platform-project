@@ -1,5 +1,12 @@
 # Development platform project
 
+Group member github accounts: 
+
+ Yeeway69,
+
+ DavidLastra8
+
+
  Please check out branch: **going-back** for assignment 1
 
  basic control:
