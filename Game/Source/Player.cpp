@@ -41,7 +41,7 @@ bool Player::Awake() {
 bool Player::Start() {
 
 	//initilize textures
-	texture = app->tex->Load("Assets/Textures/player-Sheet-animations.png");
+	texture = app->tex->Load("Assets/Textures/player.png");
 	
 
 	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
@@ -166,7 +166,7 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 50;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 58;
 
-	app->render->DrawTexture(texture, position.x, position.y,  &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x, position.y);
 
 	return true;
 }

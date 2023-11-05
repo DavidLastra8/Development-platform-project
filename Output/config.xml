@@ -22,7 +22,7 @@
   </audio>
 
   <scene>
-    <player x="400" y="1102" texturepath="Assets/Textures/player-Sheet-idle animation.png"/>
+    <player x="400" y="1102" texturepath="Assets/Textures/player.png"/>
     
   </scene>
 
