@@ -175,7 +175,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			IsJumping = false;
 		}
 		break;
-
+	case ColliderType:: DEATH:
+		LOG("Collision DEATH");
+		SetPosition(400, 1102);
+		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
