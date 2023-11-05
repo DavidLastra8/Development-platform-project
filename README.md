@@ -6,7 +6,11 @@ Group member github accounts:
 
  DavidLastra8
 
+ Developers:
 
+ Yiwei: Programmer/ artist
+
+ David: Programmer/ artist
  Please check out branch: **going-back** for assignment 1
 
  basic control:
