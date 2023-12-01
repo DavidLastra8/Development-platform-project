@@ -61,6 +61,28 @@ void Player::SetPosition(int x, int y) {
 	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
 }
 
+bool Player::LoadState(pugi::xml_node& node)
+{
+	pugi::xml_node playerNode = node.child("player");
+	if (playerNode)
+	{
+		position.x = playerNode.attribute("x").as_int();
+		position.y = playerNode.attribute("y").as_int();
+	}
+
+	return true;
+}
+
+bool Player::SaveState(pugi::xml_node& node) 
+{
+	pugi::xml_node playerNode = node.append_child("player");
+	playerNode.append_attribute("x").set_value(position.x);
+	playerNode.append_attribute("y").set_value(position.y);
+
+	return true;
+}
+
+
 bool Player::Update(float dt)
 {
 	if (isAlive)
@@ -102,6 +124,8 @@ bool Player::Update(float dt)
 		SetPosition(400, 1102);
 		isAlive = true;
 	 }
+
+
 
 	//we don't want this for now, Instead of directly setting the linear velocity for movement, you can apply forces or impulses in the horizontal direction as well. This will allow both jumping and lateral movement to coexist.
 

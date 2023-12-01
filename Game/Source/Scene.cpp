@@ -121,6 +121,10 @@ bool Scene::Update(float dt)
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
 
+	// L14: TODO 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
+
 	return true;
 }
 
@@ -142,3 +146,25 @@ bool Scene::CleanUp()
 
 	return true;
 }
+
+//// L14: TODO 6: Implement a method to load the state
+//// for now load camera's x and y
+//bool Scene::LoadState(pugi::xml_node node) {
+//
+//	player->position.x = node.child("player").attribute("x").as_int();
+//	player->position.y = node.child("player").attribute("y").as_int();
+//	b2Vec newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player.position.y));
+//	return true;
+//}
+//
+//
+//// L14: TODO 8: Create a method to save the state of the renderer
+//// using append_child and append_attribute
+//bool Render::SaveState(pugi::xml_node node) {
+//
+//	pugi::xml_node camNode = node.append_child("camera");
+//	camNode.append_attribute("x").set_value(camera.x);
+//	camNode.append_attribute("y").set_value(camera.y);
+//
+//	return true;
+//}

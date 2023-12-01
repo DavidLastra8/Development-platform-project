@@ -73,6 +73,7 @@ public:
 
 	};
 
+	
 public:
 
 	SString name;

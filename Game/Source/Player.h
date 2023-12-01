@@ -6,6 +6,7 @@
 #include "SDL/include/SDL.h"
 #include "Animation.h"
 #include <SDL_image/include/SDL_image.h>
+#include "Module.h"
 
 struct SDL_Texture;
 
@@ -39,6 +40,10 @@ public:
 	void SetPosition(int x, int y);
 
 	bool isAlive = true;
+
+	// Declare the LoadState method
+	bool LoadState(pugi::xml_node&) override;
+	bool SaveState(pugi::xml_node&) override;
 
 public:
 	
