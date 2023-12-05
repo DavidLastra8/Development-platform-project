@@ -147,6 +147,7 @@ bool Player::Update(float dt)
 		//player ignore isAlive variable
 		isAlive = true;
 		
+
 	}
 	else if (GodMode == false) {
 		//make gravity work again
