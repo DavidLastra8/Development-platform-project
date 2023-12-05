@@ -22,7 +22,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	idleAnim.PushBack({ 411, 21, 42, 53 });
 	idleAnim.PushBack({ 507, 21, 42, 53 });
 	idleAnim.loop = true;
-	idleAnim.speed = 0.1f;
+	idleAnim.speed = 0.002f;
 }
 
 Player::~Player() {
