@@ -369,66 +369,66 @@ bool App::SaveRequest() {
 
 // L14: TODO 5: Implement the method LoadFromFile() to actually load a xml file
 // then call all the modules to load themselves
-bool App::LoadFromFile() {
+void App::LoadFromFile()
+{
+	//Open the XML for reading
+	pugi::xml_document saveGameDoc;
+	pugi::xml_parse_result result = saveGameDoc.load_file("save_game.xml");
 
-	bool ret = true;
-
-	pugi::xml_document saveFile;
-	pugi::xml_parse_result result = saveFile.load_file("save_game.xml");
 
 	if (result)
 	{
-		LOG("save_game.xml parsed without errors");
+		//Iterate all modules and get child of the module and call the LoadState()
 
-		// Iterates all modules and call the load of each with the part of the XML node that corresponds to the module
-		ListItem<Module*>* item;
-		item = modules.start;
+		ListItem<Module*>* moduleItem;
+		moduleItem = modules.start;
 
-		while (item != NULL && ret == true)
+
+		while (moduleItem != NULL)
 		{
-			ret = item->data->LoadState(saveFile.child("game_state").child(item->data->name.GetString()));
-			item = item->next;
-		}
+			//Call the loadState() of the odule, passing as a parameter the XML node of the module
 
+			moduleItem->data->LoadState(saveGameDoc.child("game_state").child(moduleItem->data->name.GetString()));
+			moduleItem = moduleItem->next;
+		}
 	}
 	else
 	{
-		LOG("Error loading save_game.xml: %s", result.description());
-		ret = false;
+		LOG("Error Loading save_game.xml:  %s", result.description());
 	}
 
 
 
-	return ret;
 
 }
 
 // L14: TODO 7: Implement the xml save method SaveToFile() for current state
 // check https://pugixml.org/docs/quickstart.html#modify
-bool App::SaveFromFile() {
+void App::SaveFromFile()
+{
+	//Open the XML for reading
+	pugi::xml_document saveGameDoc;
+	pugi::xml_node gameState = saveGameDoc.append_child("game_state");
 
-	bool ret = true;
+	//Iterate all modules and get child of the module and call the LoadState()
 
-	pugi::xml_document saveFile;
-	pugi::xml_node gameState = saveFile.append_child("game_state");
+	ListItem<Module*>* moduleItem;
+	moduleItem = modules.start;
 
-	// Iterates all modules and call the save of each with the part of the XML node that corresponds to the module
-	ListItem<Module*>* item;
-	item = modules.start;
 
-	while (item != NULL && ret == true)
+	while (moduleItem != NULL)
 	{
-		pugi::xml_node module = gameState.append_child(item->data->name.GetString());
-		ret = item->data->SaveState(module);
-		item = item->next;
+		//Create the module Element
+		pugi::xml_node moduleNode = gameState.append_child(moduleItem->data->name.GetString());
+
+
+		//Call the loadState() of the odule, passing as a parameter the XML node of the module
+
+		moduleItem->data->SaveState(moduleNode);
+		moduleItem = moduleItem->next;
 	}
 
-	ret = saveFile.save_file("save_game.xml");
-
-	if (ret) LOG("Saved");
-	else LOG("Error saving game state");
-
-	return ret;
+	saveGameDoc.save_file("save_game.xml");
 
 }
 

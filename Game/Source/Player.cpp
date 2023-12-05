@@ -41,7 +41,7 @@ bool Player::Awake() {
 bool Player::Start() {
 
 	//initilize textures
-	texture = app->tex->Load("Assets/Textures/player.png");
+	texture = app->tex->Load("Assets/Textures/player-Sheet-animations.png");
 	
 
 	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
@@ -61,26 +61,7 @@ void Player::SetPosition(int x, int y) {
 	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
 }
 
-bool Player::LoadState(pugi::xml_node& node)
-{
-	pugi::xml_node playerNode = node.child("player");
-	if (playerNode)
-	{
-		position.x = playerNode.attribute("x").as_int();
-		position.y = playerNode.attribute("y").as_int();
-	}
 
-	return true;
-}
-
-bool Player::SaveState(pugi::xml_node& node) 
-{
-	pugi::xml_node playerNode = node.append_child("player");
-	playerNode.append_attribute("x").set_value(position.x);
-	playerNode.append_attribute("y").set_value(position.y);
-
-	return true;
-}
 
 
 bool Player::Update(float dt)
@@ -190,7 +171,9 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 50;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 58;
 
-	app->render->DrawTexture(texture, position.x, position.y);
+	currentAnimation = &idleAnim;
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x, position.y,&rect);
 
 	return true;
 }

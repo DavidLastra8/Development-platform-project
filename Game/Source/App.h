@@ -81,10 +81,10 @@ private:
 
 	//l14 todo1
 	// Reads XML file and loads the data
-	bool LoadFromFile();
+	void LoadFromFile();
 
 	// Sace XML file with modules data
-	bool SaveFromFile();
+	void SaveFromFile();
 
 public:
 

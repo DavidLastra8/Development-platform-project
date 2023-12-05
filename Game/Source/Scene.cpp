@@ -9,6 +9,15 @@
 
 #include "Defs.h"
 #include "Log.h"
+#include "Box2D/Box2D/Box2D.h"
+#include "Player.h"
+#include "EntityManager.h"
+#include "App.h"
+#include "Physics.h"
+
+
+
+
 
 Scene::Scene() : Module()
 {
@@ -168,3 +177,23 @@ bool Scene::CleanUp()
 //
 //	return true;
 //}
+
+bool Scene::LoadState(pugi::xml_node node)
+{
+	player->position.x = node.child("player").attribute("x").as_int();
+	player->position.y = node.child("player").attribute("y").as_int();
+	b2Vec2 newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y));
+	player->pbody->body->SetTransform(newPos, player->pbody->body->GetAngle());
+	return true;
+
+};
+
+bool Scene::SaveState(pugi::xml_node node)
+{
+	pugi::xml_node playerNode = node.append_child("player");
+	playerNode.append_attribute("x").set_value(player->position.x);
+	playerNode.append_attribute("y").set_value(player->position.y);
+
+
+	return true;
+};

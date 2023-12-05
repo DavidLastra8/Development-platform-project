@@ -41,9 +41,7 @@ public:
 
 	bool isAlive = true;
 
-	// Declare the LoadState method
-	bool LoadState(pugi::xml_node&) override;
-	bool SaveState(pugi::xml_node&) override;
+	
 
 public:
 	
