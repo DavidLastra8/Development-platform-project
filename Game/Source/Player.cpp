@@ -173,8 +173,8 @@ bool Player::Update(float dt)
 	
 
 	//Update player position in pixels
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 50;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 58;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 23;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 35;
 
 	currentAnimation = &idleAnim;
 	SDL_Rect rect = currentAnimation->GetCurrentFrame(dt);
