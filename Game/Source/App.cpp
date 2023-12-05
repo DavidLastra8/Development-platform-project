@@ -14,6 +14,7 @@
 #include <iostream>
 #include <sstream>
 
+
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -202,13 +203,33 @@ void App::FinishUpdate()
 		lastSecFrameCount = 0;
 	}
 
-
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+		if (maxFrameDuration == 1000 / 60) {
+			maxFrameDuration = 1000 / 30;
+		}
+		else {
+			maxFrameDuration = 1000 / 60;
+		}
+	}
 	// Shows the time measurements in the window title
 	static char title[256];
 	sprintf_s(title, 256, "Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %I32u Frame Count: %I64u ",
 		averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
 
 	app->win->SetTitle(title);
+
+	//call load
+	if (loadRequest) {
+		LoadFromFile();
+		loadRequest = false;
+
+	}
+
+	//CALL SAVE FROM FILE
+	if (saveRequest) {
+		SaveFromFile();
+		saveRequest = false;
+	}
 }
 
 // Call modules before each loop iteration
@@ -327,4 +348,87 @@ const char* App::GetOrganization() const
 	return organization.GetString();
 }
 
+
+// L14: TODO 1: Implement the methods LoadRequest() and SaveRequest() to request and call the Load / Save the game state at the end of the frame
+// The real execution of load / save will be implemented in TODO 5 and 7
+
+// Request a save data in an XML file 
+bool App::LoadRequest() {
+
+	bool ret = true;
+	loadRequest = true;
+	return ret;
+}
+
+// Request to load data from XML file 
+bool App::SaveRequest() {
+	bool ret = true;
+	saveRequest = true;
+	return true;
+}
+
+// L14: TODO 5: Implement the method LoadFromFile() to actually load a xml file
+// then call all the modules to load themselves
+void App::LoadFromFile()
+{
+	//Open the XML for reading
+	pugi::xml_document saveGameDoc;
+	pugi::xml_parse_result result = saveGameDoc.load_file("save_game.xml");
+
+
+	if (result)
+	{
+		//Iterate all modules and get child of the module and call the LoadState()
+
+		ListItem<Module*>* moduleItem;
+		moduleItem = modules.start;
+
+
+		while (moduleItem != NULL)
+		{
+			//Call the loadState() of the odule, passing as a parameter the XML node of the module
+
+			moduleItem->data->LoadState(saveGameDoc.child("game_state").child(moduleItem->data->name.GetString()));
+			moduleItem = moduleItem->next;
+		}
+	}
+	else
+	{
+		LOG("Error Loading save_game.xml:  %s", result.description());
+	}
+
+
+
+
+}
+
+// L14: TODO 7: Implement the xml save method SaveToFile() for current state
+// check https://pugixml.org/docs/quickstart.html#modify
+void App::SaveFromFile()
+{
+	//Open the XML for reading
+	pugi::xml_document saveGameDoc;
+	pugi::xml_node gameState = saveGameDoc.append_child("game_state");
+
+	//Iterate all modules and get child of the module and call the LoadState()
+
+	ListItem<Module*>* moduleItem;
+	moduleItem = modules.start;
+
+
+	while (moduleItem != NULL)
+	{
+		//Create the module Element
+		pugi::xml_node moduleNode = gameState.append_child(moduleItem->data->name.GetString());
+
+
+		//Call the loadState() of the odule, passing as a parameter the XML node of the module
+
+		moduleItem->data->SaveState(moduleNode);
+		moduleItem = moduleItem->next;
+	}
+
+	saveGameDoc.save_file("save_game.xml");
+
+}
 

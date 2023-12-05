@@ -4,8 +4,14 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "Animation.h"
+#include <SDL_image/include/SDL_image.h>
+#include "Module.h"
 
 struct SDL_Texture;
+
+
+
 
 class Player : public Entity
 {
@@ -19,6 +25,8 @@ public:
 
 	bool Grounded = true;
 
+	bool GodMode = false;
+
 	bool Awake();
 
 	bool Start();
@@ -29,16 +37,40 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	void SetPosition(int x, int y);
+
+	bool isAlive = true;
+
+	
+
 public:
 	
 	float speed = 0.2f;
 	const char* texturePath;
+	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 	int pickCoinFxId;
 	float velx;
 	float gravity;
 	float vely;
+
+
+
+	// The pointer to the current player animation
+	// It will be switched depending on the player's movement direction
+	Animation* currentAnimation = nullptr;
+	// A set of animations
+	Animation idleAnim;
+	Animation leftAnim;
+	Animation rightAnim;
+	Animation jumpAnim;
+	Animation death;
+
+	
+
+	
+
 };
 
 #endif // __PLAYER_H__

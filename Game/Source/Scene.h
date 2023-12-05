@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Player.h"
 #include "Item.h"
+#include "Physics.h"
 
 struct SDL_Texture;
 
@@ -19,6 +20,7 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
 
+	bool CameraLock = true;
 	// Called before the first frame
 	bool Start();
 
@@ -33,6 +35,10 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+	// Declare the LoadState method
+	bool LoadState(pugi::xml_node node) override;
+	bool SaveState(pugi::xml_node node) override;
 
 private:
 	SDL_Texture* img;

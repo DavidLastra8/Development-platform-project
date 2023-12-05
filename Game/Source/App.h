@@ -51,6 +51,14 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
+	// L14: TODO 1: Declare the methods LoadRequest() and SaveRequest() to request and call the Load / Save the game state at the end of the frame
+
+	// Request a save data in an XML file 
+	bool LoadRequest();
+
+	// Request to load data from XML file 
+	bool SaveRequest();
+
 private:
 
 	// Load config file
@@ -70,6 +78,13 @@ private:
 
 	// Call modules after each loop iteration
 	bool PostUpdate();
+
+	//l14 todo1
+	// Reads XML file and loads the data
+	void LoadFromFile();
+
+	// Sace XML file with modules data
+	void SaveFromFile();
 
 public:
 
@@ -114,6 +129,11 @@ private:
 	uint32 secondsSinceStartup = 0;
 
 	uint32 maxFrameDuration = 16;
+
+	//l14 todo1
+	bool loadRequest = false;
+	bool saveRequest = false;
+
 
 };
 

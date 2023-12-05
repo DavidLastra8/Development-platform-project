@@ -55,6 +55,21 @@ public:
 		return true;
 	}
 
+
+	// L14: TODO 2: Create new virtual methods to LoadState / SaveState
+
+	
+
+	virtual bool LoadState(pugi::xml_node node)
+	{
+		return true;
+	}
+
+	virtual bool SaveState(pugi::xml_node node)
+	{
+		return true;
+	}
+
 public:
 
 	SString name;

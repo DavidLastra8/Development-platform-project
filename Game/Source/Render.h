@@ -42,6 +42,12 @@ public:
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 
+	////L14 todo6
+	//bool LoadState(pugi::xml_node node);
+
+	////l14 todo8
+	//bool SaveState(pugi::xml_node node);
+
 public:
 
 	SDL_Renderer* renderer;

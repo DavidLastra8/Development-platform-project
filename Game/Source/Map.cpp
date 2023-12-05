@@ -178,14 +178,52 @@ bool Map::Load()
     
     // NOTE: Later you have to create a function here to load and create the colliders from the map
 
-    PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543 + 32, 256, 64, STATIC);
+    /*PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543 + 32, 256, 64, STATIC);
     c1->ctype = ColliderType::PLATFORM;
 
     PhysBody* c2 = app->physics->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);
     c2->ctype = ColliderType::PLATFORM;
 
     PhysBody* c3 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
-    c3->ctype = ColliderType::PLATFORM;
+    c3->ctype = ColliderType::PLATFORM;*/
+
+    ListItem<MapLayer*>* mapLayerItem;
+    mapLayerItem = mapData.maplayers.start;
+
+    while (mapLayerItem != NULL) {
+
+        if (mapLayerItem->data->properties.GetProperty("Collision") != NULL && mapLayerItem->data->properties.GetProperty("Collision")->value) {
+
+            for (int x = 0; x < mapLayerItem->data->width; x++)
+            {
+                for (int y = 0; y < mapLayerItem->data->height; y++)
+                {
+                    int gid = mapLayerItem->data->Get(x, y);
+                    TileSet* tileset = GetTilesetFromTileId(gid);
+                    if (gid == 49)
+                    {
+                        SDL_Rect r = tileset->GetTileRect(gid);
+                        iPoint pos = MapToWorld(x, y);
+                        PhysBody* c3 = app->physics->CreateRectangle(pos.x + mapData.tileWidth / 2, pos.y + mapData.tileHeight / 2, mapData.tileWidth, mapData.tileHeight, STATIC);
+                        c3->ctype = ColliderType::PLATFORM;
+                    }
+
+                    if (gid == 50)
+                    {
+                        SDL_Rect r = tileset->GetTileRect(gid);
+                        iPoint pos = MapToWorld(x, y);
+                        PhysBody* c2 = app->physics->CreateRectangle(pos.x + mapData.tileWidth / 2, pos.y + mapData.tileHeight / 2, mapData.tileWidth, mapData.tileHeight, STATIC);
+                        c2->ctype = ColliderType::DEATH;
+                    }
+
+                    
+
+                }
+            }
+        }
+        mapLayerItem = mapLayerItem->next;
+
+    }
     
     if(ret == true)
     {
@@ -248,6 +286,11 @@ bool Map::LoadMap(pugi::xml_node mapFile)
 bool Map::LoadTileSet(pugi::xml_node mapFile){
 
     bool ret = true; 
+
+
+
+
+
 
     pugi::xml_node tileset;
     for (tileset = mapFile.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))

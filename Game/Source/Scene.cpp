@@ -9,6 +9,15 @@
 
 #include "Defs.h"
 #include "Log.h"
+#include "Box2D/Box2D/Box2D.h"
+#include "Player.h"
+#include "EntityManager.h"
+#include "App.h"
+#include "Physics.h"
+
+
+
+
 
 Scene::Scene() : Module()
 {
@@ -81,21 +90,49 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	float camSpeed = 1; 
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+		CameraLock = true;
+	}
+	if (CameraLock == true) {
+		if (player->position.x < app->win->screenSurface->w / 2) {
+			player->position.x = app->win->screenSurface->w / 2;
+		}
+		app->render->camera.x = -player->position.x + app->win->screenSurface->w / 2;
+		if (player->position.y <= 150) {
+			player->position.y += app->win->screenSurface->h + 13*2;
+		}
+		// if (player->position.y >= app->win->screenSurface->h) {
+		//	//player->position.y -= app->win->screenSurface->h + 13 * 2;
+		//}
+		//else {
+		//	//player->position.y = 0;
+		//}
+		app->render->camera.y = -player->position.y+275;
+	}
 
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += (int)ceil(camSpeed * dt);
+		
+	else
+	{
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+			app->render->camera.y -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= (int)ceil(camSpeed * dt);
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+			app->render->camera.y += (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += (int)ceil(camSpeed * dt);
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+			app->render->camera.x -= (int)ceil(camSpeed * dt);
 
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+			app->render->camera.x += (int)ceil(camSpeed * dt);
+	}
+	
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
+
+	// L14: TODO 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
 	return true;
 }
@@ -118,3 +155,45 @@ bool Scene::CleanUp()
 
 	return true;
 }
+
+//// L14: TODO 6: Implement a method to load the state
+//// for now load camera's x and y
+//bool Scene::LoadState(pugi::xml_node node) {
+//
+//	player->position.x = node.child("player").attribute("x").as_int();
+//	player->position.y = node.child("player").attribute("y").as_int();
+//	b2Vec newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player.position.y));
+//	return true;
+//}
+//
+//
+//// L14: TODO 8: Create a method to save the state of the renderer
+//// using append_child and append_attribute
+//bool Render::SaveState(pugi::xml_node node) {
+//
+//	pugi::xml_node camNode = node.append_child("camera");
+//	camNode.append_attribute("x").set_value(camera.x);
+//	camNode.append_attribute("y").set_value(camera.y);
+//
+//	return true;
+//}
+
+bool Scene::LoadState(pugi::xml_node node)
+{
+	player->position.x = node.child("player").attribute("x").as_int();
+	player->position.y = node.child("player").attribute("y").as_int();
+	b2Vec2 newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y));
+	player->pbody->body->SetTransform(newPos, player->pbody->body->GetAngle());
+	return true;
+
+};
+
+bool Scene::SaveState(pugi::xml_node node)
+{
+	pugi::xml_node playerNode = node.append_child("player");
+	playerNode.append_attribute("x").set_value(player->position.x);
+	playerNode.append_attribute("y").set_value(player->position.y);
+
+
+	return true;
+};
