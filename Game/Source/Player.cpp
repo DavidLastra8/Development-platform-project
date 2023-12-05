@@ -69,10 +69,6 @@ bool Player::Update(float dt)
 	if (isAlive)
 	{
 		currentAnimation = &idleAnim;
-
-		// Advance the current frame of the animation
-   // The GetCurrentFrame method should advance the frame based on dt
-		currentAnimation->GetCurrentFrame(dt);
 		/*vely = -GRAVITY_Y;
 		velx = 0;*/
 		b2Vec2 currentVel = pbody->body->GetLinearVelocity();
@@ -176,7 +172,7 @@ bool Player::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 58;
 
 	currentAnimation = &idleAnim;
-	SDL_Rect rect = currentAnimation->GetCurrentFrame(dt);
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(texture, position.x, position.y,&rect);
 
 	return true;
