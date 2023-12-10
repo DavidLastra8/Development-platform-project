@@ -68,14 +68,14 @@ bool Scene::Start()
 	textPosX = (float)windowW / 2 - (float)texW / 2;
 	textPosY = (float)windowH / 2 - (float)texH / 2;
 
-	app->map->Load();
+	/*app->map->Load();
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width,
 		app->map->mapData.height,
 		app->map->mapData.tileWidth,
 		app->map->mapData.tileHeight,
-		app->map->mapData.tilesets.Count());
+		app->map->mapData.tilesets.Count());*/
 
 	return true;
 }
