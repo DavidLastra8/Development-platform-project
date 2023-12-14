@@ -4,6 +4,7 @@
 #include "Textures.h"
 #include "Map.h"
 #include "Physics.h"
+#include "Scene.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -31,9 +32,29 @@ bool Map::Awake(pugi::xml_node& config)
 
     return ret;
 }
+bool Map::Start() {
+
+    //Calls the functon to load the map, make sure that the filename is assigned
+    SString mapPath = path;
+    mapPath += name;
+    Load();
+
+    //Initialize pathfinding 
+    pathfinding = new PathFinding;
+
+    //Initialize the navigation map
+    uchar* navigationMap = NULL;
+    CreateNavigationMap(mapData.width, mapData.height, &navigationMap);
+    pathfinding->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
+    RELEASE_ARRAY(navigationMap);
+
+    return true;
+}
 
 bool Map::Update(float dt)
 {
+    bool ret = true;
+
     if(mapLoaded == false)
         return false;
 
@@ -51,7 +72,7 @@ bool Map::Update(float dt)
                     int gid = mapLayerItem->data->Get(x, y);
                     TileSet* tileset = GetTilesetFromTileId(gid);
 
-                    SDL_Rect r = tileset->GetTileRect(gid);
+                    SDL_Rect r = tileset->GetRectangle(gid);
                     iPoint pos = MapToWorld(x, y);
 
                     app->render->DrawTexture(tileset->texture,
@@ -65,41 +86,13 @@ bool Map::Update(float dt)
 
     }
 
-    return true;
-}
-
-iPoint Map::MapToWorld(int x, int y) const
-{
-    iPoint ret;
-
-    ret.x = x * mapData.tileWidth;
-    ret.y = y * mapData.tileHeight;
-
     return ret;
 }
 
-iPoint Map::WorldToMap(int x, int y) 
-{
-    iPoint ret(0, 0);
 
-    //
-
-    return ret;
-}
 
 // Get relative Tile rectangle
-SDL_Rect TileSet::GetTileRect(int gid) const
-{
-    SDL_Rect rect = { 0 };
-    int relativeIndex = gid - firstgid;
 
-    rect.w = tileWidth;
-    rect.h = tileHeight;
-    rect.x = margin + (tileWidth + spacing) * (relativeIndex % columns);
-    rect.y = margin + (tileWidth + spacing) * (relativeIndex / columns);
-
-    return rect;
-}
 
 TileSet* Map::GetTilesetFromTileId(int gid) const
 {
@@ -202,7 +195,7 @@ bool Map::Load()
                     TileSet* tileset = GetTilesetFromTileId(gid);
                     if (gid == 49)
                     {
-                        SDL_Rect r = tileset->GetTileRect(gid);
+                        SDL_Rect r = tileset->GetRectangle(gid);
                         iPoint pos = MapToWorld(x, y);
                         PhysBody* c3 = app->physics->CreateRectangle(pos.x + mapData.tileWidth / 2, pos.y + mapData.tileHeight / 2, mapData.tileWidth, mapData.tileHeight, STATIC);
                         c3->ctype = ColliderType::PLATFORM;
@@ -210,7 +203,7 @@ bool Map::Load()
 
                     if (gid == 50)
                     {
-                        SDL_Rect r = tileset->GetTileRect(gid);
+                        SDL_Rect r = tileset->GetRectangle(gid);
                         iPoint pos = MapToWorld(x, y);
                         PhysBody* c2 = app->physics->CreateRectangle(pos.x + mapData.tileWidth / 2, pos.y + mapData.tileHeight / 2, mapData.tileWidth, mapData.tileHeight, STATIC);
                         c2->ctype = ColliderType::DEATH;
@@ -359,6 +352,24 @@ bool Map::LoadAllLayers(pugi::xml_node mapNode) {
     return ret;
 }
 
+iPoint Map::MapToWorld(int x, int y) const
+{
+    iPoint ret;
+
+    // L09: DONE 3: Get the screen coordinates of tile positions for isometric maps 
+    if (mapData.orientation == MapOrientation::ORTOGRAPHIC) {
+        ret.x = x * mapData.tileWidth;
+        ret.y = y * mapData.tileHeight;
+    }
+
+    if (mapData.orientation == MapOrientation::ISOMETRIC) {
+        ret.x = x * mapData.tileWidth / 2 - y * mapData.tileWidth / 2;
+        ret.y = x * mapData.tileHeight / 2 + y * mapData.tileHeight / 2;
+    }
+
+    return ret;
+}
+
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
     bool ret = false;
@@ -392,4 +403,63 @@ Properties::Property* Properties::GetProperty(const char* name)
     return p;
 }
 
+// L09: DONE 5: Add method WorldToMap to obtain  map coordinates from screen coordinates 
+iPoint Map::WorldToMap(int x, int y) {
 
+    iPoint ret(0, 0);
+
+    if (mapData.orientation == MapOrientation::ORTOGRAPHIC) {
+        ret.x = x / mapData.tileWidth;
+        ret.y = y / mapData.tileHeight;
+    }
+
+    if (mapData.orientation == MapOrientation::ISOMETRIC) {
+        float half_width = mapData.tileWidth / 2;
+        float half_height = mapData.tileHeight / 2;
+        ret.x = int((x / half_width + y / half_height) / 2);
+        ret.y = int((y / half_height - (x / half_width)) / 2);
+    }
+
+    return ret;
+}
+
+int Map::GetTileWidth() {
+    return mapData.tileWidth;
+}
+
+int Map::GetTileHeight() {
+    return mapData.tileHeight;
+}
+
+// L13: Create navigationMap map for pathfinding
+void Map::CreateNavigationMap(int& width, int& height, uchar** buffer) const
+{
+    bool ret = false;
+
+    //Sets the size of the map. The navigation map is a unidimensional array 
+    uchar* navigationMap = new uchar[navigationLayer->width * navigationLayer->height];
+    //reserves the memory for the navigation map
+    memset(navigationMap, 1, navigationLayer->width * navigationLayer->height);
+
+    for (int x = 0; x < mapData.width; x++)
+    {
+        for (int y = 0; y < mapData.height; y++)
+        {
+            //i is the index of x,y coordinate in a unidimensional array that represents the navigation map
+            int i = (y * navigationLayer->width) + x;
+
+            //Gets the gid of the map in the navigation layer
+            int gid = navigationLayer->Get(x, y);
+
+            //If the gid is a blockedGid is an area that I cannot navigate, so is set in the navigation map as 0, all the other areas can be navigated
+            //!!!! make sure that you assign blockedGid according to your map
+            if (gid == blockedGid) navigationMap[i] = 0;
+            else navigationMap[i] = 1;
+        }
+    }
+
+    *buffer = navigationMap;
+    width = mapData.width;
+    height = mapData.height;
+
+}
