@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Animation.h"
+#include "Map.h"
 
 
 
@@ -61,7 +62,13 @@ void Player::SetPosition(int x, int y) {
 	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
 }
 
+int Player::GetTilex() {
+	return (position.x + 20) / 16;
+}
 
+int Player::GetTiley() {
+	return (position.y + 20) / 16;
+}
 
 
 bool Player::Update(float dt)
@@ -186,6 +193,8 @@ bool Player::Update(float dt)
 	SDL_Rect rect = currentAnimation->GetCurrentFrame(dt);
 	app->render->DrawTexture(texture, position.x, position.y,&rect);
 
+	
+	
 	return true;
 }
 

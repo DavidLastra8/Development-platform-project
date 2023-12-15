@@ -31,6 +31,10 @@ public:
 
 	bool Start();
 
+	int GetTilex();
+
+	int GetTiley();
+
 	bool Update(float dt);
 
 	bool CleanUp();
@@ -49,6 +53,7 @@ public:
 	const char* texturePath;
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = NULL;
+	SDL_Texture* mouseTileTex = nullptr;
 	PhysBody* pbody;
 	int pickCoinFxId;
 	float velx;

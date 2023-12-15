@@ -81,6 +81,7 @@ bool Scene::Start()
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
 
+	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 	return true;
 }
 
@@ -146,7 +147,10 @@ bool Scene::Update(float dt)
 	// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
 	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
 	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
-
+	int x = player->GetTilex();
+	int y = player->GetTiley();
+	LOG("%d", x);
+	LOG("%d", y);
 	iPoint origin = iPoint(2, 2);
 
 	//If mouse button is pressed modify player position
