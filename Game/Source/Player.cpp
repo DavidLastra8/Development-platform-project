@@ -49,6 +49,7 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	jumpFxId = app->audio->LoadFx("Assets/Audio/Fx/Retro Sounds 32-Bit/jump2.wav");
 
 	return true;
 }
@@ -103,6 +104,9 @@ bool Player::Update(float dt)
 
 			pbody->body->ApplyLinearImpulse(jumpImpulse, pbody->body->GetWorldCenter(), true);
 			IsJumping = true;
+
+			// Play the jumping sound effect
+			app->audio->PlayFx(jumpFxId);
 		}
 	}
 	if (isAlive == false) {

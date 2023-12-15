@@ -43,6 +43,8 @@ public:
 
 	
 
+	
+
 public:
 	
 	float speed = 0.2f;
@@ -51,6 +53,9 @@ public:
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 	int pickCoinFxId;
+
+	unsigned int jumpFxId; // ID for the jumping sound effect
+
 	float velx;
 	float gravity;
 	float vely;
