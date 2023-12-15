@@ -207,8 +207,17 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType:: DEATH:
 		LOG("Collision DEATH");
-		isAlive = false;
+		if (GodMode = true)
+		{
+			isAlive = true;
+		}
+		else if (GodMode = false)
+		{
+			isAlive = false;
+		}
+		
 		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+		
 		
 		break;
 	case ColliderType::UNKNOWN:
