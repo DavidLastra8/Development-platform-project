@@ -106,9 +106,15 @@ bool Player::Update(float dt)
 		}
 	}
 	if (isAlive == false) {
-		SetPosition(400, 1102);
-		isAlive = true;
-	 }
+		/*SetPosition(400, 1102);*/
+		/*isAlive = true;*/
+		//stop player movement, 
+		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+		//ignore godmode movement
+		GodMode = false;
+
+
+	}
 
 
 
