@@ -49,8 +49,11 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
-	jumpFxId = app->audio->LoadFx("Assets/Audio/Fx/Retro Sounds 32-Bit/jump2.wav");
+	jumpFxId = app->audio->LoadFx("Assets/Audio/Fx/jump2.wav");
 
+	endLevelFxId = app->audio->LoadFx("Assets/Audio/Fx/Retro Success Melody 02 - choir soprano.wav");
+	endLevelSoundPlayed = false;
+	
 	return true;
 }
 
@@ -131,6 +134,19 @@ bool Player::Update(float dt)
 
 		
 
+	}
+
+	//Level complete Condition
+	if (position.x >= endLevelX && position.y >= endLevelY && !endLevelSoundPlayed)
+	{
+		// Play the end-level sound effect
+		app->audio->PlayFx(endLevelFxId);
+		endLevelSoundPlayed = true;  // Set the flag to true
+	}
+
+	//if pressed F6, set the endLevelSoundPlayed to false
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+		endLevelSoundPlayed = false;
 	}
 
 	if (GodMode == true) {
