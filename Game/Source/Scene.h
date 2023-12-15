@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Item.h"
 #include "Physics.h"
+#include "Enemy.h"
 
 struct SDL_Texture;
 
@@ -40,12 +41,16 @@ public:
 	bool LoadState(pugi::xml_node node) override;
 	bool SaveState(pugi::xml_node node) override;
 
+public:
+	Player* player;
+	Enemy* enemy;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;
-	Player* player;
+	SDL_Texture* mouseTileTex = nullptr;
+	
 
 };
 

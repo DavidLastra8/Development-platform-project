@@ -41218,6 +41218,9 @@
   </data>
  </layer>
  <layer id="21" name="Navigation" width="128" height="64">
+  <properties>
+   <property name="Navigation" type="bool" value="true"/>
+  </properties>
   <data>
    <tile gid="49"/>
    <tile gid="49"/>
