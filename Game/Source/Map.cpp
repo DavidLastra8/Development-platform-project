@@ -35,8 +35,8 @@ bool Map::Awake(pugi::xml_node& config)
 bool Map::Start() {
 
     //Calls the functon to load the map, make sure that the filename is assigned
-    SString mapPath = path;
-    mapPath += name;
+    mapPath = mapFolder;
+    mapPath += mapFileName;
     Load();
 
     //Initialize pathfinding 
@@ -146,7 +146,7 @@ bool Map::Load()
     bool ret = true;
 
     pugi::xml_document mapFileXML;
-    pugi::xml_parse_result result = mapFileXML.load_file(mapFileName.GetString());
+    pugi::xml_parse_result result = mapFileXML.load_file(mapPath.GetString());
 
     if(result == NULL)
     {
@@ -238,13 +238,28 @@ bool Map::Load()
 
         ListItem<MapLayer*>* mapLayer;
         mapLayer = mapData.maplayers.start;
+        
 
         while (mapLayer != NULL) {
             LOG("id : %d name : %s", mapLayer->data->id, mapLayer->data->name.GetString());
             LOG("Layer width : %d Layer height : %d", mapLayer->data->width, mapLayer->data->height);
+
             mapLayer = mapLayer->next;
         }
+        ListItem<MapLayer*>* mapLayerItem;
+        mapLayerItem = mapData.maplayers.start;
+        navigationLayer = mapLayerItem->data;
+
+        //Search the layer in the map that contains information for navigation
+        while (mapLayerItem != NULL) {
+            if (mapLayerItem->data->properties.GetProperty("Navigation") != NULL && mapLayerItem->data->properties.GetProperty("Navigation")->value) {
+                navigationLayer = mapLayerItem->data;
+                break;
+            }
+            mapLayerItem = mapLayerItem->next;
+        }
     }
+
 
     if(mapFileXML) mapFileXML.reset();
 

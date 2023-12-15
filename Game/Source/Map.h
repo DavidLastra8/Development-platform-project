@@ -164,13 +164,13 @@ private:
 
 public: 
 
-	SString name;
-	SString path;
+
 	PathFinding* pathfinding;
 	MapData mapData;
 
 private:
 
+	SString mapPath;
     SString mapFileName;
 	SString mapFolder;
 	MapLayer* navigationLayer;
