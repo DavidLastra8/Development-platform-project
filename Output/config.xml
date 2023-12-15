@@ -23,7 +23,7 @@
 
   <scene>
     <player x="400" y="1102" texturepath="Assets/Textures/player.png"/>
-    
+	  <enemy x ="420" y="1102"/>
   </scene>
 
   <map>
