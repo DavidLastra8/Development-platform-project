@@ -6,7 +6,11 @@
 	<audio />
 	<:anonymous />
 	<scene>
-		<player x="3677" y="1420" />
+<<<<<<< Updated upstream
+		<player x="1003" y="1397" />
+=======
+		<player x="3695" y="1420" />
+>>>>>>> Stashed changes
 	</scene>
 	<map />
 	<entitymanager />
