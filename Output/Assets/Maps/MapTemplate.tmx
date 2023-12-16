@@ -17859,7 +17859,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="200"/>
    <tile/>
    <tile/>
    <tile/>
@@ -17987,6 +17987,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="220"/>
    <tile/>
    <tile/>
    <tile/>
@@ -17999,9 +18000,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="211"/>
+   <tile gid="199"/>
    <tile/>
    <tile/>
    <tile/>
@@ -18115,6 +18115,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="220"/>
    <tile/>
    <tile/>
    <tile/>
@@ -18127,9 +18128,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="234"/>
+   <tile gid="199"/>
    <tile/>
    <tile/>
    <tile/>
@@ -18243,7 +18243,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="265"/>
+   <tile gid="220"/>
    <tile/>
    <tile/>
    <tile/>
@@ -18256,8 +18256,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="265"/>
-   <tile gid="265"/>
+   <tile gid="234"/>
+   <tile gid="199"/>
    <tile/>
    <tile/>
    <tile/>
@@ -22505,14 +22505,9 @@
    <tile/>
    <tile/>
    <tile/>
-<<<<<<< Updated upstream
    <tile/>
-=======
-   <tile gid="271"/>
->>>>>>> Stashed changes
    <tile/>
    <tile gid="271"/>
-   <tile/>
    <tile/>
    <tile gid="421"/>
    <tile gid="189"/>
@@ -26063,6 +26058,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="49"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26190,6 +26186,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="49"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26202,6 +26199,8 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="49"/>
+   <tile gid="49"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26315,6 +26314,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="49"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26327,13 +26327,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="49"/>
+   <tile gid="49"/>
    <tile/>
    <tile/>
    <tile/>
