@@ -51,6 +51,16 @@ public:
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 	int pickCoinFxId;
+<<<<<<< Updated upstream
+=======
+
+	unsigned int jumpFxId; // ID for the jumping sound effect
+	unsigned int endLevelFxId;  // ID for the end-level sound effect
+	bool endLevelSoundPlayed;   // Flag to check if the sound has been played
+	int endLevelX = 3925;              // X position where the player has to reach to end the level	
+	int endLevelY = 1420;              // Y position where the player has to reach to end the level
+
+>>>>>>> Stashed changes
 	float velx;
 	float gravity;
 	float vely;
