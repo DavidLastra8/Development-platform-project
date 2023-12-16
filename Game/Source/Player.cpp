@@ -112,10 +112,10 @@ bool Player::Update(float dt)
 			app->audio->PlayFx(jumpFxId);
 		}
 	}
-	if (isAlive == false) {
+	/*if (isAlive == false) {
 		SetPosition(400, 1102);
 		isAlive = true;
-	 }
+	}*/
 
 
 
