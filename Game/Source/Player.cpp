@@ -34,27 +34,46 @@ Player::Player() : Entity(EntityType::PLAYER)
 	idleLeftAnim.loop = true;
 	idleLeftAnim.speed = 0.003f;
 
-	walkRightAnim.PushBack({ 24, 112, 42, 53 });
-	walkRightAnim.PushBack({ 116, 112, 42, 53 });
-	walkRightAnim.PushBack({ 208, 112, 42, 53 });
-	walkRightAnim.PushBack({ 300, 112, 42, 53 });
-	walkRightAnim.PushBack({ 392, 112, 42, 53 });
-	walkRightAnim.PushBack({ 484, 112, 42, 53 });
-	walkRightAnim.PushBack({ 22, 204, 42, 53 });
-	walkRightAnim.PushBack({ 118, 208, 42, 53 });
+	walkRightAnim.PushBack({ 24, 108, 60, 60 });
+	walkRightAnim.PushBack({ 114, 114, 60, 60 });
+	walkRightAnim.PushBack({ 209, 112, 60, 60 });
+	walkRightAnim.PushBack({ 306, 109, 60, 60 });
+	walkRightAnim.PushBack({ 404, 111, 60, 60 });
+	walkRightAnim.PushBack({ 497, 112, 60, 60 });
+	walkRightAnim.PushBack({ 22, 206, 60, 60 });
+	walkRightAnim.PushBack({ 115, 206, 60, 60 });
 	walkRightAnim.loop = true;
 	walkRightAnim.speed = 0.003f;
 
-	walkLeftAnim.PushBack({ 1083, 117, 42, 53 });
-	walkLeftAnim.PushBack({ 988, 117, 42, 53 });
-	walkLeftAnim.PushBack({ 888, 117, 42, 53 });
-	walkLeftAnim.PushBack({ 796, 117, 42, 53 });
-	walkLeftAnim.PushBack({ 697, 117, 42, 53 });
-	walkLeftAnim.PushBack({ 603, 117, 42, 53 });
-	walkLeftAnim.PushBack({ 1083, 205, 42, 53 });
-	walkLeftAnim.PushBack({ 990, 209, 42, 53 });
+	walkLeftAnim.PushBack({ 1083, 113, 50, 60 });
+	walkLeftAnim.PushBack({ 988, 113, 50, 60 });
+	walkLeftAnim.PushBack({ 893, 113, 50, 60 });
+	walkLeftAnim.PushBack({ 796, 113, 50, 60 });
+	walkLeftAnim.PushBack({ 697, 113, 50, 60 });
+	walkLeftAnim.PushBack({ 603, 113, 50, 60 });
+	walkLeftAnim.PushBack({ 1083, 205, 50, 60 });
+	walkLeftAnim.PushBack({ 990, 209, 50, 60 });
 	walkLeftAnim.loop = true;
 	walkLeftAnim.speed = 0.003f;
+
+	fallingLeftAnim.PushBack({ 1082, 320, 60, 60 });
+	fallingLeftAnim.PushBack({ 987, 318, 60, 60 });
+	fallingLeftAnim.PushBack({ 888, 318, 60, 60 });
+	fallingLeftAnim.PushBack({ 791, 318, 60, 60 });
+	fallingLeftAnim.PushBack({ 699, 318, 60, 60 });
+	fallingLeftAnim.PushBack({ 604, 318, 60, 60 });
+	fallingLeftAnim.loop = false;
+	fallingLeftAnim.speed = 0.003f;
+
+	fallingRightAnim.PushBack({ 24, 320, 60, 60 });
+	fallingRightAnim.PushBack({ 114, 318, 60, 60 });
+	fallingRightAnim.PushBack({ 209, 318, 60, 60 });
+	fallingRightAnim.PushBack({ 306, 318, 60, 60 });
+	fallingRightAnim.PushBack({ 404, 318, 60, 60 });
+	fallingRightAnim.PushBack({ 497, 318, 60, 60 });
+	fallingRightAnim.loop = false;
+	fallingRightAnim.speed = 0.003f;
+
 }
 
 Player::~Player() {
@@ -116,13 +135,10 @@ bool Player::Update(float dt)
 		/*vely = -GRAVITY_Y;
 		velx = 0;*/
 		b2Vec2 currentVel = pbody->body->GetLinearVelocity();
+		float verticalVelocity = currentVel.y;  // Declaring and assigning verticalVelocity
+		
+
 		b2Vec2 jumpImpulse(0.0f, -4.1f); // Upward
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			//
-		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			//
-		}
 
 		bool movingLeft = app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT;
 		bool movingRight = app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
@@ -131,38 +147,42 @@ bool Player::Update(float dt)
 		if (movingLeft)
 		{
 			currentVel.x = -8.0f; // Leftward
-			currentAnimation = &walkLeftAnim;
-		}
-		else if (movingRight)
-		{
-			currentVel.x = 8.0f; // Rightward
-			currentAnimation = &walkRightAnim;
-		}
-		else
-		{
-			currentVel.x = 0.0f; // Stop horizontal movement when no keys are pressed
-			// Determine which idle animation to use based on the last direction
-			currentAnimation = (lastDirection == LEFT) ? &idleLeftAnim : &idleAnim;
-		}
-
-		// Update lastDirection if moving
-		if (movingLeft)
-		{
 			lastDirection = LEFT;
 		}
 		else if (movingRight)
 		{
+			currentVel.x = 8.0f; // Rightward
 			lastDirection = RIGHT;
 		}
-		
-		
+		else
+		{
+			currentVel.x = 0.0f; // No horizontal movement
+		}
+
 		// Apply the updated horizontal velocity
-		pbody->body->SetLinearVelocity(b2Vec2(currentVel.x, pbody->body->GetLinearVelocity().y));
+		pbody->body->SetLinearVelocity(currentVel);
 
-		// Advance the current frame of the animation
-        // The GetCurrentFrame method should advance the frame based on dt
-		currentAnimation->GetCurrentFrame(dt);
-
+		// Animation logic
+		if (verticalVelocity > 0 && !Grounded)
+		{
+			// Falling animation
+			currentAnimation = (lastDirection == LEFT) ? &fallingLeftAnim : &fallingRightAnim;
+		}
+		else if (movingLeft)
+		{
+			// Walking left animation
+			currentAnimation = &walkLeftAnim;
+		}
+		else if (movingRight)
+		{
+			// Walking right animation
+			currentAnimation = &walkRightAnim;
+		}
+		else
+		{
+			// Idle animation based on last direction
+			currentAnimation = (lastDirection == LEFT) ? &idleLeftAnim : &idleAnim;
+		}
 		// Jumping
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !IsJumping) {
 
@@ -257,7 +277,7 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 23;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 35;
 
-	currentAnimation = &idleAnim;
+	
 	SDL_Rect rect = currentAnimation->GetCurrentFrame(dt);
 	app->render->DrawTexture(texture, position.x, position.y,&rect);
 
