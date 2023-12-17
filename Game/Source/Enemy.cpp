@@ -8,6 +8,8 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Map.h"
+#include "Player.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
@@ -22,6 +24,12 @@ bool Enemy::Awake() {
 
 	//L03: DONE 2: Initialize Player parameters
 	position = iPoint(config.attribute("x").as_int(), config.attribute("y").as_int());
+	texture = app->tex->Load(config.attribute("texturePath").as_string());
+
+	
+	/*pbody->body->SetGravityScale(0);*/
+
+	pathTexture = app->tex->Load("Assets/Maps/TileSelection.png");
 
 	return true;
 }
@@ -33,6 +41,10 @@ bool Enemy::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 	pbody->body->SetGravityScale(0);*/
 	//initialize audio effect
+
+	groundEnemy = app->physics->CreateCircle(position.x, position.y, 16, DYNAMIC);
+	groundEnemy->ctype = ColliderType::ENEMY;
+	/*pbody->body->SetGravityScale(0);*/
 	pickCoinFxId = app->audio->LoadFx(config.attribute("coinfxpath").as_string());
 
 
@@ -42,25 +54,31 @@ bool Enemy::Start() {
 bool Enemy::Update(float dt)
 {
 	//L03: DONE 4: render the player texture and modify the position of the player using WSAD keys and render the texture
-
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		position.x += -0.2 * dt;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		position.x += 0.2 * dt;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		position.y += -0.2 * dt;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		position.y += 0.2 * dt;
-	}
-
 	app->render->DrawTexture(texture, position.x, position.y);
+	iPoint enemPos = app->map->WorldToMap(position.x, position.y);
+	iPoint PlayerPos = app->map->WorldToMap(app->scene->player->GetTilex(), app->scene->player->GetTiley());
+	app->map->pathfinding->CreatePath(enemPos, PlayerPos);
 
+	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+	for (uint i = 0; i<path->Count(); i++) {
+
+		iPoint Pathpos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(pathTexture, Pathpos.x, Pathpos.y);
+	}
+
+	if (path->Count() > 1 && app->map->pathfinding->CreatePath(enemPos, PlayerPos) != -1) {
+
+		if (enemPos.x - PlayerPos.x < 0 && abs(enemPos.x - PlayerPos.x)>2) {
+			groundEnemy->body->SetLinearVelocity(b2Vec2(0.1 * dt, 0.2 * dt));
+		}
+		else if (abs(enemPos.x - PlayerPos.x) > 2) {
+			groundEnemy->body->SetLinearVelocity(b2Vec2(0.1 * dt, 0.2 * dt));
+		}
+		else if (abs(enemPos.x - PlayerPos.x) < 2) {
+			groundEnemy->body->SetLinearVelocity(b2Vec2(0.1 * dt, 0.2 * dt));
+			groundEnemy->body->SetLinearDamping(0);
+		}
+	}
 	return true;
 }
 

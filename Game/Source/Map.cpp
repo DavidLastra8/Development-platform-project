@@ -286,6 +286,20 @@ bool Map::LoadMap(pugi::xml_node mapFile)
         mapData.tileHeight = map.attribute("tileheight").as_int();
         mapData.tileWidth = map.attribute("tilewidth").as_int();
         mapData.type = MAPTYPE_UNKNOWN;
+
+        SString OrientationStr = mapFile.child("map").attribute("orientation").as_string();
+        if (OrientationStr == "orthogonal") {
+            mapData.type = MapTypes::MAPTYPE_ORTHOGONAL;
+
+        }
+        if (OrientationStr == "isometric") {
+            mapData.type = MapTypes::MAPTYPE_ISOMETRIC;
+
+        }
+        else {
+            LOG("Map orientation not found");
+            ret = false;
+        }
     }
 
     return ret;
