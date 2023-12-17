@@ -10,7 +10,7 @@
 
 struct SDL_Texture;
 
-
+enum Direction { LEFT, RIGHT, IDLE };
 
 
 class Player : public Entity
@@ -47,6 +47,8 @@ public:
 
 	
 
+	
+
 public:
 	
 	float speed = 0.2f;
@@ -56,6 +58,13 @@ public:
 	SDL_Texture* mouseTileTex = nullptr;
 	PhysBody* pbody;
 	int pickCoinFxId;
+
+	unsigned int jumpFxId; // ID for the jumping sound effect
+	unsigned int endLevelFxId;  // ID for the end-level sound effect
+	bool endLevelSoundPlayed;   // Flag to check if the sound has been played
+	int endLevelX = 3939;              // X position where the player has to reach to end the level	
+	int endLevelY = 1420;              // Y position where the player has to reach to end the level
+
 	float velx;
 	float gravity;
 	float vely;
@@ -67,10 +76,16 @@ public:
 	Animation* currentAnimation = nullptr;
 	// A set of animations
 	Animation idleAnim;
-	Animation leftAnim;
-	Animation rightAnim;
+	/*Animation leftAnim;
+	Animation rightAnim;*/
 	Animation jumpAnim;
 	Animation death;
+	// Additional animations
+	Animation idleLeftAnim;
+	Animation walkLeftAnim;
+	Animation walkRightAnim;
+
+	Direction lastDirection = IDLE;
 
 	
 
