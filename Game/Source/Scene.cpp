@@ -151,7 +151,7 @@ bool Scene::Update(float dt)
 	int y = player->GetTiley();
 	LOG("%d", x);
 	LOG("%d", y);
-	iPoint origin = iPoint(2, 2);
+	iPoint origin = iPoint(x, y);
 
 	//If mouse button is pressed modify player position
 	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {

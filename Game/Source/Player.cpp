@@ -63,11 +63,11 @@ void Player::SetPosition(int x, int y) {
 }
 
 int Player::GetTilex() {
-	return (position.x + 20) / 16;
+	return (position.x + 20) / 32;
 }
 
 int Player::GetTiley() {
-	return (position.y + 20) / 16;
+	return (position.y + 20) / 32;
 }
 
 
