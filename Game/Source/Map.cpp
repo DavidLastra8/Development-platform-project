@@ -292,7 +292,7 @@ bool Map::LoadMap(pugi::xml_node mapFile)
             mapData.type = MapTypes::MAPTYPE_ORTHOGONAL;
 
         }
-        if (OrientationStr == "isometric") {
+        else if (OrientationStr == "isometric") {
             mapData.type = MapTypes::MAPTYPE_ISOMETRIC;
 
         }
