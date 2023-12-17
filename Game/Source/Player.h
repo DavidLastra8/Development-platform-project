@@ -10,7 +10,7 @@
 
 struct SDL_Texture;
 
-
+enum Direction { LEFT, RIGHT, IDLE };
 
 
 class Player : public Entity
@@ -71,10 +71,16 @@ public:
 	Animation* currentAnimation = nullptr;
 	// A set of animations
 	Animation idleAnim;
-	Animation leftAnim;
-	Animation rightAnim;
+	/*Animation leftAnim;
+	Animation rightAnim;*/
 	Animation jumpAnim;
 	Animation death;
+	// Additional animations
+	Animation idleLeftAnim;
+	Animation walkLeftAnim;
+	Animation walkRightAnim;
+
+	Direction lastDirection = IDLE;
 
 	
 
