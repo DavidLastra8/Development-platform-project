@@ -24,6 +24,37 @@ Player::Player() : Entity(EntityType::PLAYER)
 	idleAnim.PushBack({ 507, 21, 42, 53 });
 	idleAnim.loop = true;
 	idleAnim.speed = 0.003f;
+
+	idleLeftAnim.PushBack({ 1081, 19, 42, 53 });
+	idleLeftAnim.PushBack({ 987, 19, 42, 53 });
+	idleLeftAnim.PushBack({ 888, 19, 42, 53 });
+	idleLeftAnim.PushBack({ 791, 19, 42, 53 });
+	idleLeftAnim.PushBack({ 699, 19, 42, 53 });
+	idleLeftAnim.PushBack({ 604, 19, 42, 53 });
+	idleLeftAnim.loop = true;
+	idleLeftAnim.speed = 0.003f;
+
+	walkRightAnim.PushBack({ 24, 112, 42, 53 });
+	walkRightAnim.PushBack({ 116, 112, 42, 53 });
+	walkRightAnim.PushBack({ 208, 112, 42, 53 });
+	walkRightAnim.PushBack({ 300, 112, 42, 53 });
+	walkRightAnim.PushBack({ 392, 112, 42, 53 });
+	walkRightAnim.PushBack({ 484, 112, 42, 53 });
+	walkRightAnim.PushBack({ 22, 204, 42, 53 });
+	walkRightAnim.PushBack({ 118, 208, 42, 53 });
+	walkRightAnim.loop = true;
+	walkRightAnim.speed = 0.003f;
+
+	walkLeftAnim.PushBack({ 1083, 117, 42, 53 });
+	walkLeftAnim.PushBack({ 988, 117, 42, 53 });
+	walkLeftAnim.PushBack({ 888, 117, 42, 53 });
+	walkLeftAnim.PushBack({ 796, 117, 42, 53 });
+	walkLeftAnim.PushBack({ 697, 117, 42, 53 });
+	walkLeftAnim.PushBack({ 603, 117, 42, 53 });
+	walkLeftAnim.PushBack({ 1083, 205, 42, 53 });
+	walkLeftAnim.PushBack({ 990, 209, 42, 53 });
+	walkLeftAnim.loop = true;
+	walkLeftAnim.speed = 0.003f;
 }
 
 Player::~Player() {
@@ -50,7 +81,11 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	jumpFxId = app->audio->LoadFx("Assets/Audio/Fx/jump2.wav");
 
+	endLevelFxId = app->audio->LoadFx("Assets/Audio/Fx/Retro Success Melody 02 - choir soprano.wav");
+	endLevelSoundPlayed = false;
+	
 	return true;
 }
 
@@ -75,11 +110,9 @@ bool Player::Update(float dt)
 {
 	if (isAlive)
 	{
-		currentAnimation = &idleAnim;
+		
 
-		// Advance the current frame of the animation
-   // The GetCurrentFrame method should advance the frame based on dt
-		currentAnimation->GetCurrentFrame(dt);
+		
 		/*vely = -GRAVITY_Y;
 		velx = 0;*/
 		b2Vec2 currentVel = pbody->body->GetLinearVelocity();
@@ -91,37 +124,59 @@ bool Player::Update(float dt)
 			//
 		}
 
+		bool movingLeft = app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT;
+		bool movingRight = app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
+
 		// Horizontal movement
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		if (movingLeft)
+		{
 			currentVel.x = -8.0f; // Leftward
+			currentAnimation = &walkLeftAnim;
 		}
-		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		else if (movingRight)
+		{
 			currentVel.x = 8.0f; // Rightward
+			currentAnimation = &walkRightAnim;
 		}
-		else {
+		else
+		{
 			currentVel.x = 0.0f; // Stop horizontal movement when no keys are pressed
+			// Determine which idle animation to use based on the last direction
+			currentAnimation = (lastDirection == LEFT) ? &idleLeftAnim : &idleAnim;
 		}
+
+		// Update lastDirection if moving
+		if (movingLeft)
+		{
+			lastDirection = LEFT;
+		}
+		else if (movingRight)
+		{
+			lastDirection = RIGHT;
+		}
+		
 		
 		// Apply the updated horizontal velocity
 		pbody->body->SetLinearVelocity(b2Vec2(currentVel.x, pbody->body->GetLinearVelocity().y));
+
+		// Advance the current frame of the animation
+        // The GetCurrentFrame method should advance the frame based on dt
+		currentAnimation->GetCurrentFrame(dt);
 
 		// Jumping
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !IsJumping) {
 
 			pbody->body->ApplyLinearImpulse(jumpImpulse, pbody->body->GetWorldCenter(), true);
 			IsJumping = true;
+
+			// Play the jumping sound effect
+			app->audio->PlayFx(jumpFxId);
 		}
 	}
-	if (isAlive == false) {
-		/*SetPosition(400, 1102);*/
-		/*isAlive = true;*/
-		//stop player movement, 
-		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
-		//ignore godmode movement
-		GodMode = false;
-
-
-	}
+	/*if (isAlive == false) {
+		SetPosition(400, 1102);
+		isAlive = true;
+	}*/
 
 
 
@@ -140,6 +195,19 @@ bool Player::Update(float dt)
 
 		
 
+	}
+
+	//Level complete Condition
+	if (position.x >= endLevelX && position.y >= endLevelY && !endLevelSoundPlayed)
+	{
+		// Play the end-level sound effect
+		app->audio->PlayFx(endLevelFxId);
+		endLevelSoundPlayed = true;  // Set the flag to true
+	}
+
+	//if pressed F6, set the endLevelSoundPlayed to false
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+		endLevelSoundPlayed = false;
 	}
 
 	if (GodMode == true) {

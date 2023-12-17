@@ -17862,7 +17862,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="200"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -17990,7 +17990,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="220"/>
    <tile/>
    <tile/>
    <tile/>
@@ -18003,8 +18002,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="211"/>
-   <tile gid="199"/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -18118,7 +18118,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="220"/>
    <tile/>
    <tile/>
    <tile/>
@@ -18131,8 +18130,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="234"/>
-   <tile gid="199"/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -18246,7 +18246,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="220"/>
    <tile/>
    <tile/>
    <tile/>
@@ -18259,8 +18258,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="234"/>
-   <tile gid="199"/>
+   <tile/>
+   <tile gid="265"/>
+   <tile gid="265"/>
    <tile/>
    <tile/>
    <tile/>
@@ -18374,7 +18374,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="220"/>
+   <tile gid="190"/>
    <tile/>
    <tile/>
    <tile/>
@@ -22509,8 +22509,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
    <tile gid="271"/>
+   <tile/>
    <tile/>
    <tile gid="421"/>
    <tile gid="189"/>
@@ -26061,7 +26061,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="49"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26189,7 +26188,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="49"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26202,8 +26200,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="49"/>
-   <tile gid="49"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26317,7 +26313,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="49"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26330,8 +26325,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="49"/>
-   <tile gid="49"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26445,7 +26438,14 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="49"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -41217,10 +41217,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="21" name="Navigation" width="128" height="64">
-  <properties>
-   <property name="Navigation" type="bool" value="true"/>
-  </properties>
+ <layer id="21" name="Navigation" width="128" height="64" visible="0">
   <data>
    <tile gid="49"/>
    <tile gid="49"/>
