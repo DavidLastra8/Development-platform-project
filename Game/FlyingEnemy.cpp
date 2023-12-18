@@ -29,11 +29,9 @@ void FlyEnemy::InitAnims()
 
 bool FlyEnemy::Awake()
 {
+	position = iPoint(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
 
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
-
-	texturePath = parameters.attribute("texturepath").as_string();
+	
 
 	return true;
 }
@@ -42,8 +40,8 @@ bool FlyEnemy::Start()
 {
 
 	//initilize textures
-	texture = app->tex->Load(texturePath);
-	pathTest = app->tex->Load("Assets/Textures/testPathTile.png");
+	SString tex = parameters.attribute("texturepath").as_string();
+	texture = app->tex->Load(tex.GetString());
 
 	bound.x = position.x - 120;
 	bound.y = position.y - 60;
@@ -57,17 +55,22 @@ bool FlyEnemy::Start()
 		0, 10,
 	};
 
-	enemyCollider = app->physics->CreateCircle(position.x + 10, position.y + 15, 6, bodyType::DYNAMIC);
-	enemyCollider->listener = this;
-	enemyCollider->ctype = ColliderType::ENEMY;
+	enemyFlying = app->physics->CreateCircle(position.x, position.y, 16, DYNAMIC);
+	enemyFlying->ctype = ColliderType::ENEMY;
+	enemyFlying->listener = this;
+	
 
-	enemyCollider->body->SetGravityScale(0);
+	enemyFlying->body->SetGravityScale(0);
 
 	return true;
 }
 
 bool FlyEnemy::Update(float dt)
 {
+	position.x = METERS_TO_PIXELS(enemyFlying->body->GetTransform().p.x) - 23;
+	position.y = METERS_TO_PIXELS(enemyFlying->body->GetTransform().p.y) - 35;
+	app->render->DrawTexture(texture, position.x, position.y);
+
 	// Activate or deactivate debug mode
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
@@ -77,10 +80,9 @@ bool FlyEnemy::Update(float dt)
 		&& app->scene->player->GetTiley() >= bound.y
 		&& app->scene->player->GetTiley() <= bound.y + bound.h)
 	{
-		iPoint enemyPos = app->map->WorldToMap(position.x + 8, position.y + 16);
-		iPoint playerPos = app->map->WorldToMap(app->scene->player->GetTilex() + 8, app->scene->player->GetTiley());
-
-		app->map->pathfinding->CreatePath(enemyPos, playerPos);
+		iPoint enemPos = app->map->WorldToMap(position.x, position.y);
+		iPoint PlayerPos = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
+		app->map->pathfinding->CreatePath(enemPos, PlayerPos);
 
 		const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 
@@ -93,24 +95,24 @@ bool FlyEnemy::Update(float dt)
 		}
 
 
-		if (path->Count() > 2 && app->map->pathfinding->CreatePath(enemyPos, playerPos) != -1) {
+		if (path->Count() > 2 && app->map->pathfinding->CreatePath(enemPos, PlayerPos) != -1) {
 
 			iPoint pos = app->map->MapToWorld(path->At(2)->x, path->At(2)->y);
 
 			triX = position.x - pos.x;
 			triY = position.y - pos.y;
 
-			enemyCollider->body->SetLinearVelocity(b2Vec2(-(triX / 10), -(triY / 10)));
+			enemyFlying->body->SetLinearVelocity(b2Vec2(-(triX / 10), -(triY / 10)));
 
-			if (abs(enemyPos.x - playerPos.x) < 2) {
-				enemyCollider->body->SetLinearVelocity(b2Vec2(0, 0));
-				enemyCollider->body->SetLinearDamping(0);
+			if (abs(enemPos.x - PlayerPos.x) < 2) {
+				enemyFlying->body->SetLinearVelocity(b2Vec2(0, 0));
+				enemyFlying->body->SetLinearDamping(0);
 			}
 		}
 	}
 
-	position.x = METERS_TO_PIXELS(enemyCollider->body->GetTransform().p.x - 8);
-	position.y = METERS_TO_PIXELS(enemyCollider->body->GetTransform().p.y - 8);
+	position.x = METERS_TO_PIXELS(enemyFlying->body->GetTransform().p.x - 8);
+	position.y = METERS_TO_PIXELS(enemyFlying->body->GetTransform().p.y - 8);
 
 	bound.x = position.x - 120;
 	bound.y = position.y - 60;
@@ -134,5 +136,19 @@ bool FlyEnemy::CleanUp()
 
 void FlyEnemy::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-
+	switch (physB->ctype)
+	{
+	case ColliderType::PLATFORM:
+		LOG("Collision PLATFORM");
+		break;
+	case ColliderType::ITEM:
+		LOG("Collision ITEM");
+		
+		break;
+	case ColliderType::UNKNOWN:
+		LOG("Collision UNKNOWN");
+		break;
+	default:
+		break;
+	}
 }

@@ -6,6 +6,7 @@
 #include "Item.h"
 #include "Physics.h"
 #include "Enemy.h"
+#include "FlyingEnemy.h"
 
 struct SDL_Texture;
 
@@ -44,6 +45,7 @@ public:
 public:
 	Player* player;
 	Enemy* enemy;
+	FlyingEnemy* Flyenemy;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;

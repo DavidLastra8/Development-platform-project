@@ -38,9 +38,6 @@
     <ClInclude Include="Source\Defs.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DynArray.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\List.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -73,6 +70,7 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Pathfinding.h" />
+    <ClInclude Include="Source\DynArray.h" />
     <ClInclude Include="FlyingEnemy.h" />
   </ItemGroup>
   <ItemGroup>

@@ -25,6 +25,8 @@
     <player x="400" y="1102" texturepath="Assets/Textures/player.png"/>
 	<enemy x ="480" y="1102" texturepath ="Assets/Textures/Enemy_ground.png"/>
 
+	  <Flyenemy x ="400" y="1202" texturepath ="Assets/Textures/enemy_flying.png"/>
+
   </scene>
 
   <map>

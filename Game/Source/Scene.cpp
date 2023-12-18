@@ -13,6 +13,7 @@
 #include "Box2D/Box2D/Box2D.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "FlyingEnemy.h"
 #include "EntityManager.h"
 #include "App.h"
 #include "Physics.h"
@@ -52,6 +53,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("enemy")) {
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
 		enemy->parameters = config.child("enemy");
+	}
+
+	if (config.child("Flyenemy")) {
+		Flyenemy = (FlyingEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
+		Flyenemy->parameters = config.child("Flyenemy");
 	}
 
 	return ret;
