@@ -40,7 +40,7 @@ bool Physics::Start()
 	
 	// Set this module as a listener for contacts
 	world->SetContactListener(this);
-
+	debug = false;
 	return true;
 }
 
@@ -222,6 +222,8 @@ PhysBody* Physics::CreateChain(int x, int y, int* points, int size, bodyType typ
 bool Physics::PostUpdate()
 {
 	bool ret = true;
+
+
 
 	// Activate or deactivate debug mode
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
