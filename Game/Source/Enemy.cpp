@@ -42,6 +42,10 @@ bool Enemy::Start() {
 	pbody->body->SetGravityScale(0);*/
 	//initialize audio effect
 
+	// Set the initial position
+	position.x = 500; // Replace with your desired initial X coordinate
+	position.y = 1100; // Replace with your desired initial Y coordinate
+
 	groundEnemy = app->physics->CreateCircle(position.x, position.y, 16, DYNAMIC);
 	groundEnemy->ctype = ColliderType::ENEMY;
 	/*pbody->body->SetGravityScale(0);*/
