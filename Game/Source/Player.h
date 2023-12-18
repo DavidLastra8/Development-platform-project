@@ -61,6 +61,7 @@ public:
 
 	unsigned int jumpFxId; // ID for the jumping sound effect
 	unsigned int endLevelFxId;  // ID for the end-level sound effect
+	unsigned int deathFxId; // ID for the death sound effect
 	bool endLevelSoundPlayed;   // Flag to check if the sound has been played
 	int endLevelX = 3939;              // X position where the player has to reach to end the level	
 	int endLevelY = 1420;              // Y position where the player has to reach to end the level

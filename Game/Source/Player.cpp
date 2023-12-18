@@ -101,6 +101,7 @@ bool Player::Start() {
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 	jumpFxId = app->audio->LoadFx("Assets/Audio/Fx/jump2.wav");
+	deathFxId = app->audio->LoadFx("Assets/Audio/Fx/Retro Impact Punch Hurt 01.wav");
 
 	endLevelFxId = app->audio->LoadFx("Assets/Audio/Fx/Retro Success Melody 02 - choir soprano.wav");
 	endLevelSoundPlayed = false;
@@ -312,7 +313,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision DEATH");
 		isAlive = false;
 		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
-
+		app->audio->PlayFx(deathFxId);
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
@@ -325,6 +326,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision ENEMY");
 		isAlive = false;
 		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+		app->audio->PlayFx(deathFxId);
 		break;
 	}
 }
