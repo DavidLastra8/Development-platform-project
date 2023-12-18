@@ -23,10 +23,10 @@
 
   <scene>
     <player x="400" y="1102" texturepath="Assets/Textures/player.png"/>
-	<enemy x ="1080" y="1202" texturepath ="Assets/Textures/Enemy_ground.png"/>
-	<enemy2 x ="1080" y="1202" texturepath ="Assets/Textures/Enemy_ground.png"/>
-	<Flyenemy x ="600" y="1002" texturepath ="Assets/Textures/enemy_flying.png"/>
-	<Flyenemy2 x ="500" y="1102" texturepath ="Assets/Textures/enemy_flying.png"/>
+	<enemy x ="940" y="940" texturepath ="Assets/Textures/Enemy_ground.png"/>
+
+	<Flyenemy x ="900" y="900" texturepath ="Assets/Textures/enemy_flying.png"/>
+	<Flyenemy2 x ="400" y="402" texturepath ="Assets/Textures/enemy_flying.png"/>
   </scene>
 
   <map>
