@@ -1,10 +1,10 @@
 #ifndef __FLYENEMY_H__
 #define __FLYENEMY_H__
 
-#include "../Entity.h"
-#include "../Point.h"
+#include "Entity.h"
+#include "Point.h"
 #include "SDL/include/SDL.h"
-#include "../Animation.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 

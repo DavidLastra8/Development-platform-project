@@ -1,20 +1,20 @@
 #include "FlyingEnemy.h"
-#include "../App.h"
-#include "../Textures.h"
-#include "../Audio.h"
-#include "../Input.h"
-#include "../Render.h"
-#include "../Scene.h"
-#include "../Log.h"
-#include "../Point.h"
-#include "../Physics.h"
-#include "../Window.h"
-#include "../Pathfinding.h"
-#include "../Map.h"
+#include "App.h"
+#include "Textures.h"
+#include "Audio.h"
+#include "Input.h"
+#include "Render.h"
+#include "Scene.h"
+#include "Log.h"
+#include "Point.h"
+#include "Physics.h"
+#include "Window.h"
+#include "Pathfinding.h"
+#include "Map.h"
 
 FlyEnemy::FlyEnemy() : Entity(EntityType::FLYING_ENEMY)
 {
-	name.Create("FlyEnemy");
+	name.Create("Flyenemy");
 }
 
 FlyEnemy::~FlyEnemy()

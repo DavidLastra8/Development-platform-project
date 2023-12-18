@@ -45,7 +45,8 @@ public:
 public:
 	Player* player;
 	Enemy* enemy;
-	FlyingEnemy* Flyenemy;
+	FlyEnemy* FlyingEnemy;
+
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
