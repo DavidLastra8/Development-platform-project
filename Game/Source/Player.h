@@ -84,8 +84,6 @@ public:
 	Animation idleLeftAnim;
 	Animation walkLeftAnim;
 	Animation walkRightAnim;
-	Animation fallingLeftAnim;
-	Animation fallingRightAnim;
 
 	Direction lastDirection = IDLE;
 
