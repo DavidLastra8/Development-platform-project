@@ -13,7 +13,7 @@
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
-	name.Create("Player");
+	name.Create("enemy");
 }
 
 Enemy::~Enemy() {
@@ -68,18 +68,18 @@ bool Enemy::Update(float dt)
 	for (uint i = 0; i < path->Count(); i++) {
 
 		iPoint Pathpos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(pathTexture, Pathpos.x, Pathpos.y);
+		//app->render->DrawTexture(pathTexture, Pathpos.x, Pathpos.y);
 	}
 
 	if (path->Count() > 1 && app->map->pathfinding->CreatePath(enemPos, PlayerPos) != -1) {
 
-		if (enemPos.x - PlayerPos.x < 0 && abs(enemPos.x - PlayerPos.x)>2) {
+		if (enemPos.x - PlayerPos.x < 0 && abs(enemPos.x - PlayerPos.x)>1) {
 			groundEnemy->body->SetLinearVelocity(b2Vec2(0.1 * dt, 0.2 * dt));
 		}
-		else if (abs(enemPos.x - PlayerPos.x) > 2) {
+		else if (abs(enemPos.x - PlayerPos.x) > 1) {
 			groundEnemy->body->SetLinearVelocity(b2Vec2(-0.1 * dt, 0.2 * dt));
 		}
-		else if (abs(enemPos.x - PlayerPos.x) < 2) {
+		else if (abs(enemPos.x - PlayerPos.x) < 1) {
 			groundEnemy->body->SetLinearVelocity(b2Vec2(0.1 * dt, 0.2 * dt));
 			groundEnemy->body->SetLinearDamping(0);
 		}
