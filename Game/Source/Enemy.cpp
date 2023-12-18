@@ -23,28 +23,24 @@ Enemy::~Enemy() {
 bool Enemy::Awake() {
 
 	//L03: DONE 2: Initialize Player parameters
-	position = iPoint(config.attribute("x").as_int(), config.attribute("y").as_int());
-	texture = app->tex->Load(config.attribute("texturePath").as_string());
+	position = iPoint(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
 
-	
+
 	/*pbody->body->SetGravityScale(0);*/
-
-	pathTexture = app->tex->Load("Assets/Maps/TileSelection.png");
 
 	return true;
 }
 
 bool Enemy::Start() {
 
+	SString tex = parameters.attribute("texturepath").as_string();
+	texture = app->tex->Load(tex.GetString());
+
 	/*texture = app->tex->Load(config.attribute("texturePath").as_string());
 	pbody = app->physics->CreateCircle(position.x,position.y, 16, DYNAMIC);
 	pbody->ctype = ColliderType::PLAYER;
 	pbody->body->SetGravityScale(0);*/
 	//initialize audio effect
-
-	// Set the initial position
-	position.x = 500; // Replace with your desired initial X coordinate
-	position.y = 1100; // Replace with your desired initial Y coordinate
 
 	groundEnemy = app->physics->CreateCircle(position.x, position.y, 16, DYNAMIC);
 	groundEnemy->ctype = ColliderType::ENEMY;
@@ -58,13 +54,18 @@ bool Enemy::Start() {
 bool Enemy::Update(float dt)
 {
 	//L03: DONE 4: render the player texture and modify the position of the player using WSAD keys and render the texture
+
+	//Update enemy position in pixels
+	position.x = METERS_TO_PIXELS(groundEnemy->body->GetTransform().p.x) - 23;
+	position.y = METERS_TO_PIXELS(groundEnemy->body->GetTransform().p.y) - 35;
 	app->render->DrawTexture(texture, position.x, position.y);
+
 	iPoint enemPos = app->map->WorldToMap(position.x, position.y);
-	iPoint PlayerPos = app->map->WorldToMap(app->scene->player->GetTilex(), app->scene->player->GetTiley());
+	iPoint PlayerPos = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
 	app->map->pathfinding->CreatePath(enemPos, PlayerPos);
 
 	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-	for (uint i = 0; i<path->Count(); i++) {
+	for (uint i = 0; i < path->Count(); i++) {
 
 		iPoint Pathpos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		app->render->DrawTexture(pathTexture, Pathpos.x, Pathpos.y);
@@ -76,7 +77,7 @@ bool Enemy::Update(float dt)
 			groundEnemy->body->SetLinearVelocity(b2Vec2(0.1 * dt, 0.2 * dt));
 		}
 		else if (abs(enemPos.x - PlayerPos.x) > 2) {
-			groundEnemy->body->SetLinearVelocity(b2Vec2(0.1 * dt, 0.2 * dt));
+			groundEnemy->body->SetLinearVelocity(b2Vec2(-0.1 * dt, 0.2 * dt));
 		}
 		else if (abs(enemPos.x - PlayerPos.x) < 2) {
 			groundEnemy->body->SetLinearVelocity(b2Vec2(0.1 * dt, 0.2 * dt));
