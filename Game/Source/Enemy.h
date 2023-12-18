@@ -39,6 +39,15 @@ public:
 	//Audio fx
 	int pickCoinFxId;
 
+
+	
+	int pathfindingUpdateThreshold = 5;  // Adjust as needed for performance
+	
+private:
+	iPoint lastPlayerPos;
+	const float enemySpeed = 1000.0f;  // Adjust the speed as necessary
+	
+
 };
 
 #endif // __ENEMY_H__();

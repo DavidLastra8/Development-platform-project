@@ -14,6 +14,8 @@
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
 	name.Create("Player");
+
+
 }
 
 Enemy::~Enemy() {
@@ -42,10 +44,16 @@ bool Enemy::Start() {
 	pbody->body->SetGravityScale(0);*/
 	//initialize audio effect
 
+	// Set the initial position
+	position.x = 500; // Replace with your desired initial X coordinate
+	position.y = 1100; // Replace with your desired initial Y coordinate
+
 	groundEnemy = app->physics->CreateCircle(position.x, position.y, 16, DYNAMIC);
+	groundEnemy->listener = this;
 	groundEnemy->ctype = ColliderType::ENEMY;
 	/*pbody->body->SetGravityScale(0);*/
 	pickCoinFxId = app->audio->LoadFx(config.attribute("coinfxpath").as_string());
+
 
 
 	return true;
@@ -53,32 +61,50 @@ bool Enemy::Start() {
 
 bool Enemy::Update(float dt)
 {
-	//L03: DONE 4: render the player texture and modify the position of the player using WSAD keys and render the texture
+	// Render the enemy texture at its current position
 	app->render->DrawTexture(texture, position.x, position.y);
-	iPoint enemPos = app->map->WorldToMap(position.x, position.y);
-	iPoint PlayerPos = app->map->WorldToMap(app->scene->player->GetTilex(), app->scene->player->GetTiley());
-	app->map->pathfinding->CreatePath(enemPos, PlayerPos);
 
-	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-	for (uint i = 0; i<path->Count(); i++) {
+	// Get enemy and player positions in map coordinates
+	iPoint enemyPos = app->map->WorldToMap(position.x, position.y);
+	iPoint playerPos = app->map->WorldToMap(app->scene->player->GetTilex(), app->scene->player->GetTiley());
 
-		iPoint Pathpos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(pathTexture, Pathpos.x, Pathpos.y);
+	// Check if the player and enemy positions are different before creating a path
+	if (enemyPos != playerPos) {
+		// Create a path to the player
+		if (app->map->pathfinding->CreatePath(enemyPos, playerPos) != -1) {
+			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+
+			// Check if there is a next step in the path
+			if (path->Count() > 1) {
+				iPoint nextStep = *(path->At(1)); // Get the next step
+
+				// Convert the next step from map coordinates to world coordinates
+				iPoint nextPosition = app->map->MapToWorld(nextStep.x, nextStep.y);
+
+				// Calculate the velocity needed to move towards the next step
+				iPoint velocity = nextPosition - position;
+				if (velocity.x != 0) velocity.x = (velocity.x > 0) ? 1 : -1;
+				if (velocity.y != 0) velocity.y = (velocity.y > 0) ? 1 : -1;
+
+				// Move the enemy towards the next step
+				groundEnemy->body->SetLinearVelocity(b2Vec2(velocity.x * enemySpeed, velocity.y * enemySpeed));
+			}
+		}
 	}
 
-	if (path->Count() > 1 && app->map->pathfinding->CreatePath(enemPos, PlayerPos) != -1) {
+	// Update the enemy's position based on the physics body
+	position.x = METERS_TO_PIXELS(groundEnemy->body->GetPosition().x);
+	position.y = METERS_TO_PIXELS(groundEnemy->body->GetPosition().y);
 
-		if (enemPos.x - PlayerPos.x < 0 && abs(enemPos.x - PlayerPos.x)>2) {
-			groundEnemy->body->SetLinearVelocity(b2Vec2(0.1 * dt, 0.2 * dt));
-		}
-		else if (abs(enemPos.x - PlayerPos.x) > 2) {
-			groundEnemy->body->SetLinearVelocity(b2Vec2(0.1 * dt, 0.2 * dt));
-		}
-		else if (abs(enemPos.x - PlayerPos.x) < 2) {
-			groundEnemy->body->SetLinearVelocity(b2Vec2(0.1 * dt, 0.2 * dt));
-			groundEnemy->body->SetLinearDamping(0);
+	// Optionally visualize the path for debugging
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) { // Press F1 to display path
+		const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+		for (uint i = 0; i < path->Count(); i++) {
+			iPoint pathPos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			app->render->DrawTexture(pathTexture, pathPos.x, pathPos.y);
 		}
 	}
+
 	return true;
 }
 

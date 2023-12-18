@@ -36,24 +36,24 @@ public:
 	}
 
 	// Math ------------------------------------------------
-	Point operator -(const Point &v) const
+	Point operator -(const Point& v) const
 	{
-		p2Vector2 r;
+		Point<TYPE> r; // Changed from p2Vector2 to Point<TYPE>
 
 		r.x = x - v.x;
 		r.y = y - v.y;
 
-		return(r);
+		return r;
 	}
 
-	Point operator + (const Point &v) const
+	Point operator + (const Point& v) const
 	{
-		p2Vector2 r;
+		Point<TYPE> r; // Changed from p2Vector2 to Point<TYPE>
 
 		r.x = x + v.x;
 		r.y = y + v.y;
 
-		return(r);
+		return r;
 	}
 
 	const Point& operator -=(const Point &v)
