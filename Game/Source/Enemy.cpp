@@ -14,6 +14,8 @@
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
 	name.Create("Player");
+
+	idle.PushBack({ 27, 21, 42, 53 });
 }
 
 Enemy::~Enemy() {
@@ -29,7 +31,7 @@ bool Enemy::Awake() {
 	
 	/*pbody->body->SetGravityScale(0);*/
 
-	pathTexture = app->tex->Load("Assets/Maps/TileSelection.png");
+	pathTexture = app->tex->Load("Assets/Textures/player-Sheet-animations.png");
 
 	return true;
 }
