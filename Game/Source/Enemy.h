@@ -39,13 +39,6 @@ public:
 	//Audio fx
 	int pickCoinFxId;
 
-	Animation* currentAnimation = nullptr;
-	Animation idle;
-
-	
-	
-
-
 };
 
 #endif // __ENEMY_H__();
