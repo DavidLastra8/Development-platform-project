@@ -52,9 +52,9 @@ bool FlyEnemy::Start()
 
 	int enemy[8] = {
 		0, 0,
-		12, 0,
-		12, 10,
-		0, 10,
+		24, 0,
+		24, 20,
+		0, 20,
 	};
 
 	enemyCollider = app->physics->CreateCircle(position.x + 10, position.y + 15, 6, bodyType::DYNAMIC);
@@ -93,16 +93,16 @@ bool FlyEnemy::Update(float dt)
 		}
 
 
-		if (path->Count() > 2 && app->map->pathfinding->CreatePath(enemyPos, playerPos) != -1) {
+		if (path->Count() > 1 && app->map->pathfinding->CreatePath(enemyPos, playerPos) != -1) {
 
-			iPoint pos = app->map->MapToWorld(path->At(2)->x, path->At(2)->y);
+			iPoint pos = app->map->MapToWorld(path->At(1)->x, path->At(1)->y);
 
 			triX = position.x - pos.x;
 			triY = position.y - pos.y;
 
 			enemyCollider->body->SetLinearVelocity(b2Vec2(-(triX / 10), -(triY / 10)));
 
-			if (abs(enemyPos.x - playerPos.x) < 2) {
+			if (abs(enemyPos.x - playerPos.x) < 1) {
 				enemyCollider->body->SetLinearVelocity(b2Vec2(0, 0));
 				enemyCollider->body->SetLinearDamping(0);
 			}
