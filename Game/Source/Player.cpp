@@ -319,5 +319,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		//player not movable
 		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 		break;
+	
+
+	case ColliderType::ENEMY:
+		LOG("Collision ENEMY");
+		isAlive = false;
+		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+		break;
 	}
 }
