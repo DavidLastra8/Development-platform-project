@@ -57,7 +57,7 @@ bool FlyEnemy::Start()
 		0, 20,
 	};
 
-	enemyCollider = app->physics->CreateCircle(position.x + 10, position.y + 15, 6, bodyType::DYNAMIC);
+	enemyCollider = app->physics->CreateCircle(position.x + 10, position.y + 15, 25, bodyType::DYNAMIC);
 	enemyCollider->listener = this;
 	enemyCollider->ctype = ColliderType::ENEMY;
 
