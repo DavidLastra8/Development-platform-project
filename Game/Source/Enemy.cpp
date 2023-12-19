@@ -58,7 +58,7 @@ bool Enemy::Update(float dt)
 	//Update enemy position in pixels
 	position.x = METERS_TO_PIXELS(groundEnemy->body->GetTransform().p.x) - 23;
 	position.y = METERS_TO_PIXELS(groundEnemy->body->GetTransform().p.y) - 35;
-	app->render->DrawTexture(texture, position.x, position.y);
+	app->render->DrawTexture(texture, position.x-25, position.y-35);
 
 	iPoint enemPos = app->map->WorldToMap(position.x, position.y);
 	iPoint PlayerPos = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);

@@ -121,7 +121,7 @@ bool FlyEnemy::Update(float dt)
 		app->render->DrawRectangle(bound, 0, 255, 0, 80);
 	}
 
-	app->render->DrawTexture(texture, position.x, position.y);
+	app->render->DrawTexture(texture, position.x-80, position.y-60);
 
 	return true;
 }
