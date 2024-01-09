@@ -6,9 +6,13 @@
 	<audio />
 	<:anonymous />
 	<map />
-	<scene>
-		<player x="1082" y="748" />
-	</scene>
-	<entitymanager />
+	<scene />
+	<entitymanager>
+		<Player x="577" y="1100" />
+		<item x="629" y="1119" />
+		<enemy x="938" y="940" />
+		<Flyenemy x="913" y="962" />
+		<Flyenemy x="402" y="409" />
+	</entitymanager>
 	<renderer />
 </game_state>

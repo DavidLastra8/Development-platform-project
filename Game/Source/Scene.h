@@ -46,6 +46,7 @@ public:
 	Player* player;
 	Enemy* enemy;
 	FlyEnemy* FlyingEnemy;
+	Item* Potion;
 
 private:
 	SDL_Texture* img;

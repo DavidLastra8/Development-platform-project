@@ -33,6 +33,10 @@ public:
 
 	void AddEntity(Entity* entity);
 
+	// Declare the LoadState method
+	bool LoadState(pugi::xml_node node) override;
+	bool SaveState(pugi::xml_node node) override;
+
 public:
 
 	List<Entity*> entities;

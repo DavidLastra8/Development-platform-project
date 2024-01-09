@@ -50,6 +50,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		player->parameters = config.child("player");
 	}
 
+	if (config.child("Potion")) {
+		Potion = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		Potion->parameters = config.child("Potion");
+	}
+
 	if (config.child("enemy")) {
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
 		enemy->parameters = config.child("enemy");
@@ -232,20 +237,19 @@ bool Scene::CleanUp()
 
 bool Scene::LoadState(pugi::xml_node node)
 {
-	player->position.x = node.child("player").attribute("x").as_int();
-	player->position.y = node.child("player").attribute("y").as_int();
-	b2Vec2 newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y));
-	player->pbody->body->SetTransform(newPos, player->pbody->body->GetAngle());
+	//player->position.x = node.child("player").attribute("x").as_int();
+	//player->position.y = node.child("player").attribute("y").as_int();
+	//b2Vec2 newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y));
+	//player->pbody->body->SetTransform(newPos, player->pbody->body->GetAngle());
 	return true;
 
 };
 
 bool Scene::SaveState(pugi::xml_node node)
 {
-	pugi::xml_node playerNode = node.append_child("player");
+/*	pugi::xml_node playerNode = node.append_child("player");
 	playerNode.append_attribute("x").set_value(player->position.x);
-	playerNode.append_attribute("y").set_value(player->position.y);
-
+	playerNode.append_attribute("y").set_value(player->position.y);*/ 
 
 	return true;
 };
