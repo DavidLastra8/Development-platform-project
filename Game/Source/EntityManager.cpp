@@ -75,8 +75,39 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
+//Entity* EntityManager::FindOrCreateEntity(EntityType type) {
+//	// Search for an existing entity of the given type
+//	for (ListItem<Entity*>* item = entities.start; item != nullptr; item = item->next) {
+//		if (item->data->type == type) {
+//			return item->data;  // Return the existing entity
+//		}
+//	}
+//
+//	// If not found, create a new entity
+//	Entity* newEntity = nullptr;
+//	switch (type) {
+//	case EntityType::PLAYER:
+//		newEntity = new Player();
+//		break;
+//		// ... handle other entity types
+//	}
+//
+//	if (newEntity != nullptr) {
+//		entities.Add(newEntity);  // Add the new entity to the manager
+//	}
+//	return newEntity;
+//}
+
+
 Entity* EntityManager::CreateEntity(EntityType type)
 {
+	// Search for an existing entity of the given type
+	for (ListItem<Entity*>* item = entities.start; item != nullptr; item = item->next) {
+		if (item->data->type == type) {
+			return item->data;  // Return the existing entity
+		}
+	}
+
 	Entity* entity = nullptr; 
 
 	switch (type)
@@ -95,7 +126,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	default:
 		break;
 	}
-
+	
 	entities.Add(entity);
 
 	return entity;
@@ -136,31 +167,48 @@ bool EntityManager::Update(float dt)
 // Declare the LoadState method
 bool EntityManager::LoadState(pugi::xml_node node) {
 
+	bool ret = true;
+
 	//Example
-	/*pugi::xml_node item;
-    for (item = node.child("item"); item && ret; tileset = tileset.next_sibling("tileset"))
+	/*pugi::xml_node entitymanager;
+    for (entitymanager = node.child("entitymanager"); entitymanager && ret; entitymanager = entitymanager.next_sibling("entitymanager"))
     {
-        EntityManager* item = new Entity();
+        EntityManager* entities = new EntityManager();
 
-        set->name = tileset.attribute("name").as_string();
-        set->firstgid = tileset.attribute("firstgid").as_int();
-        set->margin = tileset.attribute("margin").as_int();
-        set->spacing = tileset.attribute("spacing").as_int();
-        set->tileWidth = tileset.attribute("tilewidth").as_int();
-        set->tileHeight = tileset.attribute("tileheight").as_int();
-        set->columns = tileset.attribute("columns").as_int();
-        set->tilecount = tileset.attribute("tilecount").as_int();
 
-        SString tmp("%s%s", mapFolder.GetString(), tileset.child("image").attribute("source").as_string());
-        set->texture = app->tex->Load(tmp.GetString());
+		entities->Player = entitymanager.attribute("Player").as_int();
+		entities->item = entitymanager.attribute("item").as_int();
+		entities->enemy = entitymanager.attribute("enemy").as_int();
+		entities->Flyenemy = entitymanager.attribute("Flyenemy").as_int();
 
-        mapData.tilesets.Add(set);
+
     }*/
 
-	return true;
+	// Iterate over each entity node
+    for (pugi::xml_node entityNode = node.child("entity"); entityNode; entityNode = entityNode.next_sibling("entity")) {
+        // Read the type of entity (assuming there's a type attribute or similar)
+        EntityType entityType = static_cast<EntityType>(entityNode.attribute("type").as_int());
+
+        // Depending on your game structure, find or create the entity
+		Entity* entity = FindOrCreateEntity(entityType);
+        
+      
+
+        if (entity != nullptr) {
+            // Now load the data for the entity from the XML node
+            entity->position.x = entityNode.attribute("x").as_int();
+            entity->position.y = entityNode.attribute("y").as_int();
+
+            // ... load other relevant data for the entity
+        }
+    }
+
+	return ret;
 
 	
 }
+
+
 
 bool EntityManager::SaveState(pugi::xml_node node) {
 	

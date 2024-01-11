@@ -8,10 +8,10 @@
 	<map />
 	<scene />
 	<entitymanager>
-		<Player x="577" y="1100" />
-		<item x="629" y="1119" />
+		<Player x="460" y="1100" />
+		<item x="581" y="1119" />
 		<enemy x="938" y="940" />
-		<Flyenemy x="913" y="962" />
+		<Flyenemy x="913" y="971" />
 		<Flyenemy x="402" y="409" />
 	</entitymanager>
 	<renderer />

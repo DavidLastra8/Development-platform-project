@@ -37,9 +37,18 @@ public:
 	bool LoadState(pugi::xml_node node) override;
 	bool SaveState(pugi::xml_node node) override;
 
+
+
 public:
+	Entity* FindOrCreateEntity(EntityType type);
 
 	List<Entity*> entities;
+	int Player;
+	int item;
+	int enemy;
+	int Flyenemy;
+
+
 
 };
 
