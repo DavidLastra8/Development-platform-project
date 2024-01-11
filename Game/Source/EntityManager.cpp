@@ -77,7 +77,14 @@ bool EntityManager::CleanUp()
 
 Entity* EntityManager::CreateEntity(EntityType type)
 {
-	Entity* entity = nullptr; 
+	// Search for an existing entity of the given type
+	for (ListItem<Entity*>* item = entities.start; item != nullptr; item = item->next) {
+		if (item->data->type == type) {
+			return item->data;  // Return the existing entity
+		}
+	}
+
+	Entity* entity = nullptr;
 
 	switch (type)
 	{
@@ -92,11 +99,16 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::FLYING_ENEMY:
 		entity = new FlyEnemy();
+		break;
 	default:
 		break;
 	}
 
-	entities.Add(entity);
+	if (entity != nullptr)
+	{
+		entities.Add(entity);
+	}
+
 
 	return entity;
 }
