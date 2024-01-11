@@ -3,6 +3,10 @@
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
+#include "Item.h"
+#include "Enemy.h"
+
+
 
 #include "Defs.h"
 #include "Log.h"
@@ -123,11 +127,16 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::FLYING_ENEMY:
 		entity = new FlyEnemy();
+		break;
 	default:
 		break;
 	}
 	
-	entities.Add(entity);
+	if (entity != nullptr)
+	{
+		entities.Add(entity);
+	}
+	
 
 	return entity;
 }
@@ -185,22 +194,25 @@ bool EntityManager::LoadState(pugi::xml_node node) {
     }*/
 
 	// Iterate over each entity node
-    for (pugi::xml_node entityNode = node.child("entity"); entityNode; entityNode = entityNode.next_sibling("entity")) {
+    for (pugi::xml_node entityNode = node.child("entity"); entityNode; entityNode = entityNode.next_sibling("entityNode")) {
         // Read the type of entity (assuming there's a type attribute or similar)
         EntityType entityType = static_cast<EntityType>(entityNode.attribute("type").as_int());
 
         // Depending on your game structure, find or create the entity
-		Entity* entity = FindOrCreateEntity(entityType);
+		Entity* entity = CreateEntity(entityType);
         
-      
+       
 
         if (entity != nullptr) {
             // Now load the data for the entity from the XML node
             entity->position.x = entityNode.attribute("x").as_int();
             entity->position.y = entityNode.attribute("y").as_int();
+			
 
             // ... load other relevant data for the entity
         }
+
+
     }
 
 	return ret;

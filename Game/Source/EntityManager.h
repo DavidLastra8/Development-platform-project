@@ -40,7 +40,7 @@ public:
 
 
 public:
-	Entity* FindOrCreateEntity(EntityType type);
+	/*Entity* FindOrCreateEntity(EntityType type);*/
 
 	List<Entity*> entities;
 	int Player;
