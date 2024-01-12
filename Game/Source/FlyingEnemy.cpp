@@ -45,18 +45,6 @@ bool FlyEnemy::Start()
 	texture = app->tex->Load(texturePath);
 	pathTest = app->tex->Load("Assets/Textures/testPathTile.png");
 
-	bound.x = position.x - 120;
-	bound.y = position.y - 60;
-	bound.w = 240;
-	bound.h = 120;
-
-	int enemy[8] = {
-		0, 0,
-		24, 0,
-		24, 20,
-		0, 20,
-	};
-
 	enemyCollider = app->physics->CreateCircle(position.x + 10, position.y + 15, 25, bodyType::DYNAMIC);
 	enemyCollider->listener = this;
 	enemyCollider->ctype = ColliderType::ENEMY;
@@ -68,19 +56,14 @@ bool FlyEnemy::Start()
 
 bool FlyEnemy::Update(float dt)
 {
-	// Activate or deactivate debug mode
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-		debug = !debug;
+	position.x = METERS_TO_PIXELS(enemyCollider->body->GetTransform().p.x) - 23;
+	position.y = METERS_TO_PIXELS(enemyCollider->body->GetTransform().p.y) - 35;
+	app->render->DrawTexture(texture, position.x - 25, position.y - 35);
 
-	if (app->scene->player->GetTilex() >= bound.x
-		&& app->scene->player->GetTilex() <= bound.x + bound.w
-		&& app->scene->player->GetTiley() >= bound.y
-		&& app->scene->player->GetTiley() <= bound.y + bound.h)
-	{
-		iPoint enemyPos = app->map->WorldToMap(position.x + 8, position.y + 16);
-		iPoint playerPos = app->map->WorldToMap(app->scene->player->GetTilex() + 8, app->scene->player->GetTiley());
+		iPoint enemPos = app->map->WorldToMap(position.x, position.y);
+		iPoint PlayerPos = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
 
-		app->map->pathfinding->CreatePath(enemyPos, playerPos);
+		app->map->pathfinding->CreatePath(enemPos, PlayerPos);
 
 		const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 
@@ -93,7 +76,7 @@ bool FlyEnemy::Update(float dt)
 		}
 
 
-		if (path->Count() > 1 && app->map->pathfinding->CreatePath(enemyPos, playerPos) != -1) {
+		if (path->Count() > 1 && app->map->pathfinding->CreatePath(enemPos, PlayerPos) != -1) {
 
 			iPoint pos = app->map->MapToWorld(path->At(1)->x, path->At(1)->y);
 
@@ -102,24 +85,11 @@ bool FlyEnemy::Update(float dt)
 
 			enemyCollider->body->SetLinearVelocity(b2Vec2(-(triX / 10), -(triY / 10)));
 
-			if (abs(enemyPos.x - playerPos.x) < 1) {
+			if (abs(enemPos.x - PlayerPos.x) < 1) {
 				enemyCollider->body->SetLinearVelocity(b2Vec2(0, 0));
 				enemyCollider->body->SetLinearDamping(0);
 			}
 		}
-	}
-
-	position.x = METERS_TO_PIXELS(enemyCollider->body->GetTransform().p.x - 8);
-	position.y = METERS_TO_PIXELS(enemyCollider->body->GetTransform().p.y - 8);
-
-	bound.x = position.x - 120;
-	bound.y = position.y - 60;
-	bound.w = 240;
-	bound.h = 120;
-
-	if (debug) {
-		app->render->DrawRectangle(bound, 0, 255, 0, 80);
-	}
 
 	app->render->DrawTexture(texture, position.x-80, position.y-60);
 
