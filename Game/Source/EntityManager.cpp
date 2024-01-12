@@ -105,12 +105,12 @@ bool EntityManager::CleanUp()
 
 Entity* EntityManager::CreateEntity(EntityType type)
 {
-	// Search for an existing entity of the given type
-	for (ListItem<Entity*>* item = entities.start; item != nullptr; item = item->next) {
-		if (item->data->type == type) {
-			return item->data;  // Return the existing entity
-		}
-	}
+	//// Search for an existing entity of the given type
+	//for (ListItem<Entity*>* item = entities.start; item != nullptr; item = item->next) {
+	//	if (item->data->type == type) {
+	//		return item->data;  // Return the existing entity
+	//	}
+	//}
 
 	Entity* entity = nullptr; 
 
@@ -178,6 +178,33 @@ bool EntityManager::LoadState(pugi::xml_node node) {
 
 	bool ret = true;
 
+	//PLayer
+	iPoint posPLayer = iPoint(node.child("Player").attribute("x").as_int(), node.child("Player").attribute("y").as_int());
+	app->scene->player->SetPosition(posPLayer.x,posPLayer.y);
+
+	//WALKING Enemies
+	int enemyCtr = 1;
+	for (pugi::xml_node enemyNode = node.child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy")) {
+
+		iPoint posEnemy = iPoint(enemyNode.attribute("x").as_int(), enemyNode.attribute("y").as_int());
+		if (enemyCtr == 1) app->scene->enemy->SetPosition(posEnemy.x, posEnemy.y);
+		if (enemyCtr == 2) app->scene->enemy2->SetPosition(posEnemy.x, posEnemy.y);
+		enemyCtr++;
+	}
+
+	//flying Enemies
+	int flyenemyCtr = 1;
+	for (pugi::xml_node flyenemyNode = node.child("Flyenemy"); flyenemyNode; flyenemyNode = flyenemyNode.next_sibling("Flyenemy")) {
+
+		iPoint posFlyEnemy = iPoint(flyenemyNode.attribute("x").as_int(), flyenemyNode.attribute("y").as_int());
+		if (flyenemyCtr == 1) app->scene->FlyingEnemy->SetPosition(posFlyEnemy.x, posFlyEnemy.y);
+		if (flyenemyCtr == 2) app->scene->FlyingEnemy2->SetPosition(posFlyEnemy.x, posFlyEnemy.y);
+		flyenemyCtr++;
+	}
+	
+	//items
+
+
 	//Example
 	/*pugi::xml_node entitymanager;
     for (entitymanager = node.child("entitymanager"); entitymanager && ret; entitymanager = entitymanager.next_sibling("entitymanager"))
@@ -194,26 +221,7 @@ bool EntityManager::LoadState(pugi::xml_node node) {
     }*/
 
 	// Iterate over each entity node
-    for (pugi::xml_node entityNode = node.child("entity"); entityNode; entityNode = entityNode.next_sibling("entityNode")) {
-        // Read the type of entity (assuming there's a type attribute or similar)
-        EntityType entityType = static_cast<EntityType>(entityNode.attribute("type").as_int());
 
-        // Depending on your game structure, find or create the entity
-		Entity* entity = CreateEntity(entityType);
-        
-       
-
-        if (entity != nullptr) {
-            // Now load the data for the entity from the XML node
-            entity->position.x = entityNode.attribute("x").as_int();
-            entity->position.y = entityNode.attribute("y").as_int();
-			
-
-            // ... load other relevant data for the entity
-        }
-
-
-    }
 
 	return ret;
 

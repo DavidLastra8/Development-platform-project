@@ -61,8 +61,8 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 
 	if (config.child("enemy2")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("enemy2");
+		enemy2 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy2->parameters = config.child("enemy2");
 	}
 
 	if (config.child("Flyenemy")) {
@@ -70,8 +70,8 @@ bool Scene::Awake(pugi::xml_node& config)
 		FlyingEnemy->parameters = config.child("Flyenemy");
 	}
 	if (config.child("Flyenemy2")) {
-		FlyingEnemy = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
-		FlyingEnemy->parameters = config.child("Flyenemy2");
+		FlyingEnemy2 = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
+		FlyingEnemy2->parameters = config.child("Flyenemy2");
 	}
 
 	return ret;

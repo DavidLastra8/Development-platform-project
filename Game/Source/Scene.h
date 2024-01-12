@@ -45,7 +45,9 @@ public:
 public:
 	Player* player;
 	Enemy* enemy;
+	Enemy* enemy2;
 	FlyEnemy* FlyingEnemy;
+	FlyEnemy* FlyingEnemy2;
 	Item* Potion;
 
 private:

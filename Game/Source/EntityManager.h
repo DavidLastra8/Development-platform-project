@@ -43,7 +43,7 @@ public:
 	/*Entity* FindOrCreateEntity(EntityType type);*/
 
 	List<Entity*> entities;
-	int Player;
+	
 	int item;
 	int enemy;
 	int Flyenemy;

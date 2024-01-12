@@ -110,3 +110,10 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	}
 }
+
+void Enemy::SetPosition(int x, int y) {
+	position.x = x;
+	position.y = y;
+	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	groundEnemy->body->SetTransform(newPos, groundEnemy->body->GetAngle());
+}
