@@ -55,6 +55,12 @@ bool Scene::Awake(pugi::xml_node& config)
 		Potion->parameters = config.child("Potion");
 	}
 
+	if (config.child("Coin"))
+	{
+		Coin = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		Coin->parameters = config.child("Coin");
+	}
+
 	if (config.child("enemy")) {
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
 		enemy->parameters = config.child("enemy");

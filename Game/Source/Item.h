@@ -22,6 +22,8 @@ public:
 
 	bool CleanUp();
 
+	void SetPosition(int x, int y);
+
 public:
 
 	bool isPicked = false;

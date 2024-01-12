@@ -49,6 +49,7 @@ public:
 	FlyEnemy* FlyingEnemy;
 	FlyEnemy* FlyingEnemy2;
 	Item* Potion;
+	Item* Coin;
 
 private:
 	SDL_Texture* img;

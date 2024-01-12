@@ -202,7 +202,15 @@ bool EntityManager::LoadState(pugi::xml_node node) {
 		flyenemyCtr++;
 	}
 	
-	//items
+	//Posions
+	int posionCtr = 1;
+    for (pugi::xml_node posionNode = node.child("item"); posionNode; posionNode = posionNode.next_sibling("item")) {
+
+		iPoint posPosion = iPoint(posionNode.attribute("x").as_int(), posionNode.attribute("y").as_int());
+		if (posionCtr == 1) app->scene->Potion->SetPosition(posPosion.x, posPosion.y);
+		
+		posionCtr++;
+	}
 
 
 	//Example
@@ -220,6 +228,7 @@ bool EntityManager::LoadState(pugi::xml_node node) {
 
     }*/
 
+
 	// Iterate over each entity node
 
 
@@ -235,6 +244,7 @@ bool EntityManager::SaveState(pugi::xml_node node) {
 	bool ret = true;
 	ListItem<Entity*>* item;
 	Entity* pEntity = NULL;
+	
 
 	for (item = entities.start; item != NULL && ret == true; item = item->next)
 	{
@@ -247,6 +257,8 @@ bool EntityManager::SaveState(pugi::xml_node node) {
 		entityNode.append_attribute("y").set_value(item->data->position.y);
 
 	}
+
+	
 
 	return true;
 }

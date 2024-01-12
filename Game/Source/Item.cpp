@@ -51,3 +51,10 @@ bool Item::CleanUp()
 {
 	return true;
 }
+
+void Item::SetPosition(int x, int y) {
+	position.x = x;
+	position.y = y;
+	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+}
