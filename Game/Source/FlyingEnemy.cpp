@@ -83,7 +83,7 @@ bool FlyEnemy::Update(float dt)
 			triX = position.x - pos.x;
 			triY = position.y - pos.y;
 
-			enemyCollider->body->SetLinearVelocity(b2Vec2(-(triX / 10), -(triY / 10)));
+			enemyCollider->body->SetLinearVelocity(b2Vec2(-(triX / 3), -(triY / 3)));
 
 			if (abs(enemPos.x - PlayerPos.x) < 1) {
 				enemyCollider->body->SetLinearVelocity(b2Vec2(0, 0));
