@@ -30,6 +30,8 @@
 
 	<Flyenemy x ="900" y="900" texturepath ="Assets/Textures/enemy_flying.png"/>
 	<Flyenemy2 x ="400" y="402" texturepath ="Assets/Textures/enemy_flying.png"/>
+	<Potion x ="410" y="1110" texturepath ="Assets/Textures/potion.png"/>
+	<Coin x ="450" y="1110" texturepath ="Assets/Textures/potion.png"/>
   </scene>
 
   <map>

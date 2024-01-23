@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Player.h"
 #include "Item.h"
+#include "Coin.h"
 #include "Physics.h"
 #include "Enemy.h"
 #include "../FlyingEnemy.h"
@@ -38,14 +39,16 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Declare the LoadState method
-	bool LoadState(pugi::xml_node node) override;
-	bool SaveState(pugi::xml_node node) override;
+	
 
 public:
 	Player* player;
 	Enemy* enemy;
+	Enemy* enemy2;
 	FlyEnemy* FlyingEnemy;
+	FlyEnemy* FlyingEnemy2;
+	Item* Potion;
+	Coin* Coin;
 
 private:
 	SDL_Texture* img;

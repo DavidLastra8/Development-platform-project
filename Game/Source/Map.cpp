@@ -312,11 +312,6 @@ bool Map::LoadTileSet(pugi::xml_node mapFile){
 
     bool ret = true; 
 
-
-
-
-
-
     pugi::xml_node tileset;
     for (tileset = mapFile.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
     {
