@@ -328,5 +328,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 		app->audio->PlayFx(deathFxId);
 		break;
+	case ColliderType::COIN:
+		LOG("Collision COIN");
+		app->audio->PlayFx(pickCoinFxId);
+		break;
 	}
+	
 }

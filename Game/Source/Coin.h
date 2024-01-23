@@ -17,12 +17,15 @@ public:
     bool Start();
     bool Update(float dt);
     bool CleanUp();
-
     void Collected(); // Call this method when the coin is collected
 
 private:
     bool collected;
     Point<int> position; // Assuming a Point class exists for position
+
+    SDL_Texture* texture;
+    const char* texturePath;
+    PhysBody* pbody;
 };
 
 #endif // __COIN_H__

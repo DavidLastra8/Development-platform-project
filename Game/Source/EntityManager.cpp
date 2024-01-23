@@ -1,3 +1,4 @@
+#include "Coin.h"
 #include "EntityManager.h"
 #include "Player.h"
 #include "App.h"
@@ -5,6 +6,7 @@
 #include "Scene.h"
 #include "Item.h"
 #include "Enemy.h"
+
 
 
 
@@ -128,6 +130,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::FLYING_ENEMY:
 		entity = new FlyEnemy();
 		break;
+	
 	default:
 		break;
 	}
