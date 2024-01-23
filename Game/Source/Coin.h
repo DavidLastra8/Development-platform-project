@@ -7,25 +7,32 @@
 
 struct SDL_Texture;
 
-
-class Coin : public Entity {
+class Coin : public Entity
+{
 public:
-    Coin();
-    virtual ~Coin();
 
-    bool Awake();
-    bool Start();
-    bool Update(float dt);
-    bool CleanUp();
-    void Collected(); // Call this method when the coin is collected
+	Coin();
+	virtual ~Coin();
+
+	bool Awake();
+
+	bool Start();
+
+	bool Update(float dt);
+
+	bool CleanUp();
+
+	void SetPosition(int x, int y);
+
+public:
+
+	bool isPicked = false;
 
 private:
-    bool collected;
-    Point<int> position; // Assuming a Point class exists for position
 
-    SDL_Texture* texture;
-    const char* texturePath;
-    PhysBody* pbody;
+	SDL_Texture* texture;
+	const char* texturePath;
+	PhysBody* pbody;
 };
 
-#endif // __COIN_H__
+#endif // __ITEM_H__

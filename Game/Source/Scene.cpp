@@ -50,14 +50,15 @@ bool Scene::Awake(pugi::xml_node& config)
 		player->parameters = config.child("player");
 	}
 
-	if (config.child("Potion")) {
+	/*if (config.child("Potion")) {
 		Potion = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		Potion->parameters = config.child("Potion");
-	}
+	}*/
+
 
 	if (config.child("Coin"))
 	{
-		Coin = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		Coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
 		Coin->parameters = config.child("Coin");
 	}
 

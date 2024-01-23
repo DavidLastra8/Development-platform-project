@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Player.h"
 #include "Item.h"
+#include "Coin.h"
 #include "Physics.h"
 #include "Enemy.h"
 #include "FlyingEnemy.h"
@@ -49,7 +50,7 @@ public:
 	FlyEnemy* FlyingEnemy;
 	FlyEnemy* FlyingEnemy2;
 	Item* Potion;
-	Item* Coin;
+	Coin* Coin;
 
 private:
 	SDL_Texture* img;

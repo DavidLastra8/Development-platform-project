@@ -47,9 +47,10 @@ public:
 	List<Entity*> entities;
 	
 	int item;
+	int coin;
 	int enemy;
 	int Flyenemy;
-	int Coin;
+	
 
 
 
