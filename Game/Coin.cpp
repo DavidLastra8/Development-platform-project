@@ -1,3 +1,4 @@
+#include "Coin.h"
 #include "Item.h"
 #include "App.h"
 #include "Textures.h"
