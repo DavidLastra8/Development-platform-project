@@ -74,6 +74,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	fallingRightAnim.loop = false;
 	fallingRightAnim.speed = 0.003f;
 
+	lives = 3;
 }
 
 Player::~Player() {
@@ -295,12 +296,23 @@ bool Player::CleanUp()
 	return true;
 }
 
-void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
+void Player::IncreaseLives(int amount) {
+	lives += amount;
+	// Optionally, cap the lives to a maximum value
+	const int maxLives = 5;
+	if (lives > maxLives) {
+		lives = maxLives;
+	}
+}
 
+void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
+	using namespace std::chrono;
+	steady_clock::time_point now = steady_clock::now();
 	switch (physB->ctype)
 	{
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
+		app->scene->player->IncreaseLives(1);
 		app->audio->PlayFx(pickCoinFxId);
 		break;
 	case ColliderType::PLATFORM:
@@ -310,9 +322,33 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		break;
 	case ColliderType:: DEATH:
+		
 		LOG("Collision DEATH");
-		isAlive = false;
-		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+		
+
+		if (duration_cast<seconds>(now - lastDamageTime).count() >= 3) {
+			if (lives > 0)
+			{
+				lives--;
+
+				
+
+				pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), pbody->body->GetWorldCenter(), true);
+
+				app->audio->PlayFx(deathFxId);
+			}
+
+			
+			lastDamageTime = now;  // Update last damage time
+
+			if (lives == 0)
+			{
+				isAlive = false;
+				pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+			}
+		}
+		
+		
 		app->audio->PlayFx(deathFxId);
 		break;
 	case ColliderType::UNKNOWN:
@@ -324,9 +360,35 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
-		isAlive = false;
-		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
-		app->audio->PlayFx(deathFxId);
+		if (duration_cast<seconds>(now - lastDamageTime).count() >= 3) {
+			if (lives > 0)
+			{
+				lives--;
+
+				
+
+				pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), pbody->body->GetWorldCenter(), true);
+
+				app->audio->PlayFx(deathFxId);
+			}
+			lastDamageTime = now;  // Update last damage time
+
+			if (lives == 0)
+			{
+				isAlive = false;
+				pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+				
+			}
+		}
+
+
+		
+		break;
+	case ColliderType::COIN:
+		LOG("Collision COIN");
+		app->audio->PlayFx(pickCoinFxId);
 		break;
 	}
+	
 }
+

@@ -33,9 +33,26 @@ public:
 
 	void AddEntity(Entity* entity);
 
+	
+
+	// Declare the LoadState method
+	bool LoadState(pugi::xml_node node) override;
+	bool SaveState(pugi::xml_node node) override;
+
+
+
 public:
+	/*Entity* FindOrCreateEntity(EntityType type);*/
 
 	List<Entity*> entities;
+	
+	int item;
+	int coin;
+	int enemy;
+	int Flyenemy;
+	
+
+
 
 };
 

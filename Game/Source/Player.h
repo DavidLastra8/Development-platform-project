@@ -1,6 +1,7 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
-
+//include chrono for time
+#include <chrono>
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
@@ -45,7 +46,7 @@ public:
 
 	bool isAlive = true;
 
-	
+	void IncreaseLives(int amount);
 
 	
 
@@ -71,6 +72,7 @@ public:
 	float vely;
 
 
+	
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
@@ -90,8 +92,9 @@ public:
 
 	Direction lastDirection = IDLE;
 
-	
-
+private:
+	int lives;
+	std::chrono::steady_clock::time_point lastDamageTime;  // Time of last damage
 	
 
 };
