@@ -9,7 +9,7 @@
 #include "Render.h"
 #include "Player.h"
 #include "Window.h"
-#include "Box2D/Box2D/Box2D.h"
+
 
 // Tell the compiler to reference the compiled Box2D libraries
 #ifdef _DEBUG
@@ -397,4 +397,10 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 	}
 
 	return ret;
+}
+
+//a method to deactivate the body
+void PhysBody::Deactivate()
+{
+	body->SetActive(false);
 }

@@ -8,6 +8,7 @@
 #include "Animation.h"
 #include <SDL_image/include/SDL_image.h>
 #include "Module.h"
+#include "EntityManager.h"
 
 struct SDL_Texture;
 
@@ -48,7 +49,7 @@ public:
 
 	void IncreaseLives(int amount);
 
-	
+	void DestroyEntity(Entity* entity);
 
 public:
 	
