@@ -1,6 +1,7 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
-
+//include chrono for time
+#include <chrono>
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
@@ -93,7 +94,7 @@ public:
 
 private:
 	int lives;
-
+	std::chrono::steady_clock::time_point lastDamageTime;  // Time of last damage
 	
 
 };
