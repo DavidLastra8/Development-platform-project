@@ -153,12 +153,8 @@ void EntityManager::DestroyEntity(Entity* entity)
 
 	for (item = entities.start; item != NULL; item = item->next)
 	{
-		// Deactivate the PhysBody associated with the entity
-		if (item->data->GetPhysBody() != nullptr)
-		{
-			item->data->GetPhysBody()->Deactivate();
-		}
-
+		if (item->data == entity) entities.Del(item);
+		
 	}
 }
 

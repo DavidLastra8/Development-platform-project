@@ -69,10 +69,10 @@ public:
 
 	};
 
-	PhysBody* Entity::GetPhysBody() const
-	{
-		return this->GetPhysBody // Assuming physBody is a member of Entity
-	}
+	//PhysBody* Entity::GetPhysBody() const
+	//{
+	//	return this->GetPhysBody // Assuming physBody is a member of Entity
+	//}
 
 
 	
