@@ -6,8 +6,8 @@
 #include "Scene.h"
 #include "Item.h"
 #include "Enemy.h"
-
-
+#include "Box2D/Box2D/Box2D.h"
+#include "Physics.h"
 
 
 #include "Defs.h"
@@ -153,13 +153,19 @@ void EntityManager::DestroyEntity(Entity* entity)
 
 	for (item = entities.start; item != NULL; item = item->next)
 	{
-		if (item->data == entity) entities.Del(item);
+		// Deactivate the PhysBody associated with the entity
+		if (item->data->GetPhysBody() != nullptr)
+		{
+			item->data->GetPhysBody()->Deactivate();
+		}
+
 	}
 }
 
 void EntityManager::AddEntity(Entity* entity)
 {
 	if ( entity != nullptr) entities.Add(entity);
+	
 }
 
 bool EntityManager::Update(float dt)

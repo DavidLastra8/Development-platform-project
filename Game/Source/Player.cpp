@@ -10,6 +10,8 @@
 #include "Physics.h"
 #include "Animation.h"
 #include "Map.h"
+#include "EntityManager.h"
+#include "Item.h"
 
 
 
@@ -308,13 +310,25 @@ void Player::IncreaseLives(int amount) {
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	using namespace std::chrono;
 	steady_clock::time_point now = steady_clock::now();
+	Item* item = (Item*)physB->listener;;
 	switch (physB->ctype)
 	{
+
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->scene->player->IncreaseLives(1);
+		// Assuming you have a way to get the actual Item entity from physB
+		
+		if (item != nullptr) {
+			app->entityManager->DestroyEntity(item);
+			//make the item collider null
+			physB->listener = nullptr;
+		}
+
 		app->audio->PlayFx(pickCoinFxId);
 		break;
+
+
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
 		if (IsJumping) {
