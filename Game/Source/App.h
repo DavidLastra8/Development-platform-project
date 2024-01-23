@@ -19,6 +19,7 @@ class Scene;
 class EntityManager;
 class Map;
 class Physics;
+class InitialScreen;
 
 class App
 {
@@ -98,6 +99,7 @@ public:
 	EntityManager* entityManager;
 	Map* map;
 	Physics* physics;
+	InitialScreen* initialScreen;
 
 private:
 

@@ -26,6 +26,7 @@
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\FlyingEnemy.cpp" />
     <ClCompile Include="Source\Coin.cpp" />
+    <ClCompile Include="InitialScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -74,6 +75,7 @@
     <ClInclude Include="Source\DynArray.h" />
     <ClInclude Include="Source\FlyingEnemy.h" />
     <ClInclude Include="Source\Coin.h" />
+    <ClInclude Include="InitialScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
