@@ -7,7 +7,7 @@
 #include "Coin.h"
 #include "Physics.h"
 #include "Enemy.h"
-#include "../FlyingEnemy.h"
+#include "FlyingEnemy.h"
 
 struct SDL_Texture;
 

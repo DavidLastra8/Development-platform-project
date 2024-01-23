@@ -105,6 +105,7 @@ bool FlyEnemy::CleanUp()
 void FlyEnemy::OnCollision(PhysBody* physA, PhysBody* physB)
 {
 
+
 }
 
 void FlyEnemy::SetPosition(int x, int y) {
@@ -112,4 +113,5 @@ void FlyEnemy::SetPosition(int x, int y) {
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	enemyCollider->body->SetTransform(newPos, enemyCollider->body->GetAngle());
+
 }
