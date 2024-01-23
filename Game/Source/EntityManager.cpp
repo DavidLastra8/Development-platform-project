@@ -130,6 +130,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::FLYING_ENEMY:
 		entity = new FlyEnemy();
 		break;
+	/*case EntityType::COIN:
+		entity = new Coin();
+		break;*/
 	
 	default:
 		break;
