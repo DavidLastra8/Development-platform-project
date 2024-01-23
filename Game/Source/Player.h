@@ -45,7 +45,7 @@ public:
 
 	bool isAlive = true;
 
-	
+	void IncreaseLives(int amount);
 
 	
 
@@ -71,6 +71,7 @@ public:
 	float vely;
 
 
+	
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
@@ -90,7 +91,8 @@ public:
 
 	Direction lastDirection = IDLE;
 
-	
+private:
+	int lives;
 
 	
 

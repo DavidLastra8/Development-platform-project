@@ -74,6 +74,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	fallingRightAnim.loop = false;
 	fallingRightAnim.speed = 0.003f;
 
+	lives = 3;
 }
 
 Player::~Player() {
@@ -295,12 +296,22 @@ bool Player::CleanUp()
 	return true;
 }
 
+void Player::IncreaseLives(int amount) {
+	lives += amount;
+	// Optionally, cap the lives to a maximum value
+	const int maxLives = 3;
+	if (lives > maxLives) {
+		lives = maxLives;
+	}
+}
+
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	switch (physB->ctype)
 	{
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
+		app->scene->player->IncreaseLives(1);
 		app->audio->PlayFx(pickCoinFxId);
 		break;
 	case ColliderType::PLATFORM:
@@ -311,8 +322,19 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType:: DEATH:
 		LOG("Collision DEATH");
-		isAlive = false;
-		pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+		if (lives > 0)
+		{
+			lives--;
+
+			pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), pbody->body->GetWorldCenter(), true);
+		}
+		
+		if (lives == 0)
+		{
+			isAlive = false;
+			pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+		}
+		
 		app->audio->PlayFx(deathFxId);
 		break;
 	case ColliderType::UNKNOWN:
@@ -335,3 +357,4 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	}
 	
 }
+

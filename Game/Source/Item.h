@@ -7,6 +7,12 @@
 
 struct SDL_Texture;
 
+enum ItemType {
+	// ...
+	POTION,
+	// ...
+};
+
 class Item : public Entity
 {
 public:
