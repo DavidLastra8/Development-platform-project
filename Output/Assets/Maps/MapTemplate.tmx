@@ -216,12 +216,8 @@
    </wangset>
   </wangsets>
  </tileset>
- <tileset firstgid="509" name="Background_2-export" tilewidth="32" tileheight="32" tilecount="4743" columns="93">
-  <image source="Legacy-Dungeon_V0.2_vacaroxa/Final/Assets/Background_2-export.png" width="2976" height="1632"/>
- </tileset>
- <tileset firstgid="5252" name="Background_s1_enlarged-export" tilewidth="32" tileheight="32" tilecount="4743" columns="93">
-  <image source="Legacy-Dungeon_V0.2_vacaroxa/Final/Assets/Background_s1_enlarged-export.png" width="2976" height="1632"/>
- </tileset>
+ <tileset firstgid="509" source="Background_2-export.tsx"/>
+ <tileset firstgid="5252" source="Background_s1_enlarged-export.tsx"/>
  <tileset firstgid="9995" source="../../../../../../MapMetadata.tsx"/>
  <layer id="18" name="BackgroundBlue" width="128" height="64">
   <properties>
