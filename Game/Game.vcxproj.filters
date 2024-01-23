@@ -27,6 +27,10 @@
     <ClCompile Include="Source\FlyingEnemy.cpp" />
     <ClCompile Include="Source\Coin.cpp" />
     <ClCompile Include="InitialScreen.cpp" />
+    <ClCompile Include="GuiControlButton.cpp" />
+    <ClCompile Include="GuiManager.cpp" />
+    <ClCompile Include="GuiCheckBox.cpp" />
+    <ClCompile Include="GuiSlider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -76,6 +80,11 @@
     <ClInclude Include="Source\FlyingEnemy.h" />
     <ClInclude Include="Source\Coin.h" />
     <ClInclude Include="InitialScreen.h" />
+    <ClInclude Include="GuiControl.h" />
+    <ClInclude Include="GuiControlButton.h" />
+    <ClInclude Include="GuiManager.h" />
+    <ClInclude Include="GuiCheckBox.h" />
+    <ClInclude Include="GuiSlider.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

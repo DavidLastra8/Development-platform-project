@@ -49,6 +49,7 @@ public:
 	FlyEnemy* FlyingEnemy2;
 	Item* Potion;
 	Coin* Coin;
+	float volume = 90;
 
 private:
 	SDL_Texture* img;
