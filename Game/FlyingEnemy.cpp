@@ -14,7 +14,7 @@
 
 FlyEnemy::FlyEnemy() : Entity(EntityType::FLYING_ENEMY)
 {
-	name.Create("FlyEnemy");
+	name.Create("Flyenemy");
 }
 
 FlyEnemy::~FlyEnemy()
@@ -29,9 +29,11 @@ void FlyEnemy::InitAnims()
 
 bool FlyEnemy::Awake()
 {
-	position = iPoint(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
 
-	
+	position.x = parameters.attribute("x").as_int();
+	position.y = parameters.attribute("y").as_int();
+
+	texturePath = parameters.attribute("texturepath").as_string();
 
 	return true;
 }
@@ -40,90 +42,56 @@ bool FlyEnemy::Start()
 {
 
 	//initilize textures
-	SString tex = parameters.attribute("texturepath").as_string();
-	texture = app->tex->Load(tex.GetString());
+	texture = app->tex->Load(texturePath);
+	pathTest = app->tex->Load("Assets/Textures/testPathTile.png");
 
-	bound.x = position.x - 120;
-	bound.y = position.y - 60;
-	bound.w = 240;
-	bound.h = 120;
+	enemyCollider = app->physics->CreateCircle(position.x + 10, position.y + 15, 25, bodyType::DYNAMIC);
+	enemyCollider->listener = this;
+	enemyCollider->ctype = ColliderType::ENEMY;
 
-	int enemy[8] = {
-		0, 0,
-		12, 0,
-		12, 10,
-		0, 10,
-	};
-
-	enemyFlying = app->physics->CreateCircle(position.x, position.y, 16, DYNAMIC);
-	enemyFlying->ctype = ColliderType::ENEMY;
-	enemyFlying->listener = this;
-	
-
-	enemyFlying->body->SetGravityScale(0);
+	enemyCollider->body->SetGravityScale(0);
 
 	return true;
 }
 
 bool FlyEnemy::Update(float dt)
 {
-	position.x = METERS_TO_PIXELS(enemyFlying->body->GetTransform().p.x) - 23;
-	position.y = METERS_TO_PIXELS(enemyFlying->body->GetTransform().p.y) - 35;
-	app->render->DrawTexture(texture, position.x, position.y);
+	position.x = METERS_TO_PIXELS(enemyCollider->body->GetTransform().p.x) - 23;
+	position.y = METERS_TO_PIXELS(enemyCollider->body->GetTransform().p.y) - 35;
+	app->render->DrawTexture(texture, position.x - 25, position.y - 35);
 
-	// Activate or deactivate debug mode
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-		debug = !debug;
+	iPoint enemPos = app->map->WorldToMap(position.x, position.y);
+	iPoint PlayerPos = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
 
-	if (app->scene->player->GetTilex() >= bound.x
-		&& app->scene->player->GetTilex() <= bound.x + bound.w
-		&& app->scene->player->GetTiley() >= bound.y
-		&& app->scene->player->GetTiley() <= bound.y + bound.h)
-	{
-		iPoint enemPos = app->map->WorldToMap(position.x, position.y);
-		iPoint PlayerPos = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
-		app->map->pathfinding->CreatePath(enemPos, PlayerPos);
+	app->map->pathfinding->CreatePath(enemPos, PlayerPos);
 
-		const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-
-		if (debug) {
-			for (uint i = 0; i < path->Count(); ++i)
-			{
-				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				app->render->DrawTexture(pathTest, pos.x, pos.y);
-			}
-		}
-
-
-		if (path->Count() > 2 && app->map->pathfinding->CreatePath(enemPos, PlayerPos) != -1) {
-
-			iPoint pos = app->map->MapToWorld(path->At(2)->x, path->At(2)->y);
-
-			triX = position.x - pos.x;
-			triY = position.y - pos.y;
-
-			enemyFlying->body->SetLinearVelocity(b2Vec2(-(triX / 10), -(triY / 10)));
-
-			if (abs(enemPos.x - PlayerPos.x) < 2) {
-				enemyFlying->body->SetLinearVelocity(b2Vec2(0, 0));
-				enemyFlying->body->SetLinearDamping(0);
-			}
-		}
-	}
-
-	position.x = METERS_TO_PIXELS(enemyFlying->body->GetTransform().p.x - 8);
-	position.y = METERS_TO_PIXELS(enemyFlying->body->GetTransform().p.y - 8);
-
-	bound.x = position.x - 120;
-	bound.y = position.y - 60;
-	bound.w = 240;
-	bound.h = 120;
+	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 
 	if (debug) {
-		app->render->DrawRectangle(bound, 0, 255, 0, 80);
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			app->render->DrawTexture(pathTest, pos.x, pos.y);
+		}
 	}
 
-	app->render->DrawTexture(texture, position.x, position.y);
+
+	if (path->Count() > 1 && app->map->pathfinding->CreatePath(enemPos, PlayerPos) != -1) {
+
+		iPoint pos = app->map->MapToWorld(path->At(1)->x, path->At(1)->y);
+
+		triX = position.x - pos.x;
+		triY = position.y - pos.y;
+
+		enemyCollider->body->SetLinearVelocity(b2Vec2(-(triX / 3), -(triY / 3)));
+
+		if (abs(enemPos.x - PlayerPos.x) < 1) {
+			enemyCollider->body->SetLinearVelocity(b2Vec2(0, 0));
+			enemyCollider->body->SetLinearDamping(0);
+		}
+	}
+
+	app->render->DrawTexture(texture, position.x - 80, position.y - 60);
 
 	return true;
 }
@@ -136,19 +104,5 @@ bool FlyEnemy::CleanUp()
 
 void FlyEnemy::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-	switch (physB->ctype)
-	{
-	case ColliderType::PLATFORM:
-		LOG("Collision PLATFORM");
-		break;
-	case ColliderType::ITEM:
-		LOG("Collision ITEM");
-		
-		break;
-	case ColliderType::UNKNOWN:
-		LOG("Collision UNKNOWN");
-		break;
-	default:
-		break;
-	}
+
 }

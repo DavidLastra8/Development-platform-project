@@ -13,10 +13,11 @@
 #include "Box2D/Box2D/Box2D.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "FlyingEnemy.h"
+#include "../FlyingEnemy.h"
 #include "EntityManager.h"
 #include "App.h"
 #include "Physics.h"
+#include "ModuleFadeToBlack.h"
 
 
 
@@ -25,6 +26,7 @@
 Scene::Scene() : Module()
 {
 	name.Create("scene");
+	
 }
 
 // Destructor
@@ -130,8 +132,7 @@ bool Scene::Update(float dt)
 		//}
 		app->render->camera.y = -player->position.y+275;
 	}
-
-
+	
 		
 	else
 	{
@@ -172,6 +173,10 @@ bool Scene::Update(float dt)
 	LOG("%d", x);
 	LOG("%d", y);
 	iPoint origin = iPoint(x, y);
+
+	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
+		app->moduleFadeToBlack->FadeToBlack(this, (ModuleFadeToBlack*)app->initialScreen, 60);
+	}
 
 	//If mouse button is pressed modify player position
 	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {

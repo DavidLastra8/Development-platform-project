@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "Scene.h"
+#include "ModuleFadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -57,6 +58,8 @@ bool Map::Update(float dt)
 
     if(mapLoaded == false)
         return false;
+
+  
 
     ListItem<MapLayer*>* mapLayerItem;
     mapLayerItem = mapData.maplayers.start;

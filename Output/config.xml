@@ -21,6 +21,9 @@
     <fx volume="128"/>
   </audio>
 
+	<initialScreen>
+		<intro texturepath ="Assets/Textures/portada_development.png"/>
+	</initialScreen>
   <scene>
     <player x="400" y="1102" texturepath="Assets/Textures/player.png"/>
 	<enemy x ="940" y="940" texturepath ="Assets/Textures/Enemy_ground.png"/>

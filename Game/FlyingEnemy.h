@@ -44,7 +44,7 @@ public:
 
 	float triX, triY;
 
-	PhysBody* enemyFlying;
+	PhysBody* enemyCollider;
 
 	SDL_Rect bound;
 

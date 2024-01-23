@@ -19,6 +19,8 @@ class Scene;
 class EntityManager;
 class Map;
 class Physics;
+class ModuleFadeToBlack;
+class InitialScreen;
 
 class App
 {
@@ -98,6 +100,8 @@ public:
 	EntityManager* entityManager;
 	Map* map;
 	Physics* physics;
+	ModuleFadeToBlack* moduleFadeToBlack;
+	InitialScreen* initialScreen;
 
 private:
 
