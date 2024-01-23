@@ -50,17 +50,17 @@ bool Scene::Awake(pugi::xml_node& config)
 		player->parameters = config.child("player");
 	}
 
-	/*if (config.child("Potion")) {
+	if (config.child("Potion")) {
 		Potion = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		Potion->parameters = config.child("Potion");
-	}*/
+	}
 
 
-	if (config.child("Coin"))
+	/*if (config.child("Coin"))
 	{
 		Coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
 		Coin->parameters = config.child("Coin");
-	}
+	}*/
 
 	if (config.child("enemy")) {
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
@@ -220,43 +220,3 @@ bool Scene::CleanUp()
 	return true;
 }
 
-//// L14: TODO 6: Implement a method to load the state
-//// for now load camera's x and y
-//bool Scene::LoadState(pugi::xml_node node) {
-//
-//	player->position.x = node.child("player").attribute("x").as_int();
-//	player->position.y = node.child("player").attribute("y").as_int();
-//	b2Vec newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player.position.y));
-//	return true;
-//}
-//
-//
-//// L14: TODO 8: Create a method to save the state of the renderer
-//// using append_child and append_attribute
-//bool Render::SaveState(pugi::xml_node node) {
-//
-//	pugi::xml_node camNode = node.append_child("camera");
-//	camNode.append_attribute("x").set_value(camera.x);
-//	camNode.append_attribute("y").set_value(camera.y);
-//
-//	return true;
-//}
-
-bool Scene::LoadState(pugi::xml_node node)
-{
-	//player->position.x = node.child("player").attribute("x").as_int();
-	//player->position.y = node.child("player").attribute("y").as_int();
-	//b2Vec2 newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y));
-	//player->pbody->body->SetTransform(newPos, player->pbody->body->GetAngle());
-	return true;
-
-};
-
-bool Scene::SaveState(pugi::xml_node node)
-{
-/*	pugi::xml_node playerNode = node.append_child("player");
-	playerNode.append_attribute("x").set_value(player->position.x);
-	playerNode.append_attribute("y").set_value(player->position.y);*/ 
-
-	return true;
-};

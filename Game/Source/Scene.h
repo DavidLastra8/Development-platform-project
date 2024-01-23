@@ -39,9 +39,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Declare the LoadState method
-	bool LoadState(pugi::xml_node node) override;
-	bool SaveState(pugi::xml_node node) override;
+	
 
 public:
 	Player* player;
