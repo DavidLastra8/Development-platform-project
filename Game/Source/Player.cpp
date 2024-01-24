@@ -148,12 +148,12 @@ bool Player::Update(float dt)
 		bool movingRight = app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
 
 		// Horizontal movement
-		if (movingLeft)
+		if (movingLeft && isOnPause == false)
 		{
 			currentVel.x = -8.0f; // Leftward
 			lastDirection = LEFT;
 		}
-		else if (movingRight)
+		else if (movingRight && isOnPause == false)
 		{
 			currentVel.x = 8.0f; // Rightward
 			lastDirection = RIGHT;
@@ -283,7 +283,11 @@ bool Player::Update(float dt)
 
 	
 	SDL_Rect rect = currentAnimation->GetCurrentFrame(dt);
-	app->render->DrawTexture(texture, position.x, position.y,&rect);
+	if (isOnPause == false) {
+
+		app->render->DrawTexture(texture, position.x, position.y, &rect);
+	}
+	
 
 	
 	

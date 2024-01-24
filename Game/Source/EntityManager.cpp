@@ -8,7 +8,7 @@
 #include "Enemy.h"
 #include "Box2D/Box2D/Box2D.h"
 #include "Physics.h"
-
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -175,11 +175,12 @@ bool EntityManager::Update(float dt)
 		pEntity = item->data;
 
 		if (pEntity->active == false) continue;
-		ret = item->data->Update(dt);
+
+		if (!app->scene->player->isOnPause || item->data == app->scene->player) {
+			ret = item->data->Update(dt);
+		}
 	}
-	/*if (!app->scene->player->isOnPause || item->data == app->scene->player) {
-		ret = item->data->Update(dt);
-	}*/
+	
 	return ret;
 }
 

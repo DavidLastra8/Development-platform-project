@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Render.h"
 #include "Player.h"
+#include "Scene.h"
 #include "Window.h"
 
 
@@ -51,8 +52,9 @@ bool Physics::PreUpdate()
 
 	// Step (update) the World
 	// WARNING: WE ARE STEPPING BY CONSTANT 1/60 SECONDS!
-	world->Step(1.0f / 60.0f, 6, 2);
-
+	if (app->scene->player->isOnPause == false){
+		world->Step(1.0f / 60.0f, 6, 2);
+	}
 	// Because Box2D does not automatically broadcast collisions/contacts with sensors, 
 	// we have to manually search for collisions and "call" the equivalent to the ModulePhysics::BeginContact() ourselves...
 	for (b2Contact* c = world->GetContactList(); c; c = c->GetNext())

@@ -170,7 +170,9 @@ bool Scene::Update(float dt)
 		app->LoadRequest();
 		
 	}
-
+	if (app->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
+		app->scene->player->isOnPause = true;
+	}
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
 	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
