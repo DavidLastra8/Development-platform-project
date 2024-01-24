@@ -94,7 +94,10 @@ public:
 	Direction lastDirection = IDLE;
 
 private:
+
 	int lives;
+	bool IsOnPause = false;
+
 	std::chrono::steady_clock::time_point lastDamageTime;  // Time of last damage
 	
 

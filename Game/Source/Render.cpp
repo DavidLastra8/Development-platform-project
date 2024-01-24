@@ -48,7 +48,9 @@ bool Render::Awake(pugi::xml_node& config)
 		camera.x = 0;
 		camera.y = -700;
 	}
-	
+	TTF_Init();
+
+	font = TTF_OpenFont("Assets/Fonts/arial/FiraSans-Black.ttf", 200);
 	return ret;
 }
 

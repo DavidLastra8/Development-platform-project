@@ -177,7 +177,9 @@ bool EntityManager::Update(float dt)
 		if (pEntity->active == false) continue;
 		ret = item->data->Update(dt);
 	}
-
+	/*if (!app->scene->player->isOnPause || item->data == app->scene->player) {
+		ret = item->data->Update(dt);
+	}*/
 	return ret;
 }
 
