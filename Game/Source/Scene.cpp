@@ -172,6 +172,9 @@ bool Scene::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
 		app->scene->player->isOnPause = true;
+		//app->scene->exitPauseButton->state = GuiControlState::NORMAL;
+		//app->scene->resumePauseButton->state = GuiControlState::NORMAL;
+		//app->scene->settingsPauseButton->state = GuiControlState::NORMAL;
 	}
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);

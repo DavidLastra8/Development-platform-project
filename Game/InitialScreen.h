@@ -37,5 +37,8 @@ private:
 	uint textW;
 	uint textH;
 	GuiControlButton* start;
+	GuiControlButton* exit;
+	GuiControlButton* setting;
+	GuiControlButton* volumen;
 };
 #endif
