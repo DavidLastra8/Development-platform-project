@@ -316,16 +316,20 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
-		app->scene->player->IncreaseLives(1);
-		// Assuming you have a way to get the actual Item entity from physB
 		
-		if (item != nullptr) {
-			app->entityManager->DestroyEntity(item);
-			//make the item collider null
-			physB->listener = nullptr;
-		}
+		if (duration_cast<seconds>(now - lastDamageTime).count() >= 5) {
+			app->audio->PlayFx(pickCoinFxId);
 
-		app->audio->PlayFx(pickCoinFxId);
+			app->scene->player->IncreaseLives(1);
+			// Assuming you have a way to get the actual Item entity from physB
+
+			if (item != nullptr) {
+				app->entityManager->DestroyEntity(item);
+				//make the item collider null
+				physB->listener = nullptr;
+			}
+		}
+		
 		break;
 
 
