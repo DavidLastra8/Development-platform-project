@@ -274,6 +274,11 @@ bool Player::Update(float dt)
 		isAlive = true;
 	}
 	
+	//Teleport the Player to another position
+    if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		SetPosition(5050, 1102);
+		isAlive = true;
+	}
 
 	
 
