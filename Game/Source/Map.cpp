@@ -193,7 +193,7 @@ bool Map::Load()
                 {
                     int gid = mapLayerItem->data->Get(x, y);
                     TileSet* tileset = GetTilesetFromTileId(gid);
-                    if (gid == 49)
+                    if (gid == 49 && 9995)
                     {
                         SDL_Rect r = tileset->GetRectangle(gid);
                         iPoint pos = MapToWorld(x, y);
