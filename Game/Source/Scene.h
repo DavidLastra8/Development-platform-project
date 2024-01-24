@@ -8,6 +8,7 @@
 #include "Physics.h"
 #include "Enemy.h"
 #include "FlyingEnemy.h"
+#include "Boss.h"
 
 struct SDL_Texture;
 
@@ -49,6 +50,8 @@ public:
 	FlyEnemy* FlyingEnemy2;
 	Item* Potion;
 	Coin* Coin;
+    Boss* boss;
+
 
 private:
 	SDL_Texture* img;

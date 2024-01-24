@@ -96,6 +96,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="InitialScreen.cpp" />
+    <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\Coin.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
@@ -118,6 +119,7 @@
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="InitialScreen.h" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\Coin.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Entity.h" />
