@@ -3,6 +3,9 @@
 
 #include "../Module.h"
 #include "../Animation.h"
+#include "GuiControlButton.h"
+#include "GuiManager.h"
+#include "GuiControl.h"
 
 struct SDL_Texture;
 
@@ -19,11 +22,20 @@ public:
 
 	bool PostUpdate() override;
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
 public:
 	// The scene sprite sheet loaded into an SDL_Texture
 
 	SDL_Texture* intro;
+	
 
 	int frame = 0;
+
+private:
+	uint windowW;
+	uint windowH;
+	uint textW;
+	uint textH;
+	GuiControlButton* start;
 };
 #endif

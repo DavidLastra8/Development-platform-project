@@ -20,6 +20,7 @@ class EntityManager;
 class Map;
 class Physics;
 class InitialScreen;
+class GuiManager;
 
 class App
 {
@@ -100,6 +101,7 @@ public:
 	Map* map;
 	Physics* physics;
 	InitialScreen* initialScreen;
+	GuiManager* guiManager;
 
 private:
 

@@ -22,6 +22,18 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 {
 	GuiControl* guiControl = nullptr;
 
+	switch (type)
+	{
+	case GuiControlType::BUTTON:
+		guiControl = new GuiControlButton(id, bounds, text);
+		break;
+	}
+
+	//Set the observer
+	guiControl->observer = observer;
+
+	// Created GuiControls are add it to the list of controls
+	guiControlsList.Add(guiControl);
 	//Call the constructor according to the GuiControlType
 
 	//Set the observer

@@ -7,6 +7,8 @@
 #include "../Input.h"
 #include "../Map.h"
 #include "../Scene.h"
+#include "GuiControl.h"
+#include "GuiManager.h"
 
 
 
@@ -30,8 +32,8 @@ bool InitialScreen::Start()
 
 	bool ret = true;
 
-
-
+	SDL_Rect StartButton = { windowW / 2 - 60,windowH / 2 - 120,100,20 };
+	start = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Start", StartButton, this);
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
@@ -44,7 +46,8 @@ bool InitialScreen::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		app->entityManager->active = true;
 		app->entityManager->Start();
-		app->map->active = true; app->map->Start();
+		app->map->active = true;
+		app->map->Start();
 		app->scene->active = true;
 		app->scene->Start();
 		this->active = false;
@@ -59,6 +62,13 @@ bool InitialScreen::PostUpdate()
 {
 	// Draw everything --------------------------------------
 	app->render->DrawTexture(intro, 0, 0, false);
+
+	
+
+	return true;
+}
+
+bool InitialScreen:: OnGuiMouseClickEvent(GuiControl* control) {
 
 
 	return true;
