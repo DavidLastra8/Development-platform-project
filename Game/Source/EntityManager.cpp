@@ -133,6 +133,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::COIN:
 		entity = new Coin();
 		break;
+
 	
 	default:
 		break;
