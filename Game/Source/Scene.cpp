@@ -133,7 +133,7 @@ bool Scene::Start()
 	SDL_Rect VsincCheckOff = { windowW / 2 - 60,windowH / 2 - 240 , 240, 80 };
 	VsincOff = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "Vsinc Off", VsincCheckOff, this);
 	VsincOff->state = GuiControlState::DISABLED;
-	SDL_Rect Go_Back = { windowW / 2 - 60,windowH / 2 - 360 , 240, 80 };
+	SDL_Rect Go_Back = { windowW / 2 - 60,windowH / 2 - 240 , 240, 80 };
 	returned = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "Go Back", Go_Back, this);
 	returned->state = GuiControlState::DISABLED;
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
