@@ -18,6 +18,7 @@
 #include "App.h"
 #include "Physics.h"
 #include "Boss.h"
+#include "Coin.h"
 
 
 
@@ -57,11 +58,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 
 
-	/*if (config.child("Coin"))
+	if (config.child("Coin"))
 	{
 		Coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
 		Coin->parameters = config.child("Coin");
-	}*/
+	}
 
 	if (config.child("enemy")) {
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
@@ -82,7 +83,7 @@ bool Scene::Awake(pugi::xml_node& config)
 		FlyingEnemy2->parameters = config.child("Flyenemy2");
 	}
 	//spawn a Boss
-    /*if (config.child("Boss")) {
+   /* if (config.child("Boss")) {
 		Boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
 		Boss->parameters = config.child("Boss");
 	}*/

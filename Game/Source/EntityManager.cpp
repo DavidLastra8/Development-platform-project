@@ -222,7 +222,7 @@ bool EntityManager::LoadState(pugi::xml_node node) {
 
 	//Coins
     int coinCtr = 1;
-    for (pugi::xml_node coinNode = node.child("item"); coinNode; coinNode = coinNode.next_sibling("item")) {
+    for (pugi::xml_node coinNode = node.child("coin"); coinNode; coinNode = coinNode.next_sibling("coin")) {
     iPoint posCoin = iPoint(coinNode.attribute("x").as_int(), coinNode.attribute("y").as_int());
 		if (coinCtr == 1) app->scene->Coin->SetPosition(posCoin.x, posCoin.y);
 		
