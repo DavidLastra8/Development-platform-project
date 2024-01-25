@@ -42,7 +42,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	
+	bool OnGuiMouseClickEvent(GuiControl* control);
 
 public:
 	Player* player;
@@ -60,7 +60,15 @@ private:
 	uint texW, texH;
 	uint windowW, windowH;
 	SDL_Texture* mouseTileTex = nullptr;
-	GuiControlButton* exit;
+	GuiControlButton* exitScene;
+	GuiControlButton* resumen;
+	GuiControlButton* settingsScene;
+	GuiControlButton* FullScreen;
+	GuiControlButton* FullScreenOff;
+	GuiControlButton* Vsinc;
+	GuiControlButton* VsincOff;
+	GuiControlButton* returned;
+	bool IsExiting = false;
 	
 
 };

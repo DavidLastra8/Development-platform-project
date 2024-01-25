@@ -33,6 +33,10 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	case GuiControlType::SLIDER:
 		guiControl = new GuiSlider(id, bounds, text);
 		break;
+	
+	case GuiControlType::CHECKBOX:
+		guiControl = new GuiCheckBox(id, bounds, text);
+		break;
 	}
 	//Set the observer
 	guiControl->observer = observer;

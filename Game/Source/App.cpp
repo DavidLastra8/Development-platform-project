@@ -48,7 +48,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	
 
 	AddModule(initialScreen);
-	AddModule(guiManager);
+	
 	AddModule(physics);
 	AddModule(map);
 	AddModule(scene);
@@ -56,7 +56,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	
 	
 	AddModule(entityManager);
-
+	AddModule(guiManager);
 	// Render last to swap buffer
 	AddModule(render);
 

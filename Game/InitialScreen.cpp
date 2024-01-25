@@ -47,7 +47,7 @@ bool InitialScreen::Start()
 	SDL_Rect MusicSlider = { windowW / 2 - 60,windowH/ 2 , 240,80 };
 	volumen = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 4, "Volume", MusicSlider, this);
 	volumen->state = GuiControlState::DISABLED;
-	SDL_Rect FullScreenCheckBox = { windowW / 2 - 60,windowH / 2 , 240, 80 };
+	
 
 	SDL_Rect GoBackButton = { windowW / 2 - 60,windowH  / 2 - 120, 240, 80 };
 	turnBack = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Go Back", GoBackButton, this);
@@ -91,6 +91,10 @@ bool InitialScreen:: OnGuiMouseClickEvent(GuiControl* control) {
 		app->scene->active = true;
 		app->scene->Start();
 		this->active = false;
+
+		exit->state = GuiControlState::DISABLED;
+		start->state = GuiControlState::DISABLED;
+		setting->state = GuiControlState::DISABLED;
 	}
 	if (control->id == 2) {
 		hasToExit = true;

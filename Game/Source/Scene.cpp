@@ -113,7 +113,29 @@ bool Scene::Start()
 		app->map->mapData.tilesets.Count());
 
 	SDL_Rect ExitButton = { windowW / 2 - 60,windowH / 2 + 120, 240, 80 };
-	exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Exit", ExitButton, this);
+	exitScene = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Exit", ExitButton, this);
+	exitScene->state = GuiControlState::DISABLED;
+	SDL_Rect ResumeButton = { windowW / 2 - 60,windowH / 2 , 240, 80 };
+	resumen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Resume", ResumeButton, this);
+	resumen->state = GuiControlState::DISABLED;
+	SDL_Rect SettingsSceneButton = { windowW / 2 - 60,windowH / 2 -120, 240, 80 };
+	settingsScene = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", SettingsSceneButton, this);
+	settingsScene->state = GuiControlState::DISABLED;
+	SDL_Rect FullScreenCheck = { windowW / 2 - 60,windowH / 2 + 120, 240, 80 };
+	FullScreen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Full Screen", FullScreenCheck, this);
+	FullScreen->state = GuiControlState::DISABLED;
+	SDL_Rect FullScreenCheckOff = { windowW / 2 - 60,windowH / 2, 240, 80 };
+	FullScreenOff = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Full Screen Off", FullScreenCheckOff, this);
+	FullScreenOff->state = GuiControlState::DISABLED;
+	SDL_Rect VsincCheck = { windowW / 2 - 60,windowH / 2-120 , 240, 80 };
+	Vsinc = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Vsinc", VsincCheck, this);
+	Vsinc->state = GuiControlState::DISABLED;
+	SDL_Rect VsincCheckOff = { windowW / 2 - 60,windowH / 2 - 240 , 240, 80 };
+	VsincOff = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "Vsinc Off", VsincCheckOff, this);
+	VsincOff->state = GuiControlState::DISABLED;
+	SDL_Rect Go_Back = { windowW / 2 - 60,windowH / 2 - 360 , 240, 80 };
+	returned = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "Go Back", Go_Back, this);
+	returned->state = GuiControlState::DISABLED;
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 	return true;
 }
@@ -178,9 +200,9 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
 		app->scene->player->isOnPause = true;
 		
-		//app->scene->exitPauseButton->state = GuiControlState::NORMAL;
-		//app->scene->resumePauseButton->state = GuiControlState::NORMAL;
-		//app->scene->settingsPauseButton->state = GuiControlState::NORMAL;
+		app->scene->exitScene->state = GuiControlState::NORMAL;
+		app->scene->resumen->state = GuiControlState::NORMAL;
+		app->scene->settingsScene->state = GuiControlState::NORMAL;
 	}
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
@@ -217,12 +239,62 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || IsExiting == true)
 		ret = false;
 
 	return ret;
 }
+bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 
+	bool ret = true;
+	if (control->id == 2) {
+		IsExiting = true;
+	}
+	if (control->id == 1) {
+		app->scene->player->isOnPause = false;
+		exitScene->state = GuiControlState::DISABLED;
+		settingsScene->state = GuiControlState::DISABLED;
+		resumen->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 3) {
+		resumen->state = GuiControlState::DISABLED;
+		settingsScene->state = GuiControlState::DISABLED;
+		FullScreen->state = GuiControlState::NORMAL;
+		Vsinc->state = GuiControlState::NORMAL;
+		returned->state = GuiControlState::NORMAL;
+		exitScene->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 4) {
+		SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		FullScreenOff->state = GuiControlState::NORMAL;
+		FullScreen->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 5) {
+		app->win->GetWindowSize(windowW, windowH);
+		SDL_SetWindowSize(app->win->window, windowW, windowH);
+		SDL_SetWindowFullscreen(app->win->window, 0);
+		
+		FullScreen->state = GuiControlState::NORMAL;
+		FullScreenOff->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 6) {
+
+	}
+	if (control->id == 7) {
+
+	}
+	if (control->id == 8) {
+		FullScreen->state = GuiControlState::DISABLED;
+		FullScreenOff->state = GuiControlState::DISABLED;
+		Vsinc->state = GuiControlState::DISABLED;
+		VsincOff->state = GuiControlState::DISABLED;
+		returned->state = GuiControlState::DISABLED;
+		resumen->state = GuiControlState::NORMAL;
+		exitScene->state = GuiControlState::NORMAL;
+		settingsScene->state = GuiControlState::NORMAL;
+	}
+	return ret;
+}
 // Called before quitting
 bool Scene::CleanUp()
 {
