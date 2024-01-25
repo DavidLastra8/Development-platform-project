@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Item.h"
 #include "Enemy.h"
+#include "Boss.h"
 #include "Box2D/Box2D/Box2D.h"
 #include "Physics.h"
 
@@ -133,7 +134,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::COIN:
 		entity = new Coin();
 		break;
-	
+	case EntityType::BOSS:
+		/*entity = new Boss();*/
+		break;
 	default:
 		break;
 	}
@@ -229,8 +232,13 @@ bool EntityManager::LoadState(pugi::xml_node node) {
 		coinCtr++;
 	}
 
+	int BossCtr = 1;
+	for (pugi::xml_node BossNode = node.child("coin"); BossNode; BossNode = BossNode.next_sibling("coin")) {
+		iPoint posBoss = iPoint(BossNode.attribute("x").as_int(), BossNode.attribute("y").as_int());
+		if (BossCtr == 1) app->scene->Coin->SetPosition(posBoss.x, posBoss.y);
 
-
+		BossCtr++;
+	}
 	//Example
 	/*pugi::xml_node entitymanager;
     for (entitymanager = node.child("entitymanager"); entitymanager && ret; entitymanager = entitymanager.next_sibling("entitymanager"))
