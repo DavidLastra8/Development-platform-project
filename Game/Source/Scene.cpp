@@ -52,10 +52,10 @@ bool Scene::Awake(pugi::xml_node& config)
 		player->parameters = config.child("player");
 	}
 
-	//if (config.child("Potion")) {
-	//	Potion = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-	//	Potion->parameters = config.child("Potion");
-	//}
+	if (config.child("Potion")) {
+		Potion = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		Potion->parameters = config.child("Potion");
+	}
 
 
 	if (config.child("Coin"))
@@ -223,6 +223,17 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	//Destroying all entities
+	app->entityManager->DestroyEntity(coin);
+	app->entityManager->DestroyEntity(player);
+	app->entityManager->DestroyEntity(enemy);
+	app->entityManager->DestroyEntity(enemy2);
+	app->entityManager->DestroyEntity(FlyingEnemy);
+	app->entityManager->DestroyEntity(FlyingEnemy2);
+	app->entityManager->DestroyEntity(boss);
+	app->entityManager->DestroyEntity(Potion);
+	app->entityManager->DestroyEntity(coin);
 
 	return true;
 }

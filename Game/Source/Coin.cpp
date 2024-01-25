@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Player.h"
 
 Coin::Coin() : Entity(EntityType::COIN)
 {
@@ -58,4 +59,9 @@ void Coin::SetPosition(int x, int y) {
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+}
+
+void Coin::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+	
 }

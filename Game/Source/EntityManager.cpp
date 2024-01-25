@@ -82,38 +82,12 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
-//Entity* EntityManager::FindOrCreateEntity(EntityType type) {
-//	// Search for an existing entity of the given type
-//	for (ListItem<Entity*>* item = entities.start; item != nullptr; item = item->next) {
-//		if (item->data->type == type) {
-//			return item->data;  // Return the existing entity
-//		}
-//	}
-//
-//	// If not found, create a new entity
-//	Entity* newEntity = nullptr;
-//	switch (type) {
-//	case EntityType::PLAYER:
-//		newEntity = new Player();
-//		break;
-//		// ... handle other entity types
-//	}
-//
-//	if (newEntity != nullptr) {
-//		entities.Add(newEntity);  // Add the new entity to the manager
-//	}
-//	return newEntity;
-//}
+
 
 
 Entity* EntityManager::CreateEntity(EntityType type)
 {
-	//// Search for an existing entity of the given type
-	//for (ListItem<Entity*>* item = entities.start; item != nullptr; item = item->next) {
-	//	if (item->data->type == type) {
-	//		return item->data;  // Return the existing entity
-	//	}
-	//}
+
 
 	Entity* entity = nullptr; 
 

@@ -12,6 +12,7 @@
 #include "Map.h"
 #include "EntityManager.h"
 #include "Item.h"
+#include "Coin.h"
 
 
 
@@ -316,6 +317,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	using namespace std::chrono;
 	steady_clock::time_point now = steady_clock::now();
 	Item* item = (Item*)physB->listener;;
+	Coin* coin = (Coin*)physB->listener;
 	switch (physB->ctype)
 	{
 
@@ -409,7 +411,14 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::COIN:
 		LOG("Collision COIN");
-		app->audio->PlayFx(pickCoinFxId);
+		/*app->audio->PlayFx(pickCoinFxId);*/
+		//if isPicked is false, then play the sound and set isPicked to true
+		
+		if (coin->isPicked == false) {
+			app->audio->PlayFx(pickCoinFxId);
+			app->entityManager->DestroyEntity(coin);
+			coin->isPicked = true;
+		}
 		break;
 	}
 	
