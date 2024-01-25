@@ -202,12 +202,14 @@ bool Player::Update(float dt)
 	
 	if (!isAlive)
 	{
+		app->audio->PlayFx(deathFxId);
 		// Get the current time in milliseconds
 		Uint32 now = SDL_GetTicks();
 		if (now - lastDeathTime > DEATH_COOLDOWN_MS)
 		{
 			//teleport to last save point
 			app->LoadRequest();
+
 			isAlive = true;
 			lastDeathTime = now;
 		}
