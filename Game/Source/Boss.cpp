@@ -13,6 +13,7 @@
 #include "Map.h"
 #include "Animation.h"
 #include "EntityManager.h"
+#include "Player.h"
 
 Boss::Boss() : Entity(EntityType::BOSS)
 {
@@ -119,7 +120,23 @@ bool Boss::CleanUp()
 
 void Boss::OnCollision(PhysBody* physA, PhysBody* physB)
 {
+	Player* player = (Player*)physB->listener;
+	if (physB->ctype == ColliderType::PLAYER)
+	{
+		LOG("Collision PLAYER - BOSS");
+		if (!player->GodMode)
+		{
+			//if the player position in y is greater than the enemy's
+			if (physB->body->GetLinearVelocity().y >= 0.5)
+			{
+				LOG("PLAYER ATTACKED BOSS");
+				DecreaseLives(lifeCount);
+				app->audio->PlayFx(pickCoinFxId);
+				app->entityManager->DestroyEntity(this);
+			}
+		}
 
+	}
 }
 
 void Boss::SetPosition(int x, int y) {

@@ -41,6 +41,7 @@ public:
 	Animation Idle;
 
 public:
+	int pickCoinFxId;
 
 	const char* texturePath;
 

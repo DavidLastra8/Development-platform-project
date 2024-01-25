@@ -313,34 +313,24 @@ void Player::IncreaseLives(int amount) {
 	}
 }
 
-//bool isOnTopOfBoss(PhysBody* physA, PhysBody* physB) {
-//	b2Vec2 posA = physA->body->GetPosition();
-//	b2Vec2 posB = physB->body->GetPosition();
-//	float distance = posA.y - posB.y;
-//	if (distance <= 5) {
-//		return true;
-//	}
-//	else {
-//		return false;
-//	}
+
+
+//bool CheckCollisionFromTop(Entity* player, Entity* boss) {
+//	// Assuming each entity has x, y, width, and height attributes
+//	// and a method to get the bottom position (y + height)
+//
+//	// Calculate the player's bottom position
+//	int playerBottom = player->position.y + 16;
+//
+//	// Check if the player's bottom is near the top of the boss
+//	bool isNearTop = playerBottom >= boss->position.y && playerBottom <= (boss->position.y + 10);
+//
+//	// Check if the player's horizontal position overlaps with the boss's horizontal span
+//	bool isHorizontallyAligned = player->position.x < (boss->position.x + 100) &&
+//		(player->position.x + 100) > boss->position.x;
+//
+//	return isNearTop && isHorizontallyAligned;
 //}
-
-bool CheckCollisionFromTop(Entity* player, Entity* boss) {
-	// Assuming each entity has x, y, width, and height attributes
-	// and a method to get the bottom position (y + height)
-
-	// Calculate the player's bottom position
-	int playerBottom = player->position.y + 16;
-
-	// Check if the player's bottom is near the top of the boss
-	bool isNearTop = playerBottom >= boss->position.y && playerBottom <= (boss->position.y + 10);
-
-	// Check if the player's horizontal position overlaps with the boss's horizontal span
-	bool isHorizontallyAligned = player->position.x < (boss->position.x + 100) &&
-		(player->position.x + 100) > boss->position.x;
-
-	return isNearTop && isHorizontallyAligned;
-}
 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	using namespace std::chrono;
@@ -460,7 +450,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	//when player colliding with 5 pixels above the BOSS collider, the boss will be destroyed
-		case ColliderType::BOSS:
+		/*case ColliderType::BOSS:
 		LOG("Collision BOSS");
 		if (CheckCollisionFromTop(player,boss) == true) {
 			boss->DecreaseLives(1);
@@ -468,7 +458,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			app->entityManager->DestroyEntity(boss);
 
 		}
-		break;
+		break;*/
 	}
 	
 }
