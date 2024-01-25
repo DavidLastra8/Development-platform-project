@@ -228,7 +228,12 @@ bool Player::Update(float dt)
 	{
 		// Play the end-level sound effect
 		app->audio->PlayFx(endLevelFxId);
+		
+
+		SetPosition(5050, 1102);
 		endLevelSoundPlayed = true;  // Set the flag to true
+
+		
 	}
 
 	//if pressed F6, set the endLevelSoundPlayed to false

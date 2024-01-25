@@ -182,6 +182,12 @@ bool Scene::Update(float dt)
 		app->LoadRequest();
 		
 	}
+	// when player x reaches 1672, Save the Game only once
+	if (player->position.x >= 1672 && GameSaved == false) {
+		app->SaveRequest();
+
+		GameSaved = true;
+	}
 
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
