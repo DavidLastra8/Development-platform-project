@@ -305,7 +305,7 @@ bool Player::CleanUp()
 void Player::IncreaseLives(int amount) {
 	lives += amount;
 	// Optionally, cap the lives to a maximum value
-	const int maxLives = 5;
+	const int maxLives = 6;
 	if (lives > maxLives) {
 		lives = maxLives;
 	}
@@ -343,8 +343,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		
 		LOG("Collision DEATH");
 		
-
-		if (duration_cast<seconds>(now - lastDamageTime).count() >= 3) {
+		lives = 0;
+		/*if (duration_cast<seconds>(now - lastDamageTime).count() >= 3) {
 			if (lives > 0)
 			{
 				lives--;
@@ -354,7 +354,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), pbody->body->GetWorldCenter(), true);
 
 				app->audio->PlayFx(deathFxId);
-			}
+			}*/
 
 			
 			lastDamageTime = now;  // Update last damage time
@@ -364,7 +364,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				isAlive = false;
 				pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 			}
-		}
+		/*}*/
 		
 		
 		app->audio->PlayFx(deathFxId);

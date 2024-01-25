@@ -95,7 +95,7 @@ public:
 
 private:
 
-	int lives;
+	int lives = 6;
 	
 
 	std::chrono::steady_clock::time_point lastDamageTime;  // Time of last damage

@@ -33,25 +33,36 @@ bool InitialScreen::Start()
 
 	bool ret = true;
 
-	SDL_Rect StartButton = { windowW / 2-60,windowH / 2-120, 240,80 };
+	SDL_Rect StartButton = { windowW / 2-450,windowH / 2-120, 240,80 };
 	start = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Start", StartButton, this);
 
-	SDL_Rect ExitButton = { windowW / 2 - 60,windowH / 2 + 120, 240, 80 };
+	SDL_Rect ExitButton = { windowW / 2 - 450,windowH / 2 + 120, 240, 80 };
 	exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Exit", ExitButton, this);
 	
+	SDL_Rect CreditButton = { windowW / 2 - 450,windowH / 2 + 240, 240, 80 };
+	credit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "Credits", CreditButton, this);
 
-	SDL_Rect SettingsButton = { windowW / 2 - 60,windowH / 2 , 240, 80 };
+	SDL_Rect SettingsButton = { windowW / 2 - 450,windowH / 2 , 240, 80 };
 	setting = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", SettingsButton, this);
 	
 	
-	SDL_Rect MusicSlider = { windowW / 2 - 60,windowH/ 2 , 240,80 };
+	SDL_Rect MusicSlider = { windowW / 2 - 450,windowH/ 2 , 240,80 };
 	volumen = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 4, "Volume", MusicSlider, this);
 	volumen->state = GuiControlState::DISABLED;
 	
 
-	SDL_Rect GoBackButton = { windowW / 2 - 60,windowH  / 2 - 120, 240, 80 };
+	SDL_Rect GoBackButton = { windowW / 2 - 450,windowH  / 2 - 120, 240, 80 };
 	turnBack = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Go Back", GoBackButton, this);
 	turnBack->state = GuiControlState::DISABLED;
+
+	SDL_Rect Credits1 = { windowW / 2 - -60,windowH / 2 + 120, 240, 80 };
+	credit2 = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "David Lastra", Credits1, this);
+	credit2->state = GuiControlState::DISABLED;
+
+	SDL_Rect Credits2 = { windowW / 2+60,windowH / 2 + 200, 240, 80 };
+	credit3 = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "Yiwei Ye", Credits2, this);
+	credit3->state = GuiControlState::DISABLED;
+
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 	return ret;
@@ -101,19 +112,31 @@ bool InitialScreen:: OnGuiMouseClickEvent(GuiControl* control) {
 	}
 	if (control->id==3){
 		start->state = GuiControlState::DISABLED;
+		credit->state = GuiControlState::DISABLED;
 		volumen->state = GuiControlState::NORMAL;
 		setting->state = GuiControlState::DISABLED;
 		turnBack->state = GuiControlState::NORMAL;
 		
 	}
 	if (control->id == 4) {
-		return ret;
+		app->audio->ChangeMusicVolume(app->scene->volume);
 	}
 	if (control->id == 6) {
 		start->state = GuiControlState::NORMAL;
+		credit->state = GuiControlState::NORMAL;
 		volumen->state = GuiControlState::DISABLED;
 		setting->state = GuiControlState::NORMAL;
 		turnBack->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 7) {
+		credit2->state = GuiControlState::NORMAL;
+		credit3->state = GuiControlState::NORMAL;
+	}
+	if (control->id == 8) {
+		credit2->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 9) {
+		credit3->state = GuiControlState::DISABLED;
 	}
 	return ret;
 }
