@@ -24,9 +24,12 @@ public:
 
 	void SetPosition(int x, int y);
 
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+
 public:
 
 	bool isPicked = false;
+	int pickCoinFxId;
 
 private:
 

@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Player.h"
 
 Coin::Coin() : Entity(EntityType::COIN)
 {
@@ -43,7 +44,7 @@ bool Coin::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x, position.y);
+	app->render->DrawTexture(texture, position.x-150, position.y-50);
 
 	return true;
 }
@@ -58,4 +59,9 @@ void Coin::SetPosition(int x, int y) {
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+}
+
+void Coin::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+	
 }

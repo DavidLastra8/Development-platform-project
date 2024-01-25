@@ -49,7 +49,9 @@ public:
 
 	void IncreaseLives(int amount);
 
-	void DestroyEntity(Entity* entity);
+	void DecreaseLives(int amount);
+
+
 
 public:
 	
@@ -60,6 +62,8 @@ public:
 	SDL_Texture* mouseTileTex = nullptr;
 	PhysBody* pbody;
 	int pickCoinFxId;
+	int coinCount;
+	int lives;
 
 	unsigned int jumpFxId; // ID for the jumping sound effect
 	unsigned int endLevelFxId;  // ID for the end-level sound effect
@@ -67,6 +71,8 @@ public:
 	bool endLevelSoundPlayed;   // Flag to check if the sound has been played
 	int endLevelX = 3939;              // X position where the player has to reach to end the level	
 	int endLevelY = 1420;              // Y position where the player has to reach to end the level
+	int lastDeathTime = 0;
+	const int DEATH_COOLDOWN_MS = 2000; // 1000 milliseconds (1 second)
 
 	float velx;
 	float gravity;
@@ -95,12 +101,10 @@ public:
 
 	Direction lastDirection = IDLE;
 
-private:
-
-	
-	
-
 	std::chrono::steady_clock::time_point lastDamageTime;  // Time of last damage
+private:
+	
+	
 	
 
 };

@@ -30,6 +30,8 @@ public:
 
 	void SetPosition(int x, int y);
 
+	void Deactivate();
+
 public:
 
 	bool isPicked = false;

@@ -12,6 +12,8 @@
 #include "Map.h"
 #include "EntityManager.h"
 #include "Item.h"
+#include "Coin.h"
+#include "Boss.h"
 
 
 
@@ -197,11 +199,20 @@ bool Player::Update(float dt)
 			app->audio->PlayFx(jumpFxId);
 		}
 	}
-	/*if (isAlive == false) {
-		SetPosition(400, 1102);
-		isAlive = true;
-	}*/
-
+	
+	if (!isAlive)
+	{
+		// Get the current time in milliseconds
+		Uint32 now = SDL_GetTicks();
+		if (now - lastDeathTime > DEATH_COOLDOWN_MS)
+		{
+			//teleport to last save point
+			app->LoadRequest();
+			isAlive = true;
+			lastDeathTime = now;
+		}
+		
+	}
 
 
 	//we don't want this for now, Instead of directly setting the linear velocity for movement, you can apply forces or impulses in the horizontal direction as well. This will allow both jumping and lateral movement to coexist.
@@ -226,7 +237,12 @@ bool Player::Update(float dt)
 	{
 		// Play the end-level sound effect
 		app->audio->PlayFx(endLevelFxId);
+		
+
+		SetPosition(5050, 1102);
 		endLevelSoundPlayed = true;  // Set the flag to true
+
+		
 	}
 
 	//if pressed F6, set the endLevelSoundPlayed to false
@@ -274,6 +290,11 @@ bool Player::Update(float dt)
 		isAlive = true;
 	}
 	
+	//Teleport the Player to another position
+    if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		SetPosition(5050, 1102);
+		isAlive = true;
+	}
 
 	
 
@@ -311,25 +332,44 @@ void Player::IncreaseLives(int amount) {
 	}
 }
 
+void Player::DecreaseLives(int amount) {
+	lives -= amount;
+	if (lives < 0) {
+		lives = 0;
+	}
+}
+
+
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	using namespace std::chrono;
 	steady_clock::time_point now = steady_clock::now();
+	Player* player = (Player*)physA->listener;
 	Item* item = (Item*)physB->listener;;
+	Coin* coin = (Coin*)physB->listener;
+	Boss* boss = (Boss*)physB->listener;
 	switch (physB->ctype)
 	{
 
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
-		app->scene->player->IncreaseLives(1);
-		// Assuming you have a way to get the actual Item entity from physB
-		
-		if (item != nullptr) {
-			app->entityManager->DestroyEntity(item);
-			//make the item collider null
-			physB->listener = nullptr;
-		}
+		if (item->isPicked == false)
+		{
+			if (duration_cast<seconds>(now - lastDamageTime).count() >= 5) {
+				app->audio->PlayFx(pickCoinFxId);
+				
+				app->scene->player->IncreaseLives(1);
+				// Assuming you have a way to get the actual Item entity from physB
 
-		app->audio->PlayFx(pickCoinFxId);
+				
+				app->entityManager->DestroyEntity(item);
+				
+				item->Deactivate();
+				
+			}
+			item->isPicked = true;
+		}
+		
+		
 		break;
 
 
@@ -369,6 +409,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		
 		app->audio->PlayFx(deathFxId);
 		break;
+
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		//player not movable
@@ -404,8 +445,19 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::COIN:
 		LOG("Collision COIN");
-		app->audio->PlayFx(pickCoinFxId);
+		/*app->audio->PlayFx(pickCoinFxId);*/
+		//if isPicked is false, then play the sound and set isPicked to true
+		
+		if (coin->isPicked == false) {
+			app->audio->PlayFx(pickCoinFxId);
+			app->entityManager->DestroyEntity(coin);
+			//increment the player's coin count
+			app->scene->player->coinCount++;
+			coin->isPicked = true;
+		}
 		break;
+
+	
 	}
 	
 }
