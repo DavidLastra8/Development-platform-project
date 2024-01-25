@@ -45,7 +45,7 @@ bool Boss::Start()
 	texture = app->tex->Load(texturePath);
 	pathTest = app->tex->Load("Assets/Textures/testPathTile.png");
 
-	enemyCollider = app->physics->CreateCircle(position.x + 10, position.y + 15, 40, bodyType::DYNAMIC);
+	enemyCollider = app->physics->CreateCircle(position.x - 50, position.y + 15, 40, bodyType::DYNAMIC);
 	enemyCollider->listener = this;
 	enemyCollider->ctype = ColliderType::ENEMY;
 

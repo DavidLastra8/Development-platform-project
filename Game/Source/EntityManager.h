@@ -50,7 +50,7 @@ public:
 	int coin;
 	int enemy;
 	int Flyenemy;
-	int Boss;
+	int boss;
 	
 
 

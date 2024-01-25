@@ -135,7 +135,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		entity = new Coin();
 		break;
 	case EntityType::BOSS:
-		/*entity = new Boss();*/
+		entity = new Boss();
 		break;
 	default:
 		break;
