@@ -58,11 +58,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 
 
-	if (config.child("Coin"))
+	/*if (config.child("Coin"))
 	{
 		Coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
 		Coin->parameters = config.child("Coin");
-	}
+	}*/
 
 	if (config.child("enemy")) {
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
@@ -84,8 +84,8 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 	//spawn a Boss
     if (config.child("Boss")) {
-		Boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
-		Boss->parameters = config.child("Boss");
+		boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+		boss->parameters = config.child("Boss");
 	}
 
 	return ret;
