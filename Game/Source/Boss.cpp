@@ -14,7 +14,8 @@
 #include "Animation.h"
 #include "EntityManager.h"
 #include "Player.h"
-
+#include <chrono>
+#include "SDL/include/SDL.h"
 Boss::Boss() : Entity(EntityType::BOSS)
 {
 	name.Create("Boss");
@@ -120,20 +121,41 @@ bool Boss::CleanUp()
 
 void Boss::OnCollision(PhysBody* physA, PhysBody* physB)
 {
+	/*using namespace std::chrono;
+	steady_clock::time_point now = steady_clock::now();
+	std::chrono::steady_clock::time_point lastAttackTime;*/
+
 	Player* player = (Player*)physB->listener;
 	if (physB->ctype == ColliderType::PLAYER)
 	{
+
 		LOG("Collision PLAYER - BOSS");
 		if (!player->GodMode)
 		{
-			//if the player position in y is greater than the enemy's
-			if (physB->body->GetLinearVelocity().y >= 0.5)
-			{
-				LOG("PLAYER ATTACKED BOSS");
-				DecreaseLives(lifeCount);
-				app->audio->PlayFx(pickCoinFxId);
-				app->entityManager->DestroyEntity(this);
+			// Get the current time in milliseconds
+			Uint32 now = SDL_GetTicks();
+
+			// Calculate the time difference in milliseconds
+			/*auto duration = duration_cast<milliseconds>(now - lastAttackTime).count();*/
+			if (now - lastAttackTime > ATTACK_COOLDOWN_MS) {
+				//if the player position in y is greater than the enemy's
+				if (physB->body->GetLinearVelocity().y >= 0.5)
+				{
+					LOG("PLAYER ATTACKED BOSS");
+					DecreaseLives(lifeCount);
+					app->audio->PlayFx(pickCoinFxId);
+					app->entityManager->DestroyEntity(this);
+				}
+				/*else if (physB->body->GetLinearVelocity().y < 0.5)
+				{
+					LOG("BOSS ATTACKED PLAYER");
+					player->DecreaseLives(player->lifeCount);
+					app->audio->PlayFx(pickCoinFxId);
+					lastDamageTime = now;
+				}*/
 			}
+
+			
 		}
 
 	}

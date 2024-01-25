@@ -449,16 +449,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		break;
 
-	//when player colliding with 5 pixels above the BOSS collider, the boss will be destroyed
-		/*case ColliderType::BOSS:
-		LOG("Collision BOSS");
-		if (CheckCollisionFromTop(player,boss) == true) {
-			boss->DecreaseLives(1);
-			app->audio->PlayFx(pickCoinFxId);
-			app->entityManager->DestroyEntity(boss);
-
-		}
-		break;*/
+	
 	}
 	
 }

@@ -6,6 +6,8 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 #include "Animation.h"
+//include chrono for time
+#include <chrono>
 
 struct SDL_Texture;
 
@@ -35,6 +37,7 @@ public:
 
 	void Deactivate();
 
+	
 
 	Animation* currentAnim;
 
@@ -42,6 +45,8 @@ public:
 
 public:
 	int pickCoinFxId;
+	const int ATTACK_COOLDOWN_MS = 3000; // 3000 milliseconds (3 seconds)
+	int lastAttackTime = 0;
 
 	const char* texturePath;
 
