@@ -45,7 +45,7 @@ public:
 
 public:
 	int pickCoinFxId;
-	const int ATTACK_COOLDOWN_MS = 3000; // 3000 milliseconds (3 seconds)
+	const int ATTACK_COOLDOWN_MS = 30000; // 3000 milliseconds (3 seconds)
 	int lastAttackTime = 0;
 
 	const char* texturePath;
