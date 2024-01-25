@@ -31,6 +31,11 @@ public:
 
 	void SetPosition(int x, int y);
 
+	void DecreaseLives(int lifeCount);
+
+	void Deactivate();
+
+
 	Animation* currentAnim;
 
 	Animation Idle;
@@ -60,6 +65,7 @@ public:
 	
 
 private:
+	int lifeCount;
 };
 
 #endif // __BOSS_H__

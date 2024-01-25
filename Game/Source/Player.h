@@ -49,7 +49,7 @@ public:
 
 	void IncreaseLives(int amount);
 
-	void DestroyEntity(Entity* entity);
+
 
 public:
 	

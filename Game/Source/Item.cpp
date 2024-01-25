@@ -49,6 +49,7 @@ bool Item::Update(float dt)
 
 bool Item::CleanUp()
 {
+	
 	return true;
 }
 
@@ -57,4 +58,10 @@ void Item::SetPosition(int x, int y) {
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+}
+
+void Item::Deactivate()
+{
+	pbody->Deactivate();
+	
 }

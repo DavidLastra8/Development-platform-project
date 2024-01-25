@@ -12,10 +12,12 @@
 #include "Pathfinding.h"
 #include "Map.h"
 #include "Animation.h"
+#include "EntityManager.h"
 
 Boss::Boss() : Entity(EntityType::BOSS)
 {
 	name.Create("Boss");
+	lifeCount = 3;
 }
 
 Boss::~Boss()
@@ -48,11 +50,21 @@ bool Boss::Start()
 
 	enemyCollider = app->physics->CreateCircle(position.x + 16, position.y + 16, 40, bodyType::DYNAMIC);
 	enemyCollider->listener = this;
-	enemyCollider->ctype = ColliderType::ENEMY;
+	enemyCollider->ctype = ColliderType::BOSS;
 
 	enemyCollider->body->SetGravityScale(0);
 
 	return true;
+}
+
+void Boss::DecreaseLives(int lifeCount)
+{
+	lifeCount--;
+	if (lifeCount <= 0) {
+		Deactivate();
+		app->entityManager->DestroyEntity(this);
+		
+	}
 }
 
 
@@ -101,7 +113,7 @@ bool Boss::Update(float dt)
 
 bool Boss::CleanUp()
 {
-
+	
 	return true;
 }
 
@@ -115,4 +127,11 @@ void Boss::SetPosition(int x, int y) {
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	enemyCollider->body->SetTransform(newPos, enemyCollider->body->GetAngle());
+}
+
+void Boss::Deactivate()
+{
+	this->Disable();
+	app->entityManager->DestroyEntity(this);
+	enemyCollider->body->SetActive(false);
 }
