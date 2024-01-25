@@ -63,7 +63,7 @@ public:
 	PhysBody* pbody;
 	int pickCoinFxId;
 	int coinCount;
-	int lives;
+	int lives=6;
 
 	unsigned int jumpFxId; // ID for the jumping sound effect
 	unsigned int endLevelFxId;  // ID for the end-level sound effect
@@ -77,8 +77,6 @@ public:
 	float velx;
 	float gravity;
 	float vely;
-	int lives = 6;
-	int coinCount;
 	bool isOnPause = false;
 
 	
