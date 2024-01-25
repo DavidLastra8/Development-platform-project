@@ -5,6 +5,7 @@
 #include "GuiControlButton.h"
 #include "GuiSlider.h"
 #include "GuiCheckBox.h"
+#include "GuiControlValueBox.h"
 #include "../Audio.h"
 
 GuiManager::GuiManager() :Module()
@@ -28,14 +29,19 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	{
 	case GuiControlType::BUTTON:
 		guiControl = new GuiControlButton(id, bounds, text);
+		guiControl->texture = app->tex->Load("Assets\Textures\button_development.png");
 		break;
 
 	case GuiControlType::SLIDER:
 		guiControl = new GuiSlider(id, bounds, text);
 		break;
-	
+
 	case GuiControlType::CHECKBOX:
 		guiControl = new GuiCheckBox(id, bounds, text);
+		break;
+
+	case GuiControlType::VALUEBOX:
+		guiControl = new GuiControlValueBox(id, bounds, text);
 		break;
 	}
 	//Set the observer

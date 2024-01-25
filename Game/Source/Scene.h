@@ -11,6 +11,7 @@
 #include "../GuiControlButton.h"
 #include "../GuiSlider.h"
 #include "../GuiCheckBox.h"
+#include "../GuiControlValueBox.h"
 
 struct SDL_Texture;
 
@@ -52,6 +53,8 @@ public:
 	FlyEnemy* FlyingEnemy2;
 	Item* Potion;
 	Coin* Coin;
+	GuiControlValueBox* Ccoins;
+	GuiControlValueBox* Clifes;
 	float volume = 90;
 
 private:
@@ -68,7 +71,10 @@ private:
 	GuiControlButton* Vsinc;
 	GuiControlButton* VsincOff;
 	GuiControlButton* returned;
+	
 	bool IsExiting = false;
+	
+
 	
 
 };

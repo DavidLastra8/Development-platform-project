@@ -136,6 +136,12 @@ bool Scene::Start()
 	SDL_Rect Go_Back = { windowW / 2 - 60,windowH / 2 - 240 , 240, 80 };
 	returned = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "Go Back", Go_Back, this);
 	returned->state = GuiControlState::DISABLED;
+	SDL_Rect CoinBox  = { windowW / 2 +260,windowH / 2 - 240 , 240, 80 };
+	Ccoins = (GuiControlValueBox*)app->guiManager->CreateGuiControl(GuiControlType::VALUEBOX, 9, "Coins:", CoinBox, this);
+	Ccoins->state = GuiControlState::DISABLED;
+	SDL_Rect LifesBox = { windowW / 2 + 260,windowH / 2 - 160 , 240, 80 };
+	Clifes = (GuiControlValueBox*)app->guiManager->CreateGuiControl(GuiControlType::VALUEBOX, 10, "Lifes:", LifesBox, this);
+	Clifes->state = GuiControlState::DISABLED;
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 	return true;
 }
@@ -203,7 +209,13 @@ bool Scene::Update(float dt)
 		app->scene->exitScene->state = GuiControlState::NORMAL;
 		app->scene->resumen->state = GuiControlState::NORMAL;
 		app->scene->settingsScene->state = GuiControlState::NORMAL;
+		Ccoins->state = GuiControlState::DISABLED;
+		Clifes->state = GuiControlState::DISABLED;
 	}
+	std::string strPlayerLifes = std::to_string(player->lives);
+	Clifes->SetValue(strPlayerLifes);
+	std::string coins = std::to_string(player->coinCount);
+	Ccoins->SetValue(coins);
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
 	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
@@ -255,6 +267,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		exitScene->state = GuiControlState::DISABLED;
 		settingsScene->state = GuiControlState::DISABLED;
 		resumen->state = GuiControlState::DISABLED;
+		Ccoins->state = GuiControlState::NORMAL;
+		Clifes->state = GuiControlState::NORMAL;
 	}
 	if (control->id == 3) {
 		resumen->state = GuiControlState::DISABLED;

@@ -62,7 +62,7 @@ bool InitialScreen::Start()
 	SDL_Rect Credits2 = { windowW / 2+60,windowH / 2 + 200, 240, 80 };
 	credit3 = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "Yiwei Ye", Credits2, this);
 	credit3->state = GuiControlState::DISABLED;
-
+	
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 	return ret;
@@ -106,6 +106,9 @@ bool InitialScreen:: OnGuiMouseClickEvent(GuiControl* control) {
 		exit->state = GuiControlState::DISABLED;
 		start->state = GuiControlState::DISABLED;
 		setting->state = GuiControlState::DISABLED;
+		credit->state = GuiControlState::DISABLED;
+		app->scene->Clifes->state = GuiControlState::NORMAL;
+		app->scene->Ccoins->state = GuiControlState::NORMAL;
 	}
 	if (control->id == 2) {
 		hasToExit = true;

@@ -97,6 +97,7 @@
   <ItemGroup>
     <ClCompile Include="GuiCheckBox.cpp" />
     <ClCompile Include="GuiControlButton.cpp" />
+    <ClCompile Include="GuiControlValueBox.cpp" />
     <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="GuiSlider.cpp" />
     <ClCompile Include="InitialScreen.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="GuiCheckBox.h" />
     <ClInclude Include="GuiControl.h" />
     <ClInclude Include="GuiControlButton.h" />
+    <ClInclude Include="GuiControlValueBox.h" />
     <ClInclude Include="GuiManager.h" />
     <ClInclude Include="GuiSlider.h" />
     <ClInclude Include="InitialScreen.h" />

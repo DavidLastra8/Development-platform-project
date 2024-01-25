@@ -71,6 +71,8 @@ public:
 	float velx;
 	float gravity;
 	float vely;
+	int lives = 6;
+	int coinCount;
 	bool isOnPause = false;
 
 	
@@ -95,7 +97,7 @@ public:
 
 private:
 
-	int lives = 6;
+	
 	
 
 	std::chrono::steady_clock::time_point lastDamageTime;  // Time of last damage
