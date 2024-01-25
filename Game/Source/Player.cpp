@@ -306,7 +306,6 @@ bool Player::CleanUp()
 
 void Player::IncreaseLives(int amount) {
 	lives += amount;
-	// Optionally, cap the lives to a maximum value
 	const int maxLives = 5;
 	if (lives > maxLives) {
 		lives = maxLives;
@@ -323,19 +322,22 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
-		
-		if (duration_cast<seconds>(now - lastDamageTime).count() >= 5) {
-			app->audio->PlayFx(pickCoinFxId);
+		if (item->isPicked == false)
+		{
+			if (duration_cast<seconds>(now - lastDamageTime).count() >= 5) {
+				app->audio->PlayFx(pickCoinFxId);
+				
+				app->scene->player->IncreaseLives(1);
+				// Assuming you have a way to get the actual Item entity from physB
 
-			app->scene->player->IncreaseLives(1);
-			// Assuming you have a way to get the actual Item entity from physB
-
-			if (item != nullptr) {
+				
 				app->entityManager->DestroyEntity(item);
-				//make the item collider null
-				physB->listener = nullptr;
+					
+				
 			}
+			item->isPicked = true;
 		}
+		
 		
 		break;
 
@@ -417,6 +419,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (coin->isPicked == false) {
 			app->audio->PlayFx(pickCoinFxId);
 			app->entityManager->DestroyEntity(coin);
+			//increment the player's coin count
+			app->scene->player->coinCount++;
 			coin->isPicked = true;
 		}
 		break;

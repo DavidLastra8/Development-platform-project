@@ -60,6 +60,7 @@ public:
 	SDL_Texture* mouseTileTex = nullptr;
 	PhysBody* pbody;
 	int pickCoinFxId;
+	int coinCount;
 
 	unsigned int jumpFxId; // ID for the jumping sound effect
 	unsigned int endLevelFxId;  // ID for the end-level sound effect

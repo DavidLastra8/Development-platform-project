@@ -50,6 +50,7 @@ public:
 	FlyEnemy* FlyingEnemy2;
 	Item* Potion;
 	Coin* coin;
+	Coin* coin2;
     Boss* boss;
 
 

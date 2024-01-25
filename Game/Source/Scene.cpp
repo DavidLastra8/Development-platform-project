@@ -63,6 +63,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
 		coin->parameters = config.child("Coin");
 	}
+	if (config.child("Coin2"))
+	{
+		coin2 = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
+		coin2->parameters = config.child("Coin2");
+	}
 
 	//if (config.child("enemy")) {
 	//	enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);

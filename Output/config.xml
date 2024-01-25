@@ -29,7 +29,9 @@
 	<Flyenemy2 x ="400" y="402" texturepath ="Assets/Textures/enemy_flying.png"/>
 	<Potion x ="410" y="1110" texturepath ="Assets/Textures/potion.png"/>
 	<Coin x ="450" y="1110" texturepath ="Assets/Textures/potion.png"/>
+	<Coin2 x ="600" y="1110" texturepath ="Assets/Textures/potion.png"/>
 	<Boss x ="1000" y="1000" texturepath ="Assets/Textures/enemy_flying.png"/>
+	
   </scene>
 
   <map>
