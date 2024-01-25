@@ -30,7 +30,7 @@
 	<Potion x ="410" y="1110" texturepath ="Assets/Textures/potion.png"/>
 	<Coin x ="450" y="1110" texturepath ="Assets/Textures/potion.png"/>
 	<Coin2 x ="600" y="1110" texturepath ="Assets/Textures/potion.png"/>
-	<Boss x ="5250" y="1102" texturepath ="Assets/Textures/enemy_flying.png"/>
+	<Boss x ="5250" y="1102" texturepath ="Assets/Textures/StaticMonsterLevel2.png"/>
 	
   </scene>
 

@@ -53,6 +53,12 @@ public:
 
 	bool debug = false;
 
+
+	Animation* currentAnimation = nullptr;
+	// A set of animations
+	Animation idleAnim;
+	
+
 private:
 };
 

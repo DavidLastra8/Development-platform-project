@@ -11,6 +11,7 @@
 #include "Window.h"
 #include "Pathfinding.h"
 #include "Map.h"
+#include "Animation.h"
 
 Boss::Boss() : Entity(EntityType::BOSS)
 {
@@ -45,7 +46,7 @@ bool Boss::Start()
 	texture = app->tex->Load(texturePath);
 	pathTest = app->tex->Load("Assets/Textures/testPathTile.png");
 
-	enemyCollider = app->physics->CreateCircle(position.x - 50, position.y + 15, 40, bodyType::DYNAMIC);
+	enemyCollider = app->physics->CreateCircle(position.x + 16, position.y + 16, 40, bodyType::DYNAMIC);
 	enemyCollider->listener = this;
 	enemyCollider->ctype = ColliderType::ENEMY;
 
@@ -54,11 +55,13 @@ bool Boss::Start()
 	return true;
 }
 
+
+
 bool Boss::Update(float dt)
 {
 	position.x = METERS_TO_PIXELS(enemyCollider->body->GetTransform().p.x) - 23;
 	position.y = METERS_TO_PIXELS(enemyCollider->body->GetTransform().p.y) - 35;
-	app->render->DrawTexture(texture, position.x - 25, position.y - 35);
+	app->render->DrawTexture(texture, position.x - 30, position.y - 30);
 
 	iPoint enemPos = app->map->WorldToMap(position.x, position.y);
 	iPoint PlayerPos = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
@@ -91,7 +94,7 @@ bool Boss::Update(float dt)
 		}
 	}
 
-	app->render->DrawTexture(texture, position.x - 80, position.y - 60);
+	
 
 	return true;
 }
