@@ -15,6 +15,9 @@
 #include "Enemy.h"
 #include "FlyingEnemy.h"
 #include "EntityManager.h"
+#include "../GuiControl.h"
+#include "../GuiManager.h"
+#include "../InitialScreen.h"
 #include "App.h"
 #include "Physics.h"
 
@@ -109,6 +112,8 @@ bool Scene::Start()
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
 
+	SDL_Rect ExitButton = { windowW / 2 - 60,windowH / 2 + 120, 240, 80 };
+	exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Exit", ExitButton, this);
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 	return true;
 }
@@ -172,6 +177,7 @@ bool Scene::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
 		app->scene->player->isOnPause = true;
+		
 		//app->scene->exitPauseButton->state = GuiControlState::NORMAL;
 		//app->scene->resumePauseButton->state = GuiControlState::NORMAL;
 		//app->scene->settingsPauseButton->state = GuiControlState::NORMAL;

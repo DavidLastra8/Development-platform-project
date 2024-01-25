@@ -4,6 +4,8 @@
 #include "../Module.h"
 #include "../Animation.h"
 #include "GuiControlButton.h"
+#include "GuiSlider.h"
+#include "GuiCheckBox.h"
 #include "GuiManager.h"
 #include "GuiControl.h"
 
@@ -32,6 +34,7 @@ public:
 	int frame = 0;
 
 private:
+	bool hasToExit = false;
 	uint windowW;
 	uint windowH;
 	uint textW;
@@ -39,6 +42,7 @@ private:
 	GuiControlButton* start;
 	GuiControlButton* exit;
 	GuiControlButton* setting;
-	GuiControlButton* volumen;
+	GuiControlButton* turnBack;
+	GuiSlider* volumen;
 };
 #endif

@@ -8,6 +8,9 @@
 #include "Physics.h"
 #include "Enemy.h"
 #include "FlyingEnemy.h"
+#include "../GuiControlButton.h"
+#include "../GuiSlider.h"
+#include "../GuiCheckBox.h"
 
 struct SDL_Texture;
 
@@ -57,6 +60,7 @@ private:
 	uint texW, texH;
 	uint windowW, windowH;
 	SDL_Texture* mouseTileTex = nullptr;
+	GuiControlButton* exit;
 	
 
 };

@@ -75,18 +75,18 @@ bool GuiSlider::Update(float dt)
             //app->render->DrawTexture(texture, sliderPosx, bounds.y, &SDL_Rect({ 116, 0, 16, 23 }), 0, 0, 0, 0, false);
 
             app->render->DrawRectangle(bounds, 0, 100, 50, 255, false, false);
-            app->render->DrawRectangle({ sliderPosx, bounds.y, 20,20 }, 200, 200, 200, 255, true, false);
+            app->render->DrawRectangle({ sliderPosx, bounds.y+60, 20,20 }, 200, 200, 200, 255, true, false);
 
             if (sliderPosx - bounds.x >= 0)
-                app->render->DrawRectangle({ bounds.x,bounds.y, sliderPosx - bounds.x,20 }, 0, 100, 50, 255, true, false);
+                app->render->DrawRectangle({ bounds.x,bounds.y+60, sliderPosx - bounds.x,20 }, 0, 100, 50, 255, true, false);
             break;
 
         case GuiControlState::FOCUSED:
 
             app->render->DrawRectangle(bounds, 0, 100, 50, 255, false, false);
-            app->render->DrawRectangle({ sliderPosx, bounds.y, 20,20 }, 200, 200, 200, 255, true, false);
+            app->render->DrawRectangle({ sliderPosx, bounds.y+60, 20,20 }, 200, 200, 200, 255, true, false);
             if (sliderPosx - bounds.x >= 0)
-                app->render->DrawRectangle({ bounds.x,bounds.y, sliderPosx - bounds.x,20 }, 0, 100, 50, 255, true, false);
+                app->render->DrawRectangle({ bounds.x,bounds.y+60, sliderPosx - bounds.x,20 }, 0, 100, 50, 255, true, false);
             // app->render->DrawTexture(texture, bounds.x, bounds.y, &SDL_Rect({ 0, 23, 116, 23 }), 0, 0, 0, 0, false);
             // app->render->DrawTexture(texture, sliderPosx, bounds.y, &SDL_Rect({ 116, 0, 16, 23 }), 0, 0, 0, 0, false);
             break;
@@ -94,9 +94,9 @@ bool GuiSlider::Update(float dt)
         case GuiControlState::PRESSED:
 
             app->render->DrawRectangle(bounds, 0, 100, 50, 255, false, false);
-            app->render->DrawRectangle({ sliderPosx, bounds.y,  20,20 }, 200, 200, 200, 255, true, false);
+            app->render->DrawRectangle({ sliderPosx, bounds.y+60,  20,20 }, 200, 200, 200, 255, true, false);
             if (sliderPosx - bounds.x >= 0)
-                app->render->DrawRectangle({ bounds.x,bounds.y, sliderPosx - bounds.x,20 }, 0, 100, 50, 255, true, false);
+                app->render->DrawRectangle({ bounds.x,bounds.y+60, sliderPosx - bounds.x,20 }, 0, 100, 50, 255, true, false);
             // app->render->DrawTexture(texture, bounds.x, bounds.y, &SDL_Rect({ 0, 23, 116, 23 }), 0, 0, 0, 0, false);
             // app->render->DrawTexture(texture, sliderPosx, bounds.y, &SDL_Rect({ 116, 23 , 16, 23 }), 0, 0, 0, 0, false);
             app->scene->volume = value2;
@@ -107,9 +107,9 @@ bool GuiSlider::Update(float dt)
                 //app->audio->PlayFx(app->guimanager->pressButtonFx, 0);
 
                 app->render->DrawRectangle(bounds, 0, 100, 50, 255, false, false);
-            app->render->DrawRectangle({ sliderPosx, bounds.y, 20,20 }, 200, 200, 200, 255, true, false);
+            app->render->DrawRectangle({ sliderPosx, bounds.y+60, 20,20 }, 200, 200, 200, 255, true, false);
             if (sliderPosx - bounds.x >= 0)
-                app->render->DrawRectangle({ bounds.x,bounds.y, sliderPosx - bounds.x,20 }, 0, 100, 50, 255, true, false);
+                app->render->DrawRectangle({ bounds.x,bounds.y+60, sliderPosx - bounds.x,20 }, 0, 100, 50, 255, true, false);
             //  app->render->DrawTexture(texture, bounds.x, bounds.y, &SDL_Rect({ 0, 23, 116, 23 }), 0, 0, 0, 0, false);
             //  app->render->DrawTexture(texture, sliderPosx, bounds.y, &SDL_Rect({ 116, 23 , 16, 23 }), 0, 0, 0, 0, false);
             NotifyObserver();
