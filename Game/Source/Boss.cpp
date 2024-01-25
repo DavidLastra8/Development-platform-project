@@ -59,15 +59,11 @@ bool Boss::Start()
 	return true;
 }
 
-void Boss::DecreaseLives(int lifeCount)
-{
-	lifeCount--;
-	if (lifeCount <= 0) {
-		Deactivate();
-		app->entityManager->DestroyEntity(this);
-		
-	}
-}
+//void Boss::DecreaseLives(int lifeCount)
+//{
+//	lifeCount--;
+//	
+//}
 
 
 
@@ -139,20 +135,44 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB)
 			/*auto duration = duration_cast<milliseconds>(now - lastAttackTime).count();*/
 			if (now - lastAttackTime > ATTACK_COOLDOWN_MS) {
 				//if the player position in y is greater than the enemy's
-				if (physB->body->GetLinearVelocity().y >= 0.5)
+				if (physB->body->GetLinearVelocity().y >= 0)
 				{
 					LOG("PLAYER ATTACKED BOSS");
-					DecreaseLives(lifeCount);
+					lifeCount--;
+
+					if (lifeCount <= 0)
+					{
+						Deactivate();
+						app->entityManager->DestroyEntity(this);
+					}
 					app->audio->PlayFx(pickCoinFxId);
-					app->entityManager->DestroyEntity(this);
+					enemyCollider->body->ApplyLinearImpulse(b2Vec2(0.0f, 10.0f), enemyCollider->body->GetWorldCenter(), true);
+					lastAttackTime = now;
+					
 				}
-				/*else if (physB->body->GetLinearVelocity().y < 0.5)
+				else if (physB->body->GetLinearVelocity().y < 0.5)
 				{
 					LOG("BOSS ATTACKED PLAYER");
-					player->DecreaseLives(player->lifeCount);
-					app->audio->PlayFx(pickCoinFxId);
-					lastDamageTime = now;
-				}*/
+					if (player->lives > 0)
+					{
+						player->lives--;
+
+
+
+						player->pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), player->pbody->body->GetWorldCenter(), true);
+
+						app->audio->PlayFx(deathFxId);
+					}
+					
+
+					if (player->lives == 0)
+					{
+						player->isAlive = false;
+						player->pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+
+					}
+					lastAttackTime = now;
+				}
 			}
 
 			

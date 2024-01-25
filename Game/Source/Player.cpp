@@ -313,6 +313,13 @@ void Player::IncreaseLives(int amount) {
 	}
 }
 
+void Player::DecreaseLives(int amount) {
+	lives -= amount;
+	if (lives < 0) {
+		lives = 0;
+	}
+}
+
 
 
 //bool CheckCollisionFromTop(Entity* player, Entity* boss) {

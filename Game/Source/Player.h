@@ -49,6 +49,8 @@ public:
 
 	void IncreaseLives(int amount);
 
+	void DecreaseLives(int amount);
+
 
 
 public:
@@ -61,6 +63,7 @@ public:
 	PhysBody* pbody;
 	int pickCoinFxId;
 	int coinCount;
+	int lives;
 
 	unsigned int jumpFxId; // ID for the jumping sound effect
 	unsigned int endLevelFxId;  // ID for the end-level sound effect
@@ -94,9 +97,10 @@ public:
 
 	Direction lastDirection = IDLE;
 
-private:
-	int lives;
 	std::chrono::steady_clock::time_point lastDamageTime;  // Time of last damage
+private:
+	
+	
 	
 
 };
