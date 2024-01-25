@@ -12,6 +12,8 @@
 #include "Map.h"
 #include "EntityManager.h"
 #include "Item.h"
+#include "Coin.h"
+#include "Boss.h"
 
 
 
@@ -274,6 +276,11 @@ bool Player::Update(float dt)
 		isAlive = true;
 	}
 	
+	//Teleport the Player to another position
+    if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		SetPosition(5050, 1102);
+		isAlive = true;
+	}
 
 	
 
@@ -311,25 +318,62 @@ void Player::IncreaseLives(int amount) {
 	}
 }
 
+void Player::DecreaseLives(int amount) {
+	lives -= amount;
+	if (lives < 0) {
+		lives = 0;
+	}
+}
+
+
+
+//bool CheckCollisionFromTop(Entity* player, Entity* boss) {
+//	// Assuming each entity has x, y, width, and height attributes
+//	// and a method to get the bottom position (y + height)
+//
+//	// Calculate the player's bottom position
+//	int playerBottom = player->position.y + 16;
+//
+//	// Check if the player's bottom is near the top of the boss
+//	bool isNearTop = playerBottom >= boss->position.y && playerBottom <= (boss->position.y + 10);
+//
+//	// Check if the player's horizontal position overlaps with the boss's horizontal span
+//	bool isHorizontallyAligned = player->position.x < (boss->position.x + 100) &&
+//		(player->position.x + 100) > boss->position.x;
+//
+//	return isNearTop && isHorizontallyAligned;
+//}
+
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	using namespace std::chrono;
 	steady_clock::time_point now = steady_clock::now();
+	Player* player = (Player*)physA->listener;
 	Item* item = (Item*)physB->listener;;
+	Coin* coin = (Coin*)physB->listener;
+	Boss* boss = (Boss*)physB->listener;
 	switch (physB->ctype)
 	{
 
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
-		app->scene->player->IncreaseLives(1);
-		// Assuming you have a way to get the actual Item entity from physB
-		
-		if (item != nullptr) {
-			app->entityManager->DestroyEntity(item);
-			//make the item collider null
-			physB->listener = nullptr;
-		}
+		if (item->isPicked == false)
+		{
+			if (duration_cast<seconds>(now - lastDamageTime).count() >= 5) {
+				app->audio->PlayFx(pickCoinFxId);
+				
+				app->scene->player->IncreaseLives(1);
+				// Assuming you have a way to get the actual Item entity from physB
 
-		app->audio->PlayFx(pickCoinFxId);
+				
+				app->entityManager->DestroyEntity(item);
+				
+				item->Deactivate();
+				
+			}
+			item->isPicked = true;
+		}
+		
+		
 		break;
 
 
@@ -369,6 +413,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		
 		app->audio->PlayFx(deathFxId);
 		break;
+
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		//player not movable
@@ -404,8 +449,19 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::COIN:
 		LOG("Collision COIN");
-		app->audio->PlayFx(pickCoinFxId);
+		/*app->audio->PlayFx(pickCoinFxId);*/
+		//if isPicked is false, then play the sound and set isPicked to true
+		
+		if (coin->isPicked == false) {
+			app->audio->PlayFx(pickCoinFxId);
+			app->entityManager->DestroyEntity(coin);
+			//increment the player's coin count
+			app->scene->player->coinCount++;
+			coin->isPicked = true;
+		}
 		break;
+
+	
 	}
 	
 }

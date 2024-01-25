@@ -9,6 +9,7 @@
 #include "Box2D/Box2D/Box2D.h"
 #include "Physics.h"
 #include "Player.h"
+#include "Boss.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -81,38 +82,12 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
-//Entity* EntityManager::FindOrCreateEntity(EntityType type) {
-//	// Search for an existing entity of the given type
-//	for (ListItem<Entity*>* item = entities.start; item != nullptr; item = item->next) {
-//		if (item->data->type == type) {
-//			return item->data;  // Return the existing entity
-//		}
-//	}
-//
-//	// If not found, create a new entity
-//	Entity* newEntity = nullptr;
-//	switch (type) {
-//	case EntityType::PLAYER:
-//		newEntity = new Player();
-//		break;
-//		// ... handle other entity types
-//	}
-//
-//	if (newEntity != nullptr) {
-//		entities.Add(newEntity);  // Add the new entity to the manager
-//	}
-//	return newEntity;
-//}
+
 
 
 Entity* EntityManager::CreateEntity(EntityType type)
 {
-	//// Search for an existing entity of the given type
-	//for (ListItem<Entity*>* item = entities.start; item != nullptr; item = item->next) {
-	//	if (item->data->type == type) {
-	//		return item->data;  // Return the existing entity
-	//	}
-	//}
+
 
 	Entity* entity = nullptr; 
 
@@ -133,7 +108,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::COIN:
 		entity = new Coin();
 		break;
-	
+	case EntityType::BOSS:
+		entity = new Boss();
+		break;
 	default:
 		break;
 	}
@@ -225,15 +202,20 @@ bool EntityManager::LoadState(pugi::xml_node node) {
 
 	//Coins
     int coinCtr = 1;
-    for (pugi::xml_node coinNode = node.child("item"); coinNode; coinNode = coinNode.next_sibling("item")) {
+    for (pugi::xml_node coinNode = node.child("coin"); coinNode; coinNode = coinNode.next_sibling("coin")) {
     iPoint posCoin = iPoint(coinNode.attribute("x").as_int(), coinNode.attribute("y").as_int());
-		if (coinCtr == 1) app->scene->Coin->SetPosition(posCoin.x, posCoin.y);
+		if (coinCtr == 1) app->scene->coin->SetPosition(posCoin.x, posCoin.y);
 		
 		coinCtr++;
 	}
 
+	int BossCtr = 1;
+	for (pugi::xml_node BossNode = node.child("coin"); BossNode; BossNode = BossNode.next_sibling("coin")) {
+		iPoint posBoss = iPoint(BossNode.attribute("x").as_int(), BossNode.attribute("y").as_int());
+		if (BossCtr == 1) app->scene->coin->SetPosition(posBoss.x, posBoss.y);
 
-
+		BossCtr++;
+	}
 	//Example
 	/*pugi::xml_node entitymanager;
     for (entitymanager = node.child("entitymanager"); entitymanager && ret; entitymanager = entitymanager.next_sibling("entitymanager"))

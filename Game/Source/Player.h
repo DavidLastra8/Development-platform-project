@@ -50,6 +50,9 @@ public:
 	void IncreaseLives(int amount);
 
 	void DestroyEntity(Entity* entity);
+	void DecreaseLives(int amount);
+
+
 
 public:
 	
@@ -60,6 +63,8 @@ public:
 	SDL_Texture* mouseTileTex = nullptr;
 	PhysBody* pbody;
 	int pickCoinFxId;
+	int coinCount;
+	int lives;
 
 	unsigned int jumpFxId; // ID for the jumping sound effect
 	unsigned int endLevelFxId;  // ID for the end-level sound effect
@@ -95,12 +100,10 @@ public:
 
 	Direction lastDirection = IDLE;
 
-private:
-
-	
-	
-
 	std::chrono::steady_clock::time_point lastDamageTime;  // Time of last damage
+private:
+	
+	
 	
 
 };

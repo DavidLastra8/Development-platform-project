@@ -20,6 +20,8 @@
 #include "../InitialScreen.h"
 #include "App.h"
 #include "Physics.h"
+#include "Boss.h"
+#include "Coin.h"
 
 
 
@@ -59,29 +61,39 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 
 
-	/*if (config.child("Coin"))
+	if (config.child("Coin"))
 	{
-		Coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
-		Coin->parameters = config.child("Coin");
-	}*/
-
-	if (config.child("enemy")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("enemy");
+		coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
+		coin->parameters = config.child("Coin");
+	}
+	if (config.child("Coin2"))
+	{
+		coin2 = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
+		coin2->parameters = config.child("Coin2");
 	}
 
-	if (config.child("enemy2")) {
-		enemy2 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy2->parameters = config.child("enemy2");
-	}
+	//if (config.child("enemy")) {
+	//	enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+	//	enemy->parameters = config.child("enemy");
+	//}
 
-	if (config.child("Flyenemy")) {
-		FlyingEnemy = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
-		FlyingEnemy->parameters = config.child("Flyenemy");
-	}
-	if (config.child("Flyenemy2")) {
-		FlyingEnemy2 = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
-		FlyingEnemy2->parameters = config.child("Flyenemy2");
+	//if (config.child("enemy2")) {
+	//	enemy2 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+	//	enemy2->parameters = config.child("enemy2");
+	//}
+
+	//if (config.child("Flyenemy")) {
+	//	FlyingEnemy = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
+	//	FlyingEnemy->parameters = config.child("Flyenemy");
+	//}
+	//if (config.child("Flyenemy2")) {
+	//	FlyingEnemy2 = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
+	//	FlyingEnemy2->parameters = config.child("Flyenemy2");
+	//}
+	////spawn a Boss
+    if (config.child("Boss")) {
+		boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+		boss->parameters = config.child("Boss");
 	}
 
 	return ret;
@@ -94,7 +106,7 @@ bool Scene::Start()
 	//img = app->tex->Load("Assets/Textures/test.png");
 	
 	//Music is commented so that you can add your own music
-	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
@@ -313,6 +325,17 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	//Destroying all entities
+	app->entityManager->DestroyEntity(coin);
+	app->entityManager->DestroyEntity(player);
+	app->entityManager->DestroyEntity(enemy);
+	app->entityManager->DestroyEntity(enemy2);
+	app->entityManager->DestroyEntity(FlyingEnemy);
+	app->entityManager->DestroyEntity(FlyingEnemy2);
+	app->entityManager->DestroyEntity(boss);
+	app->entityManager->DestroyEntity(Potion);
+	app->entityManager->DestroyEntity(coin);
 
 	return true;
 }
