@@ -79,7 +79,8 @@ private:
 	GuiControlButton* Vsinc;
 	GuiControlButton* VsincOff;
 	GuiControlButton* returned;
-	
+	GuiControlButton* Initial_Screen;
+
 	bool IsExiting = false;
 	
 

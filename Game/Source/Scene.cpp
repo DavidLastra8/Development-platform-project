@@ -133,6 +133,9 @@ bool Scene::Start()
 	SDL_Rect SettingsSceneButton = { windowW / 2 - 60,windowH / 2 -120, 240, 80 };
 	settingsScene = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", SettingsSceneButton, this);
 	settingsScene->state = GuiControlState::DISABLED;
+	SDL_Rect Return_Initial = { windowW / 2 - 60,windowH / 2 -240, 340, 80 };
+	Initial_Screen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "Return to inicial screen", Return_Initial, this);
+	Initial_Screen->state = GuiControlState::DISABLED;
 	SDL_Rect FullScreenCheck = { windowW / 2 - 60,windowH / 2 + 120, 240, 80 };
 	FullScreen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Full Screen", FullScreenCheck, this);
 	FullScreen->state = GuiControlState::DISABLED;
@@ -220,6 +223,7 @@ bool Scene::Update(float dt)
 		
 		app->scene->exitScene->state = GuiControlState::NORMAL;
 		app->scene->resumen->state = GuiControlState::NORMAL;
+		app->scene->Initial_Screen->state = GuiControlState::NORMAL;
 		app->scene->settingsScene->state = GuiControlState::NORMAL;
 		Ccoins->state = GuiControlState::DISABLED;
 		Clifes->state = GuiControlState::DISABLED;
@@ -350,6 +354,20 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		resumen->state = GuiControlState::NORMAL;
 		exitScene->state = GuiControlState::NORMAL;
 		settingsScene->state = GuiControlState::NORMAL;
+	}
+	if (control->id == 11) {
+		app->scene->player->isOnPause = false;
+		app->scene->player->SetPosition(400, 1102);
+		app->initialScreen->active = true;
+		app->initialScreen->Start();
+		app->entityManager->active = false;
+		app->scene->exitScene->state = GuiControlState::DISABLED;
+		app->scene->resumen->state = GuiControlState::DISABLED;
+		app->scene->Initial_Screen->state = GuiControlState::DISABLED;
+		app->scene->settingsScene->state = GuiControlState::DISABLED;
+		Ccoins->state = GuiControlState::DISABLED;
+		Clifes->state = GuiControlState::DISABLED;
+
 	}
 	return ret;
 }
