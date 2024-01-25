@@ -83,10 +83,10 @@ bool Scene::Awake(pugi::xml_node& config)
 		FlyingEnemy2->parameters = config.child("Flyenemy2");
 	}
 	//spawn a Boss
-    if (config.child("Boss")) {
+    /*if (config.child("Boss")) {
 		boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
 		boss->parameters = config.child("Boss");
-	}
+	}*/
 
 	return ret;
 }

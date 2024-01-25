@@ -235,7 +235,7 @@ bool EntityManager::LoadState(pugi::xml_node node) {
 	int BossCtr = 1;
 	for (pugi::xml_node BossNode = node.child("coin"); BossNode; BossNode = BossNode.next_sibling("coin")) {
 		iPoint posBoss = iPoint(BossNode.attribute("x").as_int(), BossNode.attribute("y").as_int());
-		if (BossCtr == 1) app->scene->Coin->SetPosition(posBoss.x, posBoss.y);
+		if (BossCtr == 1) app->scene->coin->SetPosition(posBoss.x, posBoss.y);
 
 		BossCtr++;
 	}
