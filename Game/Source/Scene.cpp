@@ -182,11 +182,32 @@ bool Scene::Update(float dt)
 		app->LoadRequest();
 		
 	}
-	// when player x reaches 1672, Save the Game only once
-	if (player->position.x >= 1672 && GameSaved == false) {
-		app->SaveRequest();
 
-		GameSaved = true;
+	// at the beginning of the level, Save the Game only once
+	if (player->position.x >= 300 && GameSavedinit == false) {
+		app->SaveRequest();
+		app->audio->PlayFx(player->endLevelFxId);
+		GameSavedinit = true;
+	}
+
+	// when player x reaches 1672, Save the Game only once
+	if (player->position.x >= 1672 && GameSaved1 == false) {
+		app->SaveRequest();
+		app->audio->PlayFx(player->endLevelFxId);
+		GameSaved1 = true;
+	}
+	
+	// when player reaches the end of level1, Save the Game only once
+	if (player->position.x >= player->endLevelX && player->position.y >= player->endLevelY && !player->endLevelSoundPlayed && GameSaved2 == false)
+	{
+		// Play the end-level sound effect
+		app->audio->PlayFx(player->endLevelFxId);
+
+		app->SaveRequest();
+		player->SetPosition(5050, 1102);
+		player->endLevelSoundPlayed = true;  // Set the flag to true
+		GameSaved2 = true;
+
 	}
 
 	iPoint mousePos;

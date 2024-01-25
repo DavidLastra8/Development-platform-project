@@ -199,11 +199,20 @@ bool Player::Update(float dt)
 			app->audio->PlayFx(jumpFxId);
 		}
 	}
-	/*if (isAlive == false) {
-		SetPosition(400, 1102);
-		isAlive = true;
-	}*/
-
+	
+	if (!isAlive)
+	{
+		// Get the current time in milliseconds
+		Uint32 now = SDL_GetTicks();
+		if (now - lastDeathTime > DEATH_COOLDOWN_MS)
+		{
+			//teleport to last save point
+			app->LoadRequest();
+			isAlive = true;
+			lastDeathTime = now;
+		}
+		
+	}
 
 
 	//we don't want this for now, Instead of directly setting the linear velocity for movement, you can apply forces or impulses in the horizontal direction as well. This will allow both jumping and lateral movement to coexist.
@@ -325,24 +334,6 @@ void Player::DecreaseLives(int amount) {
 	}
 }
 
-
-
-//bool CheckCollisionFromTop(Entity* player, Entity* boss) {
-//	// Assuming each entity has x, y, width, and height attributes
-//	// and a method to get the bottom position (y + height)
-//
-//	// Calculate the player's bottom position
-//	int playerBottom = player->position.y + 16;
-//
-//	// Check if the player's bottom is near the top of the boss
-//	bool isNearTop = playerBottom >= boss->position.y && playerBottom <= (boss->position.y + 10);
-//
-//	// Check if the player's horizontal position overlaps with the boss's horizontal span
-//	bool isHorizontallyAligned = player->position.x < (boss->position.x + 100) &&
-//		(player->position.x + 100) > boss->position.x;
-//
-//	return isNearTop && isHorizontallyAligned;
-//}
 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	using namespace std::chrono;

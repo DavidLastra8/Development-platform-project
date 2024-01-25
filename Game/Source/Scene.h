@@ -40,7 +40,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool GameSaved = false;
+	bool GameSaved1 = false;
+	bool GameSaved2 = false;
+	bool GameSavedinit = false;
 
 public:
 	Player* player;
