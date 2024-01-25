@@ -52,10 +52,10 @@ bool Scene::Awake(pugi::xml_node& config)
 		player->parameters = config.child("player");
 	}
 
-	if (config.child("Potion")) {
-		Potion = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		Potion->parameters = config.child("Potion");
-	}
+	//if (config.child("Potion")) {
+	//	Potion = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+	//	Potion->parameters = config.child("Potion");
+	//}
 
 
 	if (config.child("Coin"))
@@ -64,29 +64,29 @@ bool Scene::Awake(pugi::xml_node& config)
 		coin->parameters = config.child("Coin");
 	}
 
-	if (config.child("enemy")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("enemy");
-	}
+	//if (config.child("enemy")) {
+	//	enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+	//	enemy->parameters = config.child("enemy");
+	//}
 
-	if (config.child("enemy2")) {
-		enemy2 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy2->parameters = config.child("enemy2");
-	}
+	//if (config.child("enemy2")) {
+	//	enemy2 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+	//	enemy2->parameters = config.child("enemy2");
+	//}
 
-	if (config.child("Flyenemy")) {
-		FlyingEnemy = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
-		FlyingEnemy->parameters = config.child("Flyenemy");
-	}
-	if (config.child("Flyenemy2")) {
-		FlyingEnemy2 = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
-		FlyingEnemy2->parameters = config.child("Flyenemy2");
-	}
-	//spawn a Boss
-    if (config.child("Boss")) {
-		boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
-		boss->parameters = config.child("Boss");
-	}
+	//if (config.child("Flyenemy")) {
+	//	FlyingEnemy = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
+	//	FlyingEnemy->parameters = config.child("Flyenemy");
+	//}
+	//if (config.child("Flyenemy2")) {
+	//	FlyingEnemy2 = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
+	//	FlyingEnemy2->parameters = config.child("Flyenemy2");
+	//}
+	////spawn a Boss
+ //   if (config.child("Boss")) {
+	//	boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+	//	boss->parameters = config.child("Boss");
+	//}
 
 	return ret;
 }
