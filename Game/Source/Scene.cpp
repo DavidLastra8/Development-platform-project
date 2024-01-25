@@ -142,7 +142,7 @@ bool Scene::Start()
 	SDL_Rect VsincCheck = { windowW / 2 - 60,windowH / 2-120 , 240, 80 };
 	Vsinc = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Vsinc", VsincCheck, this);
 	Vsinc->state = GuiControlState::DISABLED;
-	SDL_Rect VsincCheckOff = { windowW / 2 - 60,windowH / 2 - 240 , 240, 80 };
+	SDL_Rect VsincCheckOff = { windowW / 2 - 60,windowH / 2 + 240 , 240, 80 };
 	VsincOff = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "Vsinc Off", VsincCheckOff, this);
 	VsincOff->state = GuiControlState::DISABLED;
 	SDL_Rect Go_Back = { windowW / 2 - 60,windowH / 2 - 240 , 240, 80 };
@@ -332,10 +332,14 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		FullScreenOff->state = GuiControlState::DISABLED;
 	}
 	if (control->id == 6) {
-
+		app->IsVsincActive = true;
+		Vsinc->state = GuiControlState::DISABLED;
+		VsincOff->state = GuiControlState::NORMAL;
 	}
 	if (control->id == 7) {
-
+		app->IsVsincActive = false;
+		Vsinc->state = GuiControlState::NORMAL;
+		VsincOff->state = GuiControlState::DISABLED;
 	}
 	if (control->id == 8) {
 		FullScreen->state = GuiControlState::DISABLED;

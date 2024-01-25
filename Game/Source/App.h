@@ -102,6 +102,7 @@ public:
 	Physics* physics;
 	InitialScreen* initialScreen;
 	GuiManager* guiManager;
+	bool IsVsincActive = false;
 
 private:
 
