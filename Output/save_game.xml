@@ -9,10 +9,13 @@
 	<map />
 	<scene />
 	<entitymanager>
-		<Player x="498" y="1005" />
-		<enemy x="928" y="943" />
-		<Flyenemy x="898" y="917" />
-		<Flyenemy x="384" y="415" />
+		<Player x="5068" y="620" />
+		<item x="478" y="1093" />
+		<coin x="423" y="1119" />
+		<enemy x="909" y="1036" />
+		<Flyenemy x="908" y="886" />
+		<Flyenemy x="361" y="343" />
+		<Boss x="99" y="1124" />
 	</entitymanager>
 	<renderer />
 </game_state>
