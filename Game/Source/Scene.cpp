@@ -18,6 +18,7 @@
 #include "../GuiControl.h"
 #include "../GuiManager.h"
 #include "../InitialScreen.h"
+#include "../Lose_Screen.h"
 #include "App.h"
 #include "Physics.h"
 #include "Boss.h"
@@ -157,6 +158,7 @@ bool Scene::Start()
 	SDL_Rect LifesBox = { windowW / 2 + 260,windowH / 2 - 160 , 240, 80 };
 	Clifes = (GuiControlValueBox*)app->guiManager->CreateGuiControl(GuiControlType::VALUEBOX, 10, "Lifes:", LifesBox, this);
 	Clifes->state = GuiControlState::DISABLED;
+	app->Lose_Screen->exit2->state= GuiControlState::DISABLED;
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 	return true;
 }
@@ -259,7 +261,18 @@ bool Scene::Update(float dt)
 		GameSaved2 = true;
 
 	}
+	if (player->lives == 0) {
+		this->active = false;
+		app->entityManager->active = false;
+		app->scene->active = false;
+		app->map->active = false;
+		app->Lose_Screen->active = true;
+		app->Lose_Screen->Start();
+		Ccoins->state = GuiControlState::DISABLED;
+		Clifes->state = GuiControlState::DISABLED;
+		app->Lose_Screen->exit2->state = GuiControlState::NORMAL;
 
+	}
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
 	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,

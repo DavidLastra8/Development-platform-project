@@ -21,6 +21,7 @@ class Map;
 class Physics;
 class InitialScreen;
 class GuiManager;
+class LoseScreen;
 
 class App
 {
@@ -102,6 +103,7 @@ public:
 	Physics* physics;
 	InitialScreen* initialScreen;
 	GuiManager* guiManager;
+	LoseScreen* Lose_Screen;
 	bool IsVsincActive = false;
 
 private:

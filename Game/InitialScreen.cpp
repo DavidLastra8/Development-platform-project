@@ -9,6 +9,7 @@
 #include "../Scene.h"
 #include "GuiControl.h"
 #include "GuiManager.h"
+#include "Lose_Screen.h"
 #include "../Window.h"
 
 
@@ -30,9 +31,10 @@ bool InitialScreen::Start()
 	app->entityManager->active = false;
 	app->map->active = false;
 	app->scene->active = false;
+	app->Lose_Screen->active = false;
 
 	bool ret = true;
-
+	
 	SDL_Rect StartButton = { windowW / 2-450,windowH / 2-240, 240,80 };
 	start = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Start", StartButton, this);
 

@@ -101,6 +101,7 @@
     <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="GuiSlider.cpp" />
     <ClCompile Include="InitialScreen.cpp" />
+    <ClCompile Include="Lose_Screen.cpp" />
     <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\Coin.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
@@ -129,6 +130,7 @@
     <ClInclude Include="GuiManager.h" />
     <ClInclude Include="GuiSlider.h" />
     <ClInclude Include="InitialScreen.h" />
+    <ClInclude Include="Lose_Screen.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\Coin.h" />

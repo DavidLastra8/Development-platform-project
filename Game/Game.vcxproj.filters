@@ -34,6 +34,7 @@
     <ClCompile Include="GuiControlValueBox.cpp" />
     <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\Scene2.cpp" />
+    <ClCompile Include="Lose_Screen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -91,6 +92,7 @@
     <ClInclude Include="GuiControlValueBox.h" />
     <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\Scene2.h" />
+    <ClInclude Include="Lose_Screen.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

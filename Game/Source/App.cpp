@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "../InitialScreen.h"
+#include "../Lose_Screen.h"
 #include "../GuiManager.h"
 
 #include "Defs.h"
@@ -38,6 +39,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	entityManager = new EntityManager();
 	initialScreen = new InitialScreen();
 	guiManager = new GuiManager();
+	Lose_Screen = new LoseScreen();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -48,7 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	
 
 	AddModule(initialScreen);
-	
+	AddModule(Lose_Screen);
 	AddModule(physics);
 	AddModule(map);
 	AddModule(scene);
