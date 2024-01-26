@@ -251,11 +251,11 @@ bool Scene::Update(float dt)
 	Ccoins->SetValue(coins);
 
 	// at the beginning of the level, Save the Game only once
-	if (player->position.x >= 300 && GameSavedinit == false) {
+	/*if (player->position.x >= 300 && GameSavedinit == false) {
 		app->SaveRequest();
 		app->audio->PlayFx(player->endLevelFxId);
 		GameSavedinit = true;
-	}
+	}*/
 
 	// when player x reaches 1672, Save the Game only once
 	if (player->position.x >= 1672 && GameSaved1 == false) {
