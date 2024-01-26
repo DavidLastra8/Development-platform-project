@@ -12,14 +12,15 @@
 	<map />
 	<scene />
 	<entitymanager>
-		<Player x="1684" y="485" />
+		<Player x="5027" y="1067" />
 		<item x="164" y="1159" />
 		<item x="1164" y="615" />
 		<coin x="615" y="877" />
 		<coin x="2833" y="715" />
 		<coin x="3832" y="939" />
-		<enemy x="2345" y="1581" />
-		<Flyenemy x="899" y="930" />
+		<enemy x="938" y="928" />
+		<Flyenemy x="898" y="920" />
+		<Flyenemy x="387" y="382" />
 		<Boss x="5793" y="1125" />
 	</entitymanager>
 	<guiManager />
