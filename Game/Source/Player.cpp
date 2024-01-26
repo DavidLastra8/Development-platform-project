@@ -384,21 +384,22 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType:: DEATH:
 		
 		LOG("Collision DEATH");
-		
-		lives = 0;
-		/*if (duration_cast<seconds>(now - lastDamageTime).count() >= 3) {
-			if (lives > 0)
-			{
-				lives--;
+		if (!GodMode)
+		{
+			lives = 0;
+			/*if (duration_cast<seconds>(now - lastDamageTime).count() >= 3) {
+				if (lives > 0)
+				{
+					lives--;
 
-				
 
-				pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), pbody->body->GetWorldCenter(), true);
 
-				app->audio->PlayFx(deathFxId);
-			}*/
+					pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), pbody->body->GetWorldCenter(), true);
 
-			
+					app->audio->PlayFx(deathFxId);
+				}*/
+
+
 			lastDamageTime = now;  // Update last damage time
 
 			if (lives == 0)
@@ -406,11 +407,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				isAlive = false;
 				pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 			}
-		/*}*/
+			
+			app->audio->PlayFx(deathFxId);
+			break;
+		}
 		
-		
-		app->audio->PlayFx(deathFxId);
-		break;
 
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
@@ -421,30 +422,32 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
-		if (duration_cast<seconds>(now - lastDamageTime).count() >= 3) {
-			if (lives > 0)
-			{
-				lives--;
+		if (!GodMode)
+		{
+			if (duration_cast<seconds>(now - lastDamageTime).count() >= 3) {
+				if (lives > 0)
+				{
+					lives--;
 
-				
 
-				pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), pbody->body->GetWorldCenter(), true);
 
-				app->audio->PlayFx(deathFxId);
+					pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), pbody->body->GetWorldCenter(), true);
+
+					app->audio->PlayFx(deathFxId);
+				}
+				lastDamageTime = now;  // Update last damage time
+
+				if (lives == 0)
+				{
+					isAlive = false;
+					pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+
+				}
 			}
-			lastDamageTime = now;  // Update last damage time
 
-			if (lives == 0)
-			{
-				isAlive = false;
-				pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
-				
-			}
+			break;
 		}
-
-
 		
-		break;
 	case ColliderType::COIN:
 		LOG("Collision COIN");
 		/*app->audio->PlayFx(pickCoinFxId);*/

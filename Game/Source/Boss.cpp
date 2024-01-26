@@ -154,26 +154,30 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB)
 				}
 				else if (physB->body->GetLinearVelocity().y < 0.5)
 				{
-					LOG("BOSS ATTACKED PLAYER");
-					if (player->lives > 0)
+					if (!player->GodMode)
 					{
-						player->lives--;
+						LOG("BOSS ATTACKED PLAYER");
+						if (player->lives > 0)
+						{
+							player->lives--;
 
 
 
-						player->pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), player->pbody->body->GetWorldCenter(), true);
+							player->pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), player->pbody->body->GetWorldCenter(), true);
 
-						app->audio->PlayFx(deathFxId);
+							app->audio->PlayFx(deathFxId);
+						}
+
+
+						if (player->lives == 0)
+						{
+							player->isAlive = false;
+							player->pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+
+						}
+						lastAttackTime = now;
 					}
 					
-
-					if (player->lives == 0)
-					{
-						player->isAlive = false;
-						player->pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
-
-					}
-					lastAttackTime = now;
 				}
 			}
 
