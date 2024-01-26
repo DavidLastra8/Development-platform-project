@@ -61,6 +61,19 @@ void Coin::SetPosition(int x, int y) {
 	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
 }
 
+void Coin::TeleportToNewLocation(int newX, int newY) {
+	// Set the new position for rendering
+	position.x = newX;
+	position.y = newY;
+
+	// Convert the new position to physics world coordinates (if necessary)
+	b2Vec2 newPos(PIXEL_TO_METERS(newX), PIXEL_TO_METERS(newY));
+
+	// Teleport the physics body to the new position
+	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+}
+
+
 void Coin::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	
