@@ -54,7 +54,7 @@ bool InitialScreen::Start()
 	volumen->state = GuiControlState::DISABLED;
 	
 
-	SDL_Rect GoBackButton = { windowW / 2 - 450,windowH  / 2 - 120, 240, 80 };
+	SDL_Rect GoBackButton = { windowW / 2 - 450,windowH  / 2 - 200, 240, 80 };
 	turnBack = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Go Back", GoBackButton, this);
 	turnBack->state = GuiControlState::DISABLED;
 

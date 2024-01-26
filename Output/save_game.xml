@@ -8,16 +8,17 @@
 	<:anonymous />
 	<:anonymous />
 	<:anonymous />
+	<:anonymous />
 	<map />
 	<scene />
 	<entitymanager>
-		<Player x="393" y="1080" />
-		<item x="494" y="1109" />
-		<coin x="450" y="1105" />
+		<Player x="369" y="1045" />
+		<item x="478" y="1093" />
+		<coin x="434" y="1089" />
 		<coin x="600" y="1105" />
-		<enemy x="917" y="909" />
-		<Flyenemy x="898" y="918" />
-		<Flyenemy x="387" y="382" />
+		<enemy x="907" y="877" />
+		<Flyenemy x="908" y="886" />
+		<Flyenemy x="363" y="345" />
 		<Boss x="5809" y="1125" />
 	</entitymanager>
 	<guiManager />

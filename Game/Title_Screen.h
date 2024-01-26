@@ -1,5 +1,5 @@
-#ifndef __INITIAL__SCREEN_H__
-#define __INITIAL__SCREEN_H__
+#ifndef __TITLE__SCREEN_H__
+#define __TITLE__SCREEN_H__
 
 #include "../Module.h"
 #include "../Animation.h"
@@ -11,12 +11,12 @@
 
 struct SDL_Texture;
 
-class InitialScreen : public Module {
+class TitleScreen : public Module {
 
 public:
-	InitialScreen();
+	TitleScreen();
 
-	~InitialScreen();
+	~TitleScreen();
 
 	bool Start() override;
 
@@ -29,25 +29,15 @@ public:
 	// The scene sprite sheet loaded into an SDL_Texture
 
 	SDL_Texture* intro;
-	GuiControlButton* start;
-	GuiControlButton* exit;
-	GuiControlButton* setting;
-	GuiControlButton* credit;
-	GuiControlButton* continue_;
+
+
 	int frame = 0;
+	GuiControlButton* exit3;
 
 private:
-	bool hasToExit = false;
 	uint windowW;
 	uint windowH;
-	uint textW;
-	uint textH;
-	
-	GuiControlButton* turnBack;
-	
-	GuiControlButton* credit2;
-	GuiControlButton* credit3;
-	
-	GuiSlider* volumen;
+	bool hasToExit = false;
+
 };
 #endif

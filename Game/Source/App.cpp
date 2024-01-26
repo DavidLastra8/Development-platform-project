@@ -10,6 +10,7 @@
 #include "../InitialScreen.h"
 #include "../Lose_Screen.h"
 #include "../Win_Screen.h"
+#include "../Title_Screen.h"
 #include "../GuiManager.h"
 
 #include "Defs.h"
@@ -42,6 +43,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	guiManager = new GuiManager();
 	Lose_Screen = new LoseScreen();
 	Win_Screen = new WinScreen();
+	Title_Screen = new TitleScreen();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(win);
@@ -49,7 +51,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	
-
+	AddModule(Title_Screen);
 	AddModule(initialScreen);
 	AddModule(Lose_Screen);
 	AddModule(Win_Screen);
