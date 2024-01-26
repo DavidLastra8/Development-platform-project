@@ -19,7 +19,7 @@
 Boss::Boss() : Entity(EntityType::BOSS)
 {
 	name.Create("Boss");
-	lifeCount = 1;
+	lifeCount = 2;
 }
 
 Boss::~Boss()
@@ -129,7 +129,7 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB)
 			/*auto duration = duration_cast<milliseconds>(now - lastAttackTime).count();*/
 			if (now - lastAttackTime > ATTACK_COOLDOWN_MS) {
 				//if the player position in y is greater than the enemy's
-				if (physB->body->GetLinearVelocity().y >= 1)
+				if (physB->body->GetLinearVelocity().y >= 0.5)
 				{
 					LOG("PLAYER ATTACKED BOSS");
 					lifeCount--;
