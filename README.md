@@ -52,6 +52,12 @@ collectables: Coins and Potion that recovers lives (update to HUB)
 
 Second level with a Boss, stomp on the boss 3 times to kill it, getting touched by the boss from above deals damage to the player, damage from each sides has a cool down
 
+Title and initial screen has been made, the Initial scene has a menu made by fully funcitonall buttons and sliders that each have their own functions
+
+Win or lose sceen has been implemented for when the player either passes the level or fails it
+
+You can now pause the game and it will have it's own functional menu with the posibility of resuming the game
+
 Press P to teleport to Level 2
 
 Press z to pause the game
