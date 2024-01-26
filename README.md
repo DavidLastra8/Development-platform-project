@@ -33,7 +33,7 @@ both enemies are implemented and they can track you and kill you
 
 Audios and sound effects are now implemented
 
-Stomp on the boss to kill the boss, the boss can also kill you
+Stomp on the boss to kill the boss, the boss can also kill you ( 3 seconds cool down from each side )
 
 
 ## Assignment general info:
