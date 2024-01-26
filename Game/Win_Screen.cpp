@@ -1,4 +1,4 @@
-#include "Lose_Screen.h"
+#include "Win_Screen.h"
 
 #include "../App.h"
 #include "../Textures.h"
@@ -11,33 +11,33 @@
 #include "GuiManager.h"
 #include "../Window.h"
 
-LoseScreen::LoseScreen() : Module()
+WinScreen::WinScreen() : Module()
 {
 
 }
 
-LoseScreen::~LoseScreen()
+WinScreen::~WinScreen()
 {
 
 }
 
 // Load assets
-bool LoseScreen::Start()
+bool WinScreen::Start()
 {
 	app->win->GetWindowSize(windowW, windowH);
-	intro = app->tex->Load("Assets/Textures/Lose_Screen.png");
+	intro = app->tex->Load("Assets/Textures/Win_Screen.png");
 
 	bool ret = true;
 
-	SDL_Rect ExitButton2 = { windowW / 2 - 80,windowH / 2 + 120, 240, 80 };
-	exit2 = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Exit", ExitButton2, this);
+	SDL_Rect ExitButton3 = { windowW / 2 - 60,windowH / 2 + 240, 240, 80 };
+	exit3 = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Exit", ExitButton3, this);
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 	return ret;
 }
 
-bool LoseScreen::Update(float dt)
+bool WinScreen::Update(float dt)
 {
 
 
@@ -47,7 +47,7 @@ bool LoseScreen::Update(float dt)
 	return true;
 }
 
-bool LoseScreen::PostUpdate()
+bool WinScreen::PostUpdate()
 {
 	// Draw everything --------------------------------------
 	bool ret = true;
@@ -59,7 +59,7 @@ bool LoseScreen::PostUpdate()
 
 }
 
-bool LoseScreen::OnGuiMouseClickEvent(GuiControl* control) {
+bool WinScreen::OnGuiMouseClickEvent(GuiControl* control) {
 	bool ret = true;
 	if (control->id == 2) {
 		hasToExit = true;

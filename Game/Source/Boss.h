@@ -64,7 +64,7 @@ public:
 	SDL_Rect bound;
 
 	bool debug = false;
-
+	int lifeCount;
 
 	Animation* currentAnimation = nullptr;
 	// A set of animations
@@ -72,7 +72,7 @@ public:
 	
 
 private:
-	int lifeCount;
+	
 };
 
 #endif // __BOSS_H__

@@ -19,6 +19,7 @@
 #include "../GuiManager.h"
 #include "../InitialScreen.h"
 #include "../Lose_Screen.h"
+#include "../Win_Screen.h"
 #include "App.h"
 #include "Physics.h"
 #include "Boss.h"
@@ -73,24 +74,24 @@ bool Scene::Awake(pugi::xml_node& config)
 		coin2->parameters = config.child("Coin2");
 	}
 
-	//if (config.child("enemy")) {
-	//	enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-	//	enemy->parameters = config.child("enemy");
-	//}
+	if (config.child("enemy")) {
+		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->parameters = config.child("enemy");
+	}
 
-	//if (config.child("enemy2")) {
-	//	enemy2 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-	//	enemy2->parameters = config.child("enemy2");
-	//}
+	if (config.child("enemy2")) {
+		enemy2 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy2->parameters = config.child("enemy2");
+	}
 
-	//if (config.child("Flyenemy")) {
-	//	FlyingEnemy = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
-	//	FlyingEnemy->parameters = config.child("Flyenemy");
-	//}
-	//if (config.child("Flyenemy2")) {
-	//	FlyingEnemy2 = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
-	//	FlyingEnemy2->parameters = config.child("Flyenemy2");
-	//}
+	if (config.child("Flyenemy")) {
+		FlyingEnemy = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
+		FlyingEnemy->parameters = config.child("Flyenemy");
+	}
+	if (config.child("Flyenemy2")) {
+		FlyingEnemy2 = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
+		FlyingEnemy2->parameters = config.child("Flyenemy2");
+	}
 	////spawn a Boss
     if (config.child("Boss")) {
 		boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
@@ -159,6 +160,7 @@ bool Scene::Start()
 	Clifes = (GuiControlValueBox*)app->guiManager->CreateGuiControl(GuiControlType::VALUEBOX, 10, "Lifes:", LifesBox, this);
 	Clifes->state = GuiControlState::DISABLED;
 	app->Lose_Screen->exit2->state= GuiControlState::DISABLED;
+	app->Win_Screen->exit3->state= GuiControlState::DISABLED;
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 	return true;
 }
@@ -273,6 +275,17 @@ bool Scene::Update(float dt)
 		app->Lose_Screen->exit2->state = GuiControlState::NORMAL;
 
 	}
+	if (boss->lifeCount == 0 || app->input->GetKey(SDL_SCANCODE_K)==KEY_DOWN) {
+		this->active = false;
+		app->entityManager->active = false;
+		app->scene->active = false;
+		app->map->active = false;
+		app->Win_Screen->active = true;
+		app->Win_Screen->Start();
+		Ccoins->state = GuiControlState::DISABLED;
+		Clifes->state = GuiControlState::DISABLED;
+		app->Win_Screen->exit3->state = GuiControlState::NORMAL;
+	}
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
 	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
@@ -362,6 +375,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		FullScreen->state = GuiControlState::DISABLED;
 		FullScreenOff->state = GuiControlState::DISABLED;
 		Vsinc->state = GuiControlState::DISABLED;
+		Initial_Screen->state = GuiControlState::DISABLED;
 		VsincOff->state = GuiControlState::DISABLED;
 		returned->state = GuiControlState::DISABLED;
 		resumen->state = GuiControlState::NORMAL;

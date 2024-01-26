@@ -22,6 +22,7 @@ class Physics;
 class InitialScreen;
 class GuiManager;
 class LoseScreen;
+class WinScreen;
 
 class App
 {
@@ -104,6 +105,7 @@ public:
 	InitialScreen* initialScreen;
 	GuiManager* guiManager;
 	LoseScreen* Lose_Screen;
+	WinScreen* Win_Screen;
 	bool IsVsincActive = false;
 
 private:

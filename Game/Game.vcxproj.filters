@@ -35,6 +35,7 @@
     <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\Scene2.cpp" />
     <ClCompile Include="Lose_Screen.cpp" />
+    <ClCompile Include="Win_Screen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\Scene2.h" />
     <ClInclude Include="Lose_Screen.h" />
+    <ClInclude Include="Win_Screen.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

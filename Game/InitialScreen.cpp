@@ -10,6 +10,7 @@
 #include "GuiControl.h"
 #include "GuiManager.h"
 #include "Lose_Screen.h"
+#include "Win_Screen.h"
 #include "../Window.h"
 
 
@@ -32,7 +33,7 @@ bool InitialScreen::Start()
 	app->map->active = false;
 	app->scene->active = false;
 	app->Lose_Screen->active = false;
-
+	app->Win_Screen->active = false;
 	bool ret = true;
 	
 	SDL_Rect StartButton = { windowW / 2-450,windowH / 2-240, 240,80 };
