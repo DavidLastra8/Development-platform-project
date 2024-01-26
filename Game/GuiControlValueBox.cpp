@@ -43,11 +43,11 @@ bool GuiControlValueBox::Update(float dt)
         app->render->DrawText(value.c_str(), bounds.x, bounds.y, bounds.w / 2, bounds.h);
         if (id == 10)
         {
-            app->render->DrawTexture(texture, bounds.x + 10, bounds.y + app->render->camera.y + 20);
+            app->render->DrawTexture(texture, bounds.x - app->render->camera.x - 200, bounds.y - app->render->camera.y - 50);
         }
         else if (id == 9)
         {
-            app->render->DrawTexture(texture, bounds.x + 60, bounds.y + app->render->camera.y + 40);
+            app->render->DrawTexture(texture, bounds.x - app->render->camera.x - 180, bounds.y - app->render->camera.y - 20);
         }
         else
         {
