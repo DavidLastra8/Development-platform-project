@@ -276,7 +276,7 @@ bool Scene::Update(float dt)
 		GameSaved2 = true;
 
 	}
-	if (player->lives == 0) {
+	if (player->lives <= 0) {
 		this->active = false;
 		app->entityManager->active = false;
 		app->scene->active = false;
