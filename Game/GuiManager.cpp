@@ -29,7 +29,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	{
 	case GuiControlType::BUTTON:
 		guiControl = new GuiControlButton(id, bounds, text);
-		guiControl->texture = app->tex->Load("Assets\Textures\button_development.png");
+		guiControl->texture = app->tex->Load("Assets/Textures/button_development.png");
 		break;
 
 	case GuiControlType::SLIDER:
@@ -42,6 +42,14 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 
 	case GuiControlType::VALUEBOX:
 		guiControl = new GuiControlValueBox(id, bounds, text);
+		if (guiControl->id == 10) {
+			guiControl->texture = app->tex->Load("Assets/Textures/lives.png");
+		}
+		else
+		{
+			guiControl->texture = app->tex->Load("Assets/Textures/coin.png");
+
+		}
 		break;
 	}
 	//Set the observer

@@ -41,7 +41,18 @@ bool GuiControlValueBox::Update(float dt)
         }
        /* app->render->DrawRectangle(bounds, 0, 0, 255, 255, true, false);*/
         app->render->DrawText(value.c_str(), bounds.x, bounds.y, bounds.w / 2, bounds.h);
+        if (id == 10)
+        {
+            app->render->DrawTexture(texture, bounds.x + 10, bounds.y + app->render->camera.y + 20);
+        }
+        else if (id == 9)
+        {
+            app->render->DrawTexture(texture, bounds.x + 60, bounds.y + app->render->camera.y + 40);
+        }
+        else
+        {
 
+        }
     }
 
 
