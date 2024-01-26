@@ -19,7 +19,7 @@
 Boss::Boss() : Entity(EntityType::BOSS)
 {
 	name.Create("Boss");
-	lifeCount = 3;
+	lifeCount = 1;
 }
 
 Boss::~Boss()
@@ -58,12 +58,6 @@ bool Boss::Start()
 
 	return true;
 }
-
-//void Boss::DecreaseLives(int lifeCount)
-//{
-//	lifeCount--;
-//	
-//}
 
 
 
