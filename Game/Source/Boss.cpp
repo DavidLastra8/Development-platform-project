@@ -135,17 +135,19 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB)
 			/*auto duration = duration_cast<milliseconds>(now - lastAttackTime).count();*/
 			if (now - lastAttackTime > ATTACK_COOLDOWN_MS) {
 				//if the player position in y is greater than the enemy's
-				if (physB->body->GetLinearVelocity().y >= 0)
+				if (physB->body->GetLinearVelocity().y >= 1)
 				{
 					LOG("PLAYER ATTACKED BOSS");
 					lifeCount--;
+
+					app->audio->PlayFx(player->deathFxId);
 
 					if (lifeCount <= 0)
 					{
 						Deactivate();
 						app->entityManager->DestroyEntity(this);
 					}
-					app->audio->PlayFx(pickCoinFxId);
+					app->audio->PlayFx(player->pickCoinFxId);
 					enemyCollider->body->ApplyLinearImpulse(b2Vec2(0.0f, 10.0f), enemyCollider->body->GetWorldCenter(), true);
 					lastAttackTime = now;
 					

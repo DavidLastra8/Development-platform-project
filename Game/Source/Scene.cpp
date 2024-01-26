@@ -61,6 +61,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		Potion = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		Potion->parameters = config.child("Potion");
 	}
+	if(config.child("Potion2"))
+	{
+		Potion2 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		Potion2->parameters = config.child("Potion2");
+	 }
 
 
 	if (config.child("Coin"))
@@ -72,6 +77,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	{
 		coin2 = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
 		coin2->parameters = config.child("Coin2");
+	}
+    if (config.child("Coin3"))
+	{
+		coin3 = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
+		coin3->parameters = config.child("Coin3");
 	}
 
 	if (config.child("enemy")) {
@@ -241,11 +251,11 @@ bool Scene::Update(float dt)
 	Ccoins->SetValue(coins);
 
 	// at the beginning of the level, Save the Game only once
-	if (player->position.x >= 300 && GameSavedinit == false) {
+	/*if (player->position.x >= 300 && GameSavedinit == false) {
 		app->SaveRequest();
 		app->audio->PlayFx(player->endLevelFxId);
 		GameSavedinit = true;
-	}
+	}*/
 
 	// when player x reaches 1672, Save the Game only once
 	if (player->position.x >= 1672 && GameSaved1 == false) {

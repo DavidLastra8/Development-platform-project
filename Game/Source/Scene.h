@@ -60,8 +60,10 @@ public:
 	GuiControlValueBox* Ccoins;
 	GuiControlValueBox* Clifes;
 	float volume = 90;
+    Item* Potion2;
 	Coin* coin;
 	Coin* coin2;
+    Coin* coin3;
     Boss* boss;
 
 
