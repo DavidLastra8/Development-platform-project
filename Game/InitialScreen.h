@@ -46,6 +46,7 @@ private:
 	GuiControlButton* credit;
 	GuiControlButton* credit2;
 	GuiControlButton* credit3;
+	GuiControlButton* continue_;
 	GuiSlider* volumen;
 };
 #endif

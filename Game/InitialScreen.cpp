@@ -33,13 +33,13 @@ bool InitialScreen::Start()
 
 	bool ret = true;
 
-	SDL_Rect StartButton = { windowW / 2-450,windowH / 2-120, 240,80 };
+	SDL_Rect StartButton = { windowW / 2-450,windowH / 2-240, 240,80 };
 	start = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Start", StartButton, this);
 
-	SDL_Rect ExitButton = { windowW / 2 - 450,windowH / 2 + 120, 240, 80 };
+	SDL_Rect ExitButton = { windowW / 2 - 450,windowH / 2 + 240, 240, 80 };
 	exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Exit", ExitButton, this);
 	
-	SDL_Rect CreditButton = { windowW / 2 - 450,windowH / 2 + 240, 240, 80 };
+	SDL_Rect CreditButton = { windowW / 2 - 450,windowH / 2 + 120, 240, 80 };
 	credit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "Credits", CreditButton, this);
 
 	SDL_Rect SettingsButton = { windowW / 2 - 450,windowH / 2 , 240, 80 };
@@ -62,6 +62,10 @@ bool InitialScreen::Start()
 	SDL_Rect Credits2 = { windowW / 2+60,windowH / 2 + 200, 240, 80 };
 	credit3 = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "Yiwei Ye", Credits2, this);
 	credit3->state = GuiControlState::DISABLED;
+
+	SDL_Rect ContinueButton = { windowW / 2 - 450, windowH / 2 - 120, 240, 80 };
+	continue_= (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, "Continue", ContinueButton, this);
+
 	
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -107,6 +111,7 @@ bool InitialScreen:: OnGuiMouseClickEvent(GuiControl* control) {
 		start->state = GuiControlState::DISABLED;
 		setting->state = GuiControlState::DISABLED;
 		credit->state = GuiControlState::DISABLED;
+		continue_->state = GuiControlState::DISABLED;
 		app->scene->Clifes->state = GuiControlState::NORMAL;
 		app->scene->Ccoins->state = GuiControlState::NORMAL;
 	}
@@ -116,6 +121,7 @@ bool InitialScreen:: OnGuiMouseClickEvent(GuiControl* control) {
 	if (control->id==3){
 		start->state = GuiControlState::DISABLED;
 		credit->state = GuiControlState::DISABLED;
+		continue_->state = GuiControlState::DISABLED;
 		volumen->state = GuiControlState::NORMAL;
 		setting->state = GuiControlState::DISABLED;
 		turnBack->state = GuiControlState::NORMAL;
@@ -127,6 +133,7 @@ bool InitialScreen:: OnGuiMouseClickEvent(GuiControl* control) {
 	if (control->id == 6) {
 		start->state = GuiControlState::NORMAL;
 		credit->state = GuiControlState::NORMAL;
+		continue_->state = GuiControlState::NORMAL;
 		volumen->state = GuiControlState::DISABLED;
 		setting->state = GuiControlState::NORMAL;
 		turnBack->state = GuiControlState::DISABLED;
@@ -140,6 +147,25 @@ bool InitialScreen:: OnGuiMouseClickEvent(GuiControl* control) {
 	}
 	if (control->id == 9) {
 		credit3->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 10) {
+
+		app->entityManager->active = true;
+		app->entityManager->Start();
+		app->map->active = true;
+		app->map->Start();
+		app->scene->active = true;
+		app->scene->Start();
+		app->LoadRequest();
+		this->active = false;
+		
+		exit->state = GuiControlState::DISABLED;
+		start->state = GuiControlState::DISABLED;
+		setting->state = GuiControlState::DISABLED;
+		credit->state = GuiControlState::DISABLED;
+		continue_->state = GuiControlState::DISABLED;
+		app->scene->Clifes->state = GuiControlState::NORMAL;
+		app->scene->Ccoins->state = GuiControlState::NORMAL;
 	}
 	return ret;
 }
