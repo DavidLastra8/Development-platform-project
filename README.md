@@ -50,7 +50,7 @@ Checkpoint during the middle of level 1 as well as the begining of level 2 (with
 
 collectables: Coins and Potion that recovers lives (update to HUB)
 
-Second level with A Boss, stomp on the boss 3 times to kill it, getting touched by the boss from above deals damage to the player, damage from each sides has a cool down
+Second level with a Boss, stomp on the boss 3 times to kill it, getting touched by the boss from above deals damage to the player, damage from each sides has a cool down
 
 Press P to teleport to Level 2
 
