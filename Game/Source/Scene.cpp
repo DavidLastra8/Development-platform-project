@@ -289,6 +289,9 @@ bool Scene::Update(float dt)
 		Clifes->state = GuiControlState::DISABLED;
 		app->Win_Screen->exit3->state = GuiControlState::NORMAL;
 	}
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+
+	
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
 	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
@@ -304,10 +307,14 @@ bool Scene::Update(float dt)
 	iPoint origin = iPoint(x, y);
 
 	//If mouse button is pressed modify player position
-	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-		player->position = iPoint(highlightedTileWorld.x, highlightedTileWorld.y);
-		app->map->pathfinding->CreatePath(origin, mouseTile);
+	
+
+		if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+			player->position = iPoint(highlightedTileWorld.x, highlightedTileWorld.y);
+			app->map->pathfinding->CreatePath(origin, mouseTile);
+		}
 	}
+	
 
 	// L13: Get the latest calculated path and draw
 	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
