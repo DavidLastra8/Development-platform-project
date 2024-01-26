@@ -141,7 +141,7 @@ bool Scene::Start()
 	SDL_Rect FullScreenCheck = { windowW / 2 - 60,windowH / 2 + 120, 240, 80 };
 	FullScreen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Full Screen", FullScreenCheck, this);
 	FullScreen->state = GuiControlState::DISABLED;
-	SDL_Rect FullScreenCheckOff = { windowW / 2 - 60,windowH / 2, 240, 80 };
+	SDL_Rect FullScreenCheckOff = { windowW / 2+60,windowH / 2, 240, 80 };
 	FullScreenOff = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Full Screen Off", FullScreenCheckOff, this);
 	FullScreenOff->state = GuiControlState::DISABLED;
 	SDL_Rect VsincCheck = { windowW / 2 - 60,windowH / 2-120 , 240, 80 };
@@ -159,6 +159,9 @@ bool Scene::Start()
 	SDL_Rect LifesBox = { windowW / 2 + 260,windowH / 2 - 160 , 240, 80 };
 	Clifes = (GuiControlValueBox*)app->guiManager->CreateGuiControl(GuiControlType::VALUEBOX, 10, "Lifes:", LifesBox, this);
 	Clifes->state = GuiControlState::DISABLED;
+	SDL_Rect MusicSlider = { windowW / 2 - 240,windowH / 2 , 240,80 };
+	volumen = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 12, "Volume", MusicSlider, this);
+	volumen->state = GuiControlState::DISABLED;
 	app->Lose_Screen->exit2->state= GuiControlState::DISABLED;
 	app->Win_Screen->exit3->state= GuiControlState::DISABLED;
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
@@ -343,9 +346,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	if (control->id == 3) {
 		resumen->state = GuiControlState::DISABLED;
 		settingsScene->state = GuiControlState::DISABLED;
+		Initial_Screen->state = GuiControlState::DISABLED;
 		FullScreen->state = GuiControlState::NORMAL;
 		Vsinc->state = GuiControlState::NORMAL;
 		returned->state = GuiControlState::NORMAL;
+		volumen->state = GuiControlState::NORMAL;
 		exitScene->state = GuiControlState::DISABLED;
 	}
 	if (control->id == 4) {
@@ -378,6 +383,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		Initial_Screen->state = GuiControlState::DISABLED;
 		VsincOff->state = GuiControlState::DISABLED;
 		returned->state = GuiControlState::DISABLED;
+		volumen->state = GuiControlState::DISABLED;
 		resumen->state = GuiControlState::NORMAL;
 		exitScene->state = GuiControlState::NORMAL;
 		settingsScene->state = GuiControlState::NORMAL;
@@ -395,6 +401,9 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		Ccoins->state = GuiControlState::DISABLED;
 		Clifes->state = GuiControlState::DISABLED;
 
+	}
+	if (control->id == 12) {
+		app->audio->ChangeMusicVolume(app->scene->volume);
 	}
 	return ret;
 }

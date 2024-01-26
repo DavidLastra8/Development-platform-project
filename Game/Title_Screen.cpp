@@ -53,6 +53,7 @@ bool TitleScreen::Update(float dt)
 	app->initialScreen->setting->state = GuiControlState::DISABLED;
 	app->initialScreen->credit->state = GuiControlState::DISABLED;
 	app->initialScreen->continue_->state = GuiControlState::DISABLED;
+	app->initialScreen->VsincOff->state = GuiControlState::DISABLED;
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		this->active = false;

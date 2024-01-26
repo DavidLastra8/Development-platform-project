@@ -34,6 +34,7 @@ public:
 	GuiControlButton* setting;
 	GuiControlButton* credit;
 	GuiControlButton* continue_;
+	GuiControlButton* VsincOff;
 	int frame = 0;
 
 private:
@@ -47,6 +48,9 @@ private:
 	
 	GuiControlButton* credit2;
 	GuiControlButton* credit3;
+	GuiControlButton* FullScreen;
+	GuiControlButton* FullScreenOff;
+	GuiControlButton* Vsinc;
 	
 	GuiSlider* volumen;
 };

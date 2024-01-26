@@ -80,7 +80,7 @@ private:
 	GuiControlButton* VsincOff;
 	GuiControlButton* returned;
 	GuiControlButton* Initial_Screen;
-
+	GuiSlider* volumen;
 	bool IsExiting = false;
 	
 

@@ -54,7 +54,7 @@ bool InitialScreen::Start()
 	volumen->state = GuiControlState::DISABLED;
 	
 
-	SDL_Rect GoBackButton = { windowW / 2 - 450,windowH  / 2 - 200, 240, 80 };
+	SDL_Rect GoBackButton = { windowW / 2 - 450,windowH  / 2 - 240, 240, 80 };
 	turnBack = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Go Back", GoBackButton, this);
 	turnBack->state = GuiControlState::DISABLED;
 
@@ -69,7 +69,21 @@ bool InitialScreen::Start()
 	SDL_Rect ContinueButton = { windowW / 2 - 450, windowH / 2 - 120, 240, 80 };
 	continue_= (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, "Continue", ContinueButton, this);
 
-	
+	SDL_Rect FullScreenCheck = { windowW / 2 - 450,windowH / 2 + 120, 240, 80 };
+	FullScreen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "Full Screen", FullScreenCheck, this);
+	FullScreen->state = GuiControlState::DISABLED;
+
+	SDL_Rect FullScreenCheckOff = { windowW / 2 -210,windowH / 2 + 120, 240, 80 };
+	FullScreenOff = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 12, "Full Screen Off", FullScreenCheckOff, this);
+	FullScreenOff->state = GuiControlState::DISABLED;
+
+	SDL_Rect VsincCheck = { windowW / 2 - 450,windowH / 2 - 120 , 240, 80 };
+	Vsinc = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "Vsinc", VsincCheck, this);
+	Vsinc->state = GuiControlState::DISABLED;
+
+	SDL_Rect VsincCheckOff = { windowW / 2 - 210,windowH / 2 -120 , 240, 80 };
+	VsincOff = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "Vsinc Off", VsincCheckOff, this);
+	VsincOff->state = GuiControlState::DISABLED;
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 	return ret;
@@ -128,6 +142,8 @@ bool InitialScreen:: OnGuiMouseClickEvent(GuiControl* control) {
 		volumen->state = GuiControlState::NORMAL;
 		setting->state = GuiControlState::DISABLED;
 		turnBack->state = GuiControlState::NORMAL;
+		Vsinc->state = GuiControlState::NORMAL;
+		FullScreen->state = GuiControlState::NORMAL;
 		
 	}
 	if (control->id == 4) {
@@ -140,6 +156,9 @@ bool InitialScreen:: OnGuiMouseClickEvent(GuiControl* control) {
 		volumen->state = GuiControlState::DISABLED;
 		setting->state = GuiControlState::NORMAL;
 		turnBack->state = GuiControlState::DISABLED;
+		VsincOff->state = GuiControlState::DISABLED;
+		Vsinc->state = GuiControlState::DISABLED;
+
 	}
 	if (control->id == 7) {
 		credit2->state = GuiControlState::NORMAL;
@@ -169,6 +188,29 @@ bool InitialScreen:: OnGuiMouseClickEvent(GuiControl* control) {
 		continue_->state = GuiControlState::DISABLED;
 		app->scene->Clifes->state = GuiControlState::NORMAL;
 		app->scene->Ccoins->state = GuiControlState::NORMAL;
+	}
+	if (control->id == 11) {
+		SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		FullScreenOff->state = GuiControlState::NORMAL;
+		FullScreen->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 12) {
+		app->win->GetWindowSize(windowW, windowH);
+		SDL_SetWindowSize(app->win->window, windowW, windowH);
+		SDL_SetWindowFullscreen(app->win->window, 0);
+
+		FullScreen->state = GuiControlState::NORMAL;
+		FullScreenOff->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 13) {
+		app->IsVsincActive = true;
+		Vsinc->state = GuiControlState::DISABLED;
+		VsincOff->state = GuiControlState::NORMAL;
+	}
+	if (control->id == 14) {
+		app->IsVsincActive = false;
+		Vsinc->state = GuiControlState::NORMAL;
+		VsincOff->state = GuiControlState::DISABLED;
 	}
 	return ret;
 }
