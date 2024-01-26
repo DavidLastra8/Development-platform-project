@@ -29,7 +29,7 @@ bool Item::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/healing_potiton.png");
-	pbody = app->physics->CreateCircle(position.x + 100, position.y + 16, 16, bodyType::STATIC);
+	pbody = app->physics->CreateCircle(position.x + 100, position.y + 16, 1, bodyType::STATIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ITEM;
 

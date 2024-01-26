@@ -31,7 +31,7 @@ bool Coin::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/coin.png");
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 1, bodyType::STATIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::COIN;
 
@@ -44,7 +44,7 @@ bool Coin::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x-150, position.y-50);
+	app->render->DrawTexture(texture, position.x-150, position.y-70);
 
 	return true;
 }
