@@ -16,7 +16,7 @@ David: Programmer/ artist
 
 
 
-## basic control:
+## Basic control:
 
 w,a,s,d for player directional control
 
@@ -62,7 +62,7 @@ Press z to pause the game
 
 
 
-## debug keys:
+## Debug keys:
 
 F1 or F3 for respawn to the start posistion
 
