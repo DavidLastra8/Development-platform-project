@@ -56,6 +56,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		Potion = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		Potion->parameters = config.child("Potion");
 	}
+	if(config.child("Potion2"))
+	{
+		Potion2 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		Potion2->parameters = config.child("Potion2");
+	 }
 
 
 	if (config.child("Coin"))
@@ -67,6 +72,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	{
 		coin2 = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
 		coin2->parameters = config.child("Coin2");
+	}
+    if (config.child("Coin3"))
+	{
+		coin3 = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
+		coin3->parameters = config.child("Coin3");
 	}
 
 	//if (config.child("enemy")) {

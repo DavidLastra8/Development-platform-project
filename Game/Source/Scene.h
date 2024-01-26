@@ -51,8 +51,10 @@ public:
 	FlyEnemy* FlyingEnemy;
 	FlyEnemy* FlyingEnemy2;
 	Item* Potion;
+    Item* Potion2;
 	Coin* coin;
 	Coin* coin2;
+    Coin* coin3;
     Boss* boss;
 
 
