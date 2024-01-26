@@ -443,3 +443,21 @@ bool Scene::CleanUp()
 	return true;
 }
 
+//destroying all enemies
+void Scene::DestroyallEnemies() {
+	app->entityManager->DestroyEntity(enemy);
+	app->entityManager->DestroyEntity(enemy2);
+	app->entityManager->DestroyEntity(FlyingEnemy);
+	app->entityManager->DestroyEntity(FlyingEnemy2);
+	
+}
+
+//destroy all items
+void Scene::DestroyallItems() {
+	app->entityManager->DestroyEntity(Potion);
+	app->entityManager->DestroyEntity(Potion2);
+	app->entityManager->DestroyEntity(coin);
+	app->entityManager->DestroyEntity(coin2);
+	app->entityManager->DestroyEntity(coin3);
+}
+

@@ -19,7 +19,7 @@
 Boss::Boss() : Entity(EntityType::BOSS)
 {
 	name.Create("Boss");
-	lifeCount = 2;
+	lifeCount = 3;
 }
 
 Boss::~Boss()
@@ -137,7 +137,7 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB)
 					LOG("PLAYER ATTACKED BOSS");
 					lifeCount--;
 
-					app->audio->PlayFx(player->deathFxId);
+					
 
 					if (lifeCount <= 0)
 					{
@@ -162,7 +162,7 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB)
 
 							player->pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), player->pbody->body->GetWorldCenter(), true);
 
-							app->audio->PlayFx(deathFxId);
+							app->audio->PlayFx(player->deathFxId);
 						}
 
 

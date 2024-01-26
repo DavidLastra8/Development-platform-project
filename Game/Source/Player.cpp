@@ -240,12 +240,15 @@ bool Player::Update(float dt)
 		// Play the end-level sound effect
 		app->audio->PlayFx(endLevelFxId);
 		
-
 		SetPosition(5050, 1102);
 		endLevelSoundPlayed = true;  // Set the flag to true
-
-		
 	}
+	//drestroy thigns when player position x is above 5050
+	if (position.x >= 4500) {
+		app->scene->DestroyallEnemies();
+		app->scene->DestroyallItems();
+	}
+	
 
 	//if pressed F6, set the endLevelSoundPlayed to false
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
@@ -349,6 +352,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	Item* item = (Item*)physB->listener;;
 	Coin* coin = (Coin*)physB->listener;
 	Boss* boss = (Boss*)physB->listener;
+    Enemy* enemy = (Enemy*)physB->listener;
+    Enemy* flyEnemy = (Enemy*)physB->listener;
+    Enemy* flyEnemy2 = (Enemy*)physB->listener;
+
+
+	
+
 	switch (physB->ctype)
 	{
 

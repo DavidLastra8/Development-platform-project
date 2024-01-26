@@ -44,6 +44,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void DestroyallEnemies();
+
+	void DestroyallItems();
+
 	bool OnGuiMouseClickEvent(GuiControl* control);
 	bool GameSaved1 = false;
 	bool GameSaved2 = false;
