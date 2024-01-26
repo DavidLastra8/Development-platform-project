@@ -15,8 +15,15 @@
 #include "Enemy.h"
 #include "FlyingEnemy.h"
 #include "EntityManager.h"
+#include "../GuiControl.h"
+#include "../GuiManager.h"
+#include "../InitialScreen.h"
+#include "../Lose_Screen.h"
+#include "../Win_Screen.h"
 #include "App.h"
 #include "Physics.h"
+#include "Boss.h"
+#include "Coin.h"
 
 
 
@@ -54,13 +61,28 @@ bool Scene::Awake(pugi::xml_node& config)
 		Potion = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		Potion->parameters = config.child("Potion");
 	}
-
-
-	/*if (config.child("Coin"))
+	if(config.child("Potion2"))
 	{
-		Coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
-		Coin->parameters = config.child("Coin");
-	}*/
+		Potion2 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		Potion2->parameters = config.child("Potion2");
+	 }
+
+
+	if (config.child("Coin"))
+	{
+		coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
+		coin->parameters = config.child("Coin");
+	}
+	if (config.child("Coin2"))
+	{
+		coin2 = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
+		coin2->parameters = config.child("Coin2");
+	}
+    if (config.child("Coin3"))
+	{
+		coin3 = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
+		coin3->parameters = config.child("Coin3");
+	}
 
 	if (config.child("enemy")) {
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
@@ -80,6 +102,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		FlyingEnemy2 = (FlyEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
 		FlyingEnemy2->parameters = config.child("Flyenemy2");
 	}
+	////spawn a Boss
+    if (config.child("Boss")) {
+		boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+		boss->parameters = config.child("Boss");
+	}
 
 	return ret;
 }
@@ -91,7 +118,7 @@ bool Scene::Start()
 	//img = app->tex->Load("Assets/Textures/test.png");
 	
 	//Music is commented so that you can add your own music
-	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
@@ -109,6 +136,44 @@ bool Scene::Start()
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
 
+	SDL_Rect ExitButton = { windowW / 2 - 60,windowH / 2 + 120, 240, 80 };
+	exitScene = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Exit", ExitButton, this);
+	exitScene->state = GuiControlState::DISABLED;
+	SDL_Rect ResumeButton = { windowW / 2 - 60,windowH / 2 , 240, 80 };
+	resumen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Resume", ResumeButton, this);
+	resumen->state = GuiControlState::DISABLED;
+	SDL_Rect SettingsSceneButton = { windowW / 2 - 60,windowH / 2 -120, 240, 80 };
+	settingsScene = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", SettingsSceneButton, this);
+	settingsScene->state = GuiControlState::DISABLED;
+	SDL_Rect Return_Initial = { windowW / 2 - 60,windowH / 2 -240, 340, 80 };
+	Initial_Screen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "Return to inicial screen", Return_Initial, this);
+	Initial_Screen->state = GuiControlState::DISABLED;
+	SDL_Rect FullScreenCheck = { windowW / 2 - 60,windowH / 2 + 120, 240, 80 };
+	FullScreen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Full Screen", FullScreenCheck, this);
+	FullScreen->state = GuiControlState::DISABLED;
+	SDL_Rect FullScreenCheckOff = { windowW / 2+60,windowH / 2, 240, 80 };
+	FullScreenOff = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Full Screen Off", FullScreenCheckOff, this);
+	FullScreenOff->state = GuiControlState::DISABLED;
+	SDL_Rect VsincCheck = { windowW / 2 - 60,windowH / 2-120 , 240, 80 };
+	Vsinc = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Vsinc", VsincCheck, this);
+	Vsinc->state = GuiControlState::DISABLED;
+	SDL_Rect VsincCheckOff = { windowW / 2 - 60,windowH / 2 + 240 , 240, 80 };
+	VsincOff = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "Vsinc Off", VsincCheckOff, this);
+	VsincOff->state = GuiControlState::DISABLED;
+	SDL_Rect Go_Back = { windowW / 2 - 60,windowH / 2 - 240 , 240, 80 };
+	returned = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "Go Back", Go_Back, this);
+	returned->state = GuiControlState::DISABLED;
+	SDL_Rect CoinBox  = { windowW / 2 +260,windowH / 2 - 240 , 240, 80 };
+	Ccoins = (GuiControlValueBox*)app->guiManager->CreateGuiControl(GuiControlType::VALUEBOX, 9, "Coins:", CoinBox, this);
+	Ccoins->state = GuiControlState::DISABLED;
+	SDL_Rect LifesBox = { windowW / 2 + 260,windowH / 2 - 160 , 240, 80 };
+	Clifes = (GuiControlValueBox*)app->guiManager->CreateGuiControl(GuiControlType::VALUEBOX, 10, "Lifes:", LifesBox, this);
+	Clifes->state = GuiControlState::DISABLED;
+	SDL_Rect MusicSlider = { windowW / 2 - 240,windowH / 2 , 240,80 };
+	volumen = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 12, "Volume", MusicSlider, this);
+	volumen->state = GuiControlState::DISABLED;
+	app->Lose_Screen->exit2->state= GuiControlState::DISABLED;
+	app->Win_Screen->exit3->state= GuiControlState::DISABLED;
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 	return true;
 }
@@ -170,7 +235,73 @@ bool Scene::Update(float dt)
 		app->LoadRequest();
 		
 	}
+	if (app->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
+		app->scene->player->isOnPause = true;
+		
+		app->scene->exitScene->state = GuiControlState::NORMAL;
+		app->scene->resumen->state = GuiControlState::NORMAL;
+		app->scene->Initial_Screen->state = GuiControlState::NORMAL;
+		app->scene->settingsScene->state = GuiControlState::NORMAL;
+		Ccoins->state = GuiControlState::DISABLED;
+		Clifes->state = GuiControlState::DISABLED;
+	}
+	std::string strPlayerLifes = std::to_string(player->lives);
+	Clifes->SetValue(strPlayerLifes);
+	std::string coins = std::to_string(player->coinCount);
+	Ccoins->SetValue(coins);
 
+	// at the beginning of the level, Save the Game only once
+	/*if (player->position.x >= 300 && GameSavedinit == false) {
+		app->SaveRequest();
+		app->audio->PlayFx(player->endLevelFxId);
+		GameSavedinit = true;
+	}*/
+
+	// when player x reaches 1672, Save the Game only once
+	if (player->position.x >= 1672 && GameSaved1 == false) {
+		app->SaveRequest();
+		app->audio->PlayFx(player->endLevelFxId);
+		GameSaved1 = true;
+	}
+	
+	// when player reaches the end of level1, Save the Game only once
+	if (player->position.x >= player->endLevelX && player->position.y >= player->endLevelY && !player->endLevelSoundPlayed && GameSaved2 == false)
+	{
+		// Play the end-level sound effect
+		app->audio->PlayFx(player->endLevelFxId);
+
+		app->SaveRequest();
+		player->SetPosition(5050, 1102);
+		player->endLevelSoundPlayed = true;  // Set the flag to true
+		GameSaved2 = true;
+
+	}
+	if (player->lives == 0) {
+		this->active = false;
+		app->entityManager->active = false;
+		app->scene->active = false;
+		app->map->active = false;
+		app->Lose_Screen->active = true;
+		app->Lose_Screen->Start();
+		Ccoins->state = GuiControlState::DISABLED;
+		Clifes->state = GuiControlState::DISABLED;
+		app->Lose_Screen->exit2->state = GuiControlState::NORMAL;
+
+	}
+	if (boss->lifeCount == 0 || app->input->GetKey(SDL_SCANCODE_K)==KEY_DOWN) {
+		this->active = false;
+		app->entityManager->active = false;
+		app->scene->active = false;
+		app->map->active = false;
+		app->Win_Screen->active = true;
+		app->Win_Screen->Start();
+		Ccoins->state = GuiControlState::DISABLED;
+		Clifes->state = GuiControlState::DISABLED;
+		app->Win_Screen->exit3->state = GuiControlState::NORMAL;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+
+	
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
 	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
@@ -186,10 +317,14 @@ bool Scene::Update(float dt)
 	iPoint origin = iPoint(x, y);
 
 	//If mouse button is pressed modify player position
-	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-		player->position = iPoint(highlightedTileWorld.x, highlightedTileWorld.y);
-		app->map->pathfinding->CreatePath(origin, mouseTile);
+	
+
+		if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+			player->position = iPoint(highlightedTileWorld.x, highlightedTileWorld.y);
+			app->map->pathfinding->CreatePath(origin, mouseTile);
+		}
 	}
+	
 
 	// L13: Get the latest calculated path and draw
 	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
@@ -206,17 +341,123 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || IsExiting == true)
 		ret = false;
 
 	return ret;
 }
+bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 
+	bool ret = true;
+	if (control->id == 2) {
+		IsExiting = true;
+	}
+	if (control->id == 1) {
+		app->scene->player->isOnPause = false;
+		exitScene->state = GuiControlState::DISABLED;
+		settingsScene->state = GuiControlState::DISABLED;
+		resumen->state = GuiControlState::DISABLED;
+		Ccoins->state = GuiControlState::NORMAL;
+		Clifes->state = GuiControlState::NORMAL;
+	}
+	if (control->id == 3) {
+		resumen->state = GuiControlState::DISABLED;
+		settingsScene->state = GuiControlState::DISABLED;
+		Initial_Screen->state = GuiControlState::DISABLED;
+		FullScreen->state = GuiControlState::NORMAL;
+		Vsinc->state = GuiControlState::NORMAL;
+		returned->state = GuiControlState::NORMAL;
+		volumen->state = GuiControlState::NORMAL;
+		exitScene->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 4) {
+		SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		FullScreenOff->state = GuiControlState::NORMAL;
+		FullScreen->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 5) {
+		app->win->GetWindowSize(windowW, windowH);
+		SDL_SetWindowSize(app->win->window, windowW, windowH);
+		SDL_SetWindowFullscreen(app->win->window, 0);
+		
+		FullScreen->state = GuiControlState::NORMAL;
+		FullScreenOff->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 6) {
+		app->IsVsincActive = true;
+		Vsinc->state = GuiControlState::DISABLED;
+		VsincOff->state = GuiControlState::NORMAL;
+	}
+	if (control->id == 7) {
+		app->IsVsincActive = false;
+		Vsinc->state = GuiControlState::NORMAL;
+		VsincOff->state = GuiControlState::DISABLED;
+	}
+	if (control->id == 8) {
+		FullScreen->state = GuiControlState::DISABLED;
+		FullScreenOff->state = GuiControlState::DISABLED;
+		Vsinc->state = GuiControlState::DISABLED;
+		Initial_Screen->state = GuiControlState::DISABLED;
+		VsincOff->state = GuiControlState::DISABLED;
+		returned->state = GuiControlState::DISABLED;
+		volumen->state = GuiControlState::DISABLED;
+		resumen->state = GuiControlState::NORMAL;
+		exitScene->state = GuiControlState::NORMAL;
+		settingsScene->state = GuiControlState::NORMAL;
+	}
+	if (control->id == 11) {
+		app->scene->player->isOnPause = false;
+		app->scene->player->SetPosition(400, 1102);
+		app->initialScreen->active = true;
+		app->initialScreen->Start();
+		app->entityManager->active = false;
+		app->scene->exitScene->state = GuiControlState::DISABLED;
+		app->scene->resumen->state = GuiControlState::DISABLED;
+		app->scene->Initial_Screen->state = GuiControlState::DISABLED;
+		app->scene->settingsScene->state = GuiControlState::DISABLED;
+		Ccoins->state = GuiControlState::DISABLED;
+		Clifes->state = GuiControlState::DISABLED;
+
+	}
+	if (control->id == 12) {
+		app->audio->ChangeMusicVolume(app->scene->volume);
+	}
+	return ret;
+}
 // Called before quitting
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
+	//Destroying all entities
+	app->entityManager->DestroyEntity(coin);
+	app->entityManager->DestroyEntity(player);
+	app->entityManager->DestroyEntity(enemy);
+	app->entityManager->DestroyEntity(enemy2);
+	app->entityManager->DestroyEntity(FlyingEnemy);
+	app->entityManager->DestroyEntity(FlyingEnemy2);
+	app->entityManager->DestroyEntity(boss);
+	app->entityManager->DestroyEntity(Potion);
+	app->entityManager->DestroyEntity(coin);
+
 	return true;
+}
+
+//destroying all enemies
+void Scene::DestroyallEnemies() {
+	app->entityManager->DestroyEntity(enemy);
+	app->entityManager->DestroyEntity(enemy2);
+	app->entityManager->DestroyEntity(FlyingEnemy);
+	app->entityManager->DestroyEntity(FlyingEnemy2);
+	
+}
+
+//destroy all items
+void Scene::DestroyallItems() {
+	app->entityManager->DestroyEntity(Potion);
+	app->entityManager->DestroyEntity(Potion2);
+	app->entityManager->DestroyEntity(coin);
+	app->entityManager->DestroyEntity(coin2);
+	app->entityManager->DestroyEntity(coin3);
 }
 

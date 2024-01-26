@@ -29,7 +29,7 @@ bool Item::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/healing_potiton.png");
-	pbody = app->physics->CreateCircle(position.x + 100, position.y + 16, 16, bodyType::STATIC);
+	pbody = app->physics->CreateCircle(position.x + 100, position.y + 16, 1, bodyType::STATIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ITEM;
 
@@ -42,13 +42,14 @@ bool Item::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x-10, position.y-20);
+	app->render->DrawTexture(texture, position.x-10, position.y-30);
 
 	return true;
 }
 
 bool Item::CleanUp()
 {
+	
 	return true;
 }
 
@@ -57,4 +58,10 @@ void Item::SetPosition(int x, int y) {
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+}
+
+void Item::Deactivate()
+{
+	pbody->Deactivate();
+	
 }

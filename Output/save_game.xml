@@ -5,15 +5,23 @@
 	<textures />
 	<audio />
 	<:anonymous />
+	<:anonymous />
+	<:anonymous />
+	<:anonymous />
+	<:anonymous />
 	<map />
 	<scene />
 	<entitymanager>
-		<Player x="1429" y="1132" />
-		<item x="32" y="1599" />
-		<item x="2222" y="1599" />
-		<enemy x="1314" y="1132" />
-		<Flyenemy x="1054" y="928" />
-		<Flyenemy x="367" y="896" />
+		<Player x="1681" y="300" />
+		<item x="164" y="1159" />
+		<item x="1164" y="615" />
+		<coin x="2833" y="715" />
+		<coin x="3832" y="939" />
+		<enemy x="1309" y="1580" />
+		<Flyenemy x="899" y="932" />
+		<Flyenemy x="713" y="250" />
+		<Boss x="5793" y="1125" />
 	</entitymanager>
+	<guiManager />
 	<renderer />
 </game_state>

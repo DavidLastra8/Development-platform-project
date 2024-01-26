@@ -14,6 +14,7 @@ enum class EntityType
 	ITEM,
 	FLYING_ENEMY,
 	ENEMY,
+	BOSS,
 	COIN,
 	UNKNOWN
 	
@@ -69,6 +70,12 @@ public:
 
 	};
 
+	//PhysBody* Entity::GetPhysBody() const
+	//{
+	//	return this->GetPhysBody // Assuming physBody is a member of Entity
+	//}
+
+
 	
 public:
 
@@ -82,5 +89,7 @@ public:
 	iPoint position;       
 	bool renderable = true;
 };
+
+
 
 #endif // __ENTITY_H__

@@ -8,6 +8,7 @@
 #include "Animation.h"
 #include <SDL_image/include/SDL_image.h>
 #include "Module.h"
+#include "EntityManager.h"
 
 struct SDL_Texture;
 
@@ -48,7 +49,9 @@ public:
 
 	void IncreaseLives(int amount);
 
-	
+	void DecreaseLives(int amount);
+
+
 
 public:
 	
@@ -59,6 +62,8 @@ public:
 	SDL_Texture* mouseTileTex = nullptr;
 	PhysBody* pbody;
 	int pickCoinFxId;
+	int coinCount;
+	int lives=6;
 
 	unsigned int jumpFxId; // ID for the jumping sound effect
 	unsigned int endLevelFxId;  // ID for the end-level sound effect
@@ -66,11 +71,13 @@ public:
 	bool endLevelSoundPlayed;   // Flag to check if the sound has been played
 	int endLevelX = 3939;              // X position where the player has to reach to end the level	
 	int endLevelY = 1420;              // Y position where the player has to reach to end the level
+	int lastDeathTime = 0;
+	const int DEATH_COOLDOWN_MS = 2000; // 1000 milliseconds (1 second)
 
 	float velx;
 	float gravity;
 	float vely;
-
+	bool isOnPause = false;
 
 	
 
@@ -92,9 +99,10 @@ public:
 
 	Direction lastDirection = IDLE;
 
-private:
-	int lives;
 	std::chrono::steady_clock::time_point lastDamageTime;  // Time of last damage
+private:
+	
+	
 	
 
 };

@@ -6,7 +6,10 @@
 #include "Scene.h"
 #include "Item.h"
 #include "Enemy.h"
-
+#include "Box2D/Box2D/Box2D.h"
+#include "Physics.h"
+#include "Player.h"
+#include "Boss.h"
 
 
 
@@ -81,38 +84,12 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
-//Entity* EntityManager::FindOrCreateEntity(EntityType type) {
-//	// Search for an existing entity of the given type
-//	for (ListItem<Entity*>* item = entities.start; item != nullptr; item = item->next) {
-//		if (item->data->type == type) {
-//			return item->data;  // Return the existing entity
-//		}
-//	}
-//
-//	// If not found, create a new entity
-//	Entity* newEntity = nullptr;
-//	switch (type) {
-//	case EntityType::PLAYER:
-//		newEntity = new Player();
-//		break;
-//		// ... handle other entity types
-//	}
-//
-//	if (newEntity != nullptr) {
-//		entities.Add(newEntity);  // Add the new entity to the manager
-//	}
-//	return newEntity;
-//}
+
 
 
 Entity* EntityManager::CreateEntity(EntityType type)
 {
-	//// Search for an existing entity of the given type
-	//for (ListItem<Entity*>* item = entities.start; item != nullptr; item = item->next) {
-	//	if (item->data->type == type) {
-	//		return item->data;  // Return the existing entity
-	//	}
-	//}
+
 
 	Entity* entity = nullptr; 
 
@@ -133,7 +110,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::COIN:
 		entity = new Coin();
 		break;
-	
+	case EntityType::BOSS:
+		entity = new Boss();
+		break;
 	default:
 		break;
 	}
@@ -154,12 +133,14 @@ void EntityManager::DestroyEntity(Entity* entity)
 	for (item = entities.start; item != NULL; item = item->next)
 	{
 		if (item->data == entity) entities.Del(item);
+		
 	}
 }
 
 void EntityManager::AddEntity(Entity* entity)
 {
 	if ( entity != nullptr) entities.Add(entity);
+	
 }
 
 bool EntityManager::Update(float dt)
@@ -173,9 +154,12 @@ bool EntityManager::Update(float dt)
 		pEntity = item->data;
 
 		if (pEntity->active == false) continue;
-		ret = item->data->Update(dt);
-	}
 
+		if (!app->scene->player->isOnPause || item->data == app->scene->player) {
+			ret = item->data->Update(dt);
+		}
+	}
+	
 	return ret;
 }
 
@@ -220,15 +204,20 @@ bool EntityManager::LoadState(pugi::xml_node node) {
 
 	//Coins
     int coinCtr = 1;
-    for (pugi::xml_node coinNode = node.child("item"); coinNode; coinNode = coinNode.next_sibling("item")) {
+    for (pugi::xml_node coinNode = node.child("coin"); coinNode; coinNode = coinNode.next_sibling("coin")) {
     iPoint posCoin = iPoint(coinNode.attribute("x").as_int(), coinNode.attribute("y").as_int());
-		if (coinCtr == 1) app->scene->Coin->SetPosition(posCoin.x, posCoin.y);
+		if (coinCtr == 1) app->scene->coin->SetPosition(posCoin.x, posCoin.y);
 		
 		coinCtr++;
 	}
 
+	int BossCtr = 1;
+	for (pugi::xml_node BossNode = node.child("coin"); BossNode; BossNode = BossNode.next_sibling("coin")) {
+		iPoint posBoss = iPoint(BossNode.attribute("x").as_int(), BossNode.attribute("y").as_int());
+		if (BossCtr == 1) app->scene->coin->SetPosition(posBoss.x, posBoss.y);
 
-
+		BossCtr++;
+	}
 	//Example
 	/*pugi::xml_node entitymanager;
     for (entitymanager = node.child("entitymanager"); entitymanager && ret; entitymanager = entitymanager.next_sibling("entitymanager"))

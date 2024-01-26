@@ -30,6 +30,7 @@ enum class ColliderType {
 	ENEMY,
 	DEATH,
 	COIN,
+	BOSS,
 	UNKNOWN
 	// ..
 };
@@ -47,6 +48,8 @@ public:
 	float GetRotation() const;
 	bool Contains(int x, int y) const;
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
+	//a method to deactivate the body
+	void Deactivate();
 
 public:
 	int width, height;

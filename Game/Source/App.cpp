@@ -7,6 +7,11 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Physics.h"
+#include "../InitialScreen.h"
+#include "../Lose_Screen.h"
+#include "../Win_Screen.h"
+#include "../Title_Screen.h"
+#include "../GuiManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -34,21 +39,30 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	map = new Map();
 	entityManager = new EntityManager();
-
-
+	initialScreen = new InitialScreen();
+	guiManager = new GuiManager();
+	Lose_Screen = new LoseScreen();
+	Win_Screen = new WinScreen();
+	Title_Screen = new TitleScreen();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(win);
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	
+	AddModule(Title_Screen);
+	AddModule(initialScreen);
+	AddModule(Lose_Screen);
+	AddModule(Win_Screen);
 	AddModule(physics);
 	AddModule(map);
 	AddModule(scene);
+
 	
 	
 	AddModule(entityManager);
-
+	AddModule(guiManager);
 	// Render last to swap buffer
 	AddModule(render);
 
@@ -181,7 +195,9 @@ void App::FinishUpdate()
 		uint32 delay = (uint32) (maxFrameDuration - currentDt);
 
 		PerfTimer delayTimer = PerfTimer();
-		SDL_Delay(delay);
+		if (IsVsincActive==true){
+			SDL_Delay(delay);
+		}
 		//LOG("We waited for %I32u ms and got back in %f ms",delay,delayTimer.ReadMs());
 	}
 

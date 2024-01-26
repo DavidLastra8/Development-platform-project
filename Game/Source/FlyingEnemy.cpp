@@ -71,7 +71,11 @@ bool FlyEnemy::Update(float dt)
 			for (uint i = 0; i < path->Count(); ++i)
 			{
 				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				app->render->DrawTexture(pathTest, pos.x, pos.y);
+
+				if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+					app->render->DrawTexture(pathTest, pos.x, pos.y);
+				}
+				
 			}
 		}
 
@@ -105,7 +109,6 @@ bool FlyEnemy::CleanUp()
 void FlyEnemy::OnCollision(PhysBody* physA, PhysBody* physB)
 {
 
-
 }
 
 void FlyEnemy::SetPosition(int x, int y) {
@@ -113,5 +116,4 @@ void FlyEnemy::SetPosition(int x, int y) {
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	enemyCollider->body->SetTransform(newPos, enemyCollider->body->GetAngle());
-
 }

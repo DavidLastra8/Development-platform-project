@@ -48,7 +48,9 @@ bool Render::Awake(pugi::xml_node& config)
 		camera.x = 0;
 		camera.y = -700;
 	}
-	
+	TTF_Init();
+
+	font = TTF_OpenFont("Assets/Fonts/arial/FiraSans-Black.ttf", 200);
 	return ret;
 }
 
@@ -226,7 +228,24 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
 	return ret;
 }
+bool Render::DrawText(const char* text, int posx, int posy, int w, int h) {
 
+	SDL_Color color = { 255, 255, 255 };
+	SDL_Surface* surface = TTF_RenderText_Solid(font, text, color);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+	int texW = 0;
+	int texH = 0;
+	SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+	SDL_Rect dstrect = { posx, posy, w, h };
+
+	SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+
+	SDL_DestroyTexture(texture);
+	SDL_FreeSurface(surface);
+
+	return true;
+}
 
 //// L14: TODO 6: Implement a method to load the state
 //// for now load camera's x and y

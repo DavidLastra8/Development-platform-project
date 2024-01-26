@@ -24,9 +24,17 @@ public:
 
 	void SetPosition(int x, int y);
 
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+
+	void TeleportToNewLocation(int newX, int newY);
+
 public:
 
 	bool isPicked = false;
+	int pickCoinFxId;
+
+	int newX = 5;
+	int newY = 0;
 
 private:
 

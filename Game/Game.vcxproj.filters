@@ -25,9 +25,18 @@
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\FlyingEnemy.cpp" />
-
     <ClCompile Include="Source\Coin.cpp" />
-
+    <ClCompile Include="InitialScreen.cpp" />
+    <ClCompile Include="GuiControlButton.cpp" />
+    <ClCompile Include="GuiManager.cpp" />
+    <ClCompile Include="GuiCheckBox.cpp" />
+    <ClCompile Include="GuiSlider.cpp" />
+    <ClCompile Include="GuiControlValueBox.cpp" />
+    <ClCompile Include="Source\Boss.cpp" />
+    <ClCompile Include="Source\Scene2.cpp" />
+    <ClCompile Include="Lose_Screen.cpp" />
+    <ClCompile Include="Win_Screen.cpp" />
+    <ClCompile Include="Title_Screen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -75,9 +84,19 @@
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\DynArray.h" />
     <ClInclude Include="Source\FlyingEnemy.h" />
-
     <ClInclude Include="Source\Coin.h" />
-
+    <ClInclude Include="InitialScreen.h" />
+    <ClInclude Include="GuiControl.h" />
+    <ClInclude Include="GuiControlButton.h" />
+    <ClInclude Include="GuiManager.h" />
+    <ClInclude Include="GuiCheckBox.h" />
+    <ClInclude Include="GuiSlider.h" />
+    <ClInclude Include="GuiControlValueBox.h" />
+    <ClInclude Include="Source\Boss.h" />
+    <ClInclude Include="Source\Scene2.h" />
+    <ClInclude Include="Lose_Screen.h" />
+    <ClInclude Include="Win_Screen.h" />
+    <ClInclude Include="Title_Screen.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

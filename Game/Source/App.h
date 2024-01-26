@@ -19,6 +19,11 @@ class Scene;
 class EntityManager;
 class Map;
 class Physics;
+class InitialScreen;
+class GuiManager;
+class LoseScreen;
+class WinScreen;
+class TitleScreen;
 
 class App
 {
@@ -98,6 +103,12 @@ public:
 	EntityManager* entityManager;
 	Map* map;
 	Physics* physics;
+	InitialScreen* initialScreen;
+	GuiManager* guiManager;
+	LoseScreen* Lose_Screen;
+	WinScreen* Win_Screen;
+	TitleScreen* Title_Screen;
+	bool IsVsincActive = false;
 
 private:
 

@@ -10,6 +10,10 @@
 #include "Physics.h"
 #include "Animation.h"
 #include "Map.h"
+#include "EntityManager.h"
+#include "Item.h"
+#include "Coin.h"
+#include "Boss.h"
 
 
 
@@ -146,12 +150,12 @@ bool Player::Update(float dt)
 		bool movingRight = app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
 
 		// Horizontal movement
-		if (movingLeft)
+		if (movingLeft && isOnPause == false)
 		{
 			currentVel.x = -8.0f; // Leftward
 			lastDirection = LEFT;
 		}
-		else if (movingRight)
+		else if (movingRight && isOnPause == false)
 		{
 			currentVel.x = 8.0f; // Rightward
 			lastDirection = RIGHT;
@@ -195,11 +199,22 @@ bool Player::Update(float dt)
 			app->audio->PlayFx(jumpFxId);
 		}
 	}
-	/*if (isAlive == false) {
-		SetPosition(400, 1102);
-		isAlive = true;
-	}*/
+	
+	if (!isAlive)
+	{
+		app->audio->PlayFx(deathFxId);
+		// Get the current time in milliseconds
+		Uint32 now = SDL_GetTicks();
+		if (now - lastDeathTime > DEATH_COOLDOWN_MS)
+		{
+			//teleport to last save point
+			app->LoadRequest();
 
+			isAlive = true;
+			lastDeathTime = now;
+		}
+		
+	}
 
 
 	//we don't want this for now, Instead of directly setting the linear velocity for movement, you can apply forces or impulses in the horizontal direction as well. This will allow both jumping and lateral movement to coexist.
@@ -224,8 +239,16 @@ bool Player::Update(float dt)
 	{
 		// Play the end-level sound effect
 		app->audio->PlayFx(endLevelFxId);
+		
+		SetPosition(5050, 1102);
 		endLevelSoundPlayed = true;  // Set the flag to true
 	}
+	//drestroy thigns when player position x is above 5050
+	if (position.x >= 4500) {
+		app->scene->DestroyallEnemies();
+		app->scene->DestroyallItems();
+	}
+	
 
 	//if pressed F6, set the endLevelSoundPlayed to false
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
@@ -272,6 +295,11 @@ bool Player::Update(float dt)
 		isAlive = true;
 	}
 	
+	//Teleport the Player to another position
+    if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		SetPosition(5050, 1102);
+		isAlive = true;
+	}
 
 	
 
@@ -281,7 +309,11 @@ bool Player::Update(float dt)
 
 	
 	SDL_Rect rect = currentAnimation->GetCurrentFrame(dt);
-	app->render->DrawTexture(texture, position.x, position.y,&rect);
+	if (isOnPause == false) {
+
+		app->render->DrawTexture(texture, position.x, position.y, &rect);
+	}
+	
 
 	
 	
@@ -299,22 +331,60 @@ bool Player::CleanUp()
 void Player::IncreaseLives(int amount) {
 	lives += amount;
 	// Optionally, cap the lives to a maximum value
-	const int maxLives = 5;
+	const int maxLives = 6;
 	if (lives > maxLives) {
 		lives = maxLives;
 	}
 }
 
+void Player::DecreaseLives(int amount) {
+	lives -= amount;
+	if (lives < 0) {
+		lives = 0;
+	}
+}
+
+
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	using namespace std::chrono;
 	steady_clock::time_point now = steady_clock::now();
+	Player* player = (Player*)physA->listener;
+	Item* item = (Item*)physB->listener;;
+	Coin* coin = (Coin*)physB->listener;
+	Boss* boss = (Boss*)physB->listener;
+    Enemy* enemy = (Enemy*)physB->listener;
+    Enemy* flyEnemy = (Enemy*)physB->listener;
+    Enemy* flyEnemy2 = (Enemy*)physB->listener;
+
+
+	
+
 	switch (physB->ctype)
 	{
+
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
-		app->scene->player->IncreaseLives(1);
-		app->audio->PlayFx(pickCoinFxId);
+		if (item->isPicked == false)
+		{
+			if (duration_cast<seconds>(now - lastDamageTime).count() >= 5) {
+				app->audio->PlayFx(pickCoinFxId);
+				
+				app->scene->player->IncreaseLives(1);
+				// Assuming you have a way to get the actual Item entity from physB
+
+				
+				app->entityManager->DestroyEntity(item);
+				
+				item->Deactivate();
+				
+			}
+			item->isPicked = true;
+		}
+		
+		
 		break;
+
+
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
 		if (IsJumping) {
@@ -324,33 +394,24 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType:: DEATH:
 		
 		LOG("Collision DEATH");
-		
-
-		if (duration_cast<seconds>(now - lastDamageTime).count() >= 3) {
-			if (lives > 0)
-			{
-				lives--;
-
-				
-
-				pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), pbody->body->GetWorldCenter(), true);
-
-				app->audio->PlayFx(deathFxId);
-			}
-
+		if (!GodMode)
+		{
 			
-			lastDamageTime = now;  // Update last damage time
+			lives--;
+
+			//lastDamageTime = now;  // Update last damage time
 
 			if (lives == 0)
 			{
 				isAlive = false;
 				pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 			}
+			
+			app->audio->PlayFx(deathFxId);
+			break;
 		}
 		
-		
-		app->audio->PlayFx(deathFxId);
-		break;
+
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		//player not movable
@@ -360,34 +421,47 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
-		if (duration_cast<seconds>(now - lastDamageTime).count() >= 3) {
-			if (lives > 0)
-			{
-				lives--;
+		if (!GodMode)
+		{
+			if (duration_cast<seconds>(now - lastDamageTime).count() >= 3) {
+				if (lives > 0)
+				{
+					lives--;
 
-				
 
-				pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), pbody->body->GetWorldCenter(), true);
 
-				app->audio->PlayFx(deathFxId);
+					pbody->body->ApplyLinearImpulse(b2Vec2(0.0f, -4.1f), pbody->body->GetWorldCenter(), true);
+
+					app->audio->PlayFx(deathFxId);
+				}
+				lastDamageTime = now;  // Update last damage time
+
+				if (lives == 0)
+				{
+					isAlive = false;
+					pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+
+				}
 			}
-			lastDamageTime = now;  // Update last damage time
 
-			if (lives == 0)
-			{
-				isAlive = false;
-				pbody->body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
-				
-			}
+			break;
 		}
-
-
 		
-		break;
 	case ColliderType::COIN:
 		LOG("Collision COIN");
-		app->audio->PlayFx(pickCoinFxId);
+		/*app->audio->PlayFx(pickCoinFxId);*/
+		//if isPicked is false, then play the sound and set isPicked to true
+		
+		if (coin->isPicked == false) {
+			app->audio->PlayFx(pickCoinFxId);
+			app->entityManager->DestroyEntity(coin);
+			//increment the player's coin count
+			app->scene->player->coinCount++;
+			coin->isPicked = true;
+		}
 		break;
+
+	
 	}
 	
 }

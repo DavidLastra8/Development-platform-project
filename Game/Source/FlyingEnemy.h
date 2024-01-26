@@ -28,9 +28,7 @@ public:
 
 	void InitAnims();
 
-
 	void SetPosition(int x, int y);
-
 
 	Animation* currentAnim;
 
