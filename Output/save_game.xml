@@ -12,6 +12,7 @@
 	<map />
 	<scene />
 	<entitymanager>
+<<<<<<< HEAD
 		<Player x="1684" y="485" />
 		<item x="164" y="1159" />
 		<item x="1164" y="615" />
@@ -20,6 +21,17 @@
 		<coin x="3832" y="939" />
 		<enemy x="2345" y="1581" />
 		<Flyenemy x="899" y="930" />
+=======
+		<Player x="216" y="1065" />
+		<item x="1148" y="594" />
+		<item x="1164" y="610" />
+		<coin x="599" y="860" />
+		<coin x="2833" y="715" />
+		<coin x="3832" y="939" />
+		<enemy x="4005" y="1580" />
+		<Flyenemy x="908" y="886" />
+		<Flyenemy x="384" y="544" />
+>>>>>>> parent of e049144 (File cleanup)
 		<Boss x="5793" y="1125" />
 	</entitymanager>
 	<guiManager />
